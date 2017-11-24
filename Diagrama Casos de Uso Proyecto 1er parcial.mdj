@@ -375,7 +375,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Cosinero",
+											"text": "Cocinero",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -13510,7 +13510,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFf1gB3WQv+fKc="
 					},
-					"name": "Cosinero",
+					"name": "Cocinero",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
