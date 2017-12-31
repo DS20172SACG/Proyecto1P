@@ -10,5 +10,27 @@ package Pedidos;
  * @author Usuario
  */
 public class PedidoPresencial extends Pedido{
+    private String idMesa;
+
+    public PedidoPresencial() {
+    }
+
+    public PedidoPresencial(String idMesa, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
+        super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero);
+        this.idMesa = idMesa;
+    }
+
+    public PedidoPresencial(String idMesa, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+        super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
+        this.idMesa = idMesa;
+    }
+
+    public String getIdMesa() {
+        return idMesa;
+    }
+
+    public void setIdMesa(String idMesa) {
+        this.idMesa = idMesa;
+    }
     
 }

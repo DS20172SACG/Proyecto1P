@@ -10,5 +10,24 @@ package Pedidos;
  * @author Usuario
  */
 public class PedidoDomicilio extends Pedido{
+    private String direccionEntrega;
+
+    public PedidoDomicilio(String direccionEntrega, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
+        super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero);
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public PedidoDomicilio(String direccionEntrega, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+        super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
     
 }
