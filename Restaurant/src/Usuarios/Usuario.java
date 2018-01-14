@@ -10,23 +10,15 @@ package Usuarios;
  * @author Usuario
  */
 public class Usuario {
-    private String id;
     private String usuario;
+    private String contrasena;
 
     public Usuario() {
     }
 
-    public Usuario(String id, String usuario) {
-        this.id = id;
+    public Usuario(String usuario, String contrasena) {
         this.usuario = usuario;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.contrasena = contrasena;
     }
 
     public String getUsuario() {
@@ -36,6 +28,13 @@ public class Usuario {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-    
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
     
 }

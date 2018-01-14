@@ -16,7 +16,7 @@ public abstract class Personal {
     protected int Edad;
     protected double sueldo;
     protected String usuario;
-
+    
     public Personal() {
     } 
 
