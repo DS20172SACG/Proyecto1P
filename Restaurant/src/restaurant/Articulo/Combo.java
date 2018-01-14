@@ -23,7 +23,10 @@ public class Combo extends Articulo{
     
     private void calcularMinutos(){
         for(Articulo articulo : articulos){
-            this.minutosPreparacion += articulo.getMinutosPreparacion();
+            if(articulo.getMinutosPreparacion()>this.minutosPreparacion){
+                this.minutosPreparacion += articulo.getMinutosPreparacion();
+            }
         }
+        this.minutosPreparacion = this.minutosPreparacion + (3*articulos.size());
     }
 }

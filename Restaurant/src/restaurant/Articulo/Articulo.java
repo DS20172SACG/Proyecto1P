@@ -28,6 +28,7 @@ public abstract class Articulo {
         this.descripcion = descripcion;
         this.precio = precio;
         this.disponible = disponible;
+        this.minutosPreparacion = 0;
     }
 
     public Articulo(String id, String nombre, String descripcion, double precio, boolean disponible, int minutosPreparacion) {
