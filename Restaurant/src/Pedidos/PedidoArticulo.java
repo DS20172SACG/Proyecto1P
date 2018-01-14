@@ -14,14 +14,16 @@ public class PedidoArticulo {
     private String idPedido;
     private String idArticulo;
     private int cantidadArticulos;
+    private String observaciones;
 
     public PedidoArticulo() {
     }
 
-    public PedidoArticulo(String idPedidoArticulo, String idPedido, String idArticulo) {
+    public PedidoArticulo(String idPedidoArticulo, String idPedido, String idArticulo, String observaciones) {
         this.idPedidoArticulo = idPedidoArticulo;
         this.idPedido = idPedido;
         this.idArticulo = idArticulo;
+        this.observaciones = observaciones;
     }
 
     public String getIdPedidoArticulo() {
@@ -54,6 +56,14 @@ public class PedidoArticulo {
 
     public void setCantidadArticulos(int cantidadArticulos) {
         this.cantidadArticulos = cantidadArticulos;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     
 }

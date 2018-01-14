@@ -1,33 +1,74 @@
-DROP DATABASE SARES;
+drop database if exists SARES;
 
-CREATE DATABASE SARES;
-USE SARES;
+create database if not exists SARES;
+
+use SARES;
+
+create table Usuario(
+	usuario varchar(50) not null,
+    clave varchar(50) not null,
+    primary key (usuario)
+);
+
+create table Cargo(
+	idCargo int not null auto_increment,
+    nombreCargo varchar(50) not null,
+    eliminado boolean not null,
+    primary key (idCargo)
+);
+
+create table Personal(
+	cedula varchar(10) not null,
+    nombres varchar(255) not null,
+    apellidos varchar(255) not null,
+    edad int not null,
+    sueldo float not null,
+    idCargo int not null auto_increment,
+    usuario varchar(50) not null,
+    eliminado boolean not null,
+    foreign key (usuario) references Usuario(usuario),
+    foreign key (idCargo) references Cargo(idCargo)
+);
+
+create table Ambientes(
+	idAmbiente int not null auto_increment,
+    nombre varchar(255) not null,
+    eliminado boolean not null,
+    primary key (idAmbiente)
+);
+
+create table Mesa(
+	idMesa int not null auto_increment,
+    asientos int not null,
+    disponibilidad boolean not null,
+    idAmbiente int not null,
+    eliminado boolean not null,
+    foreign key (idAmbiente) references Ambientes(idAmbiente)
+);
+
 CREATE TABLE Cliente (
-    ID int NOT NULL,
-    Cedula varchar(10), 
+	Cedula varchar(10) not null,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255),
     Direccion varchar(255),
-    PRIMARY KEY (ID)
-    
-); 
-CREATE TABLE Categoria_Personal (
+    eliminado boolean not null,
+    PRIMARY KEY (Cedula)
+);
 
-    ID int NOT NULL,
-    Nombre varchar(255) NOT NULL,
-    
-    PRIMARY KEY (ID)
-    
-); 
-CREATE TABLE Personal (
-    ID varchar(255) NOT NULL,
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    ID_categoria int NOT NULL,
-    
-    PRIMARY KEY (ID),
-    FOREIGN KEY (ID_categoria) references Categoria_Personal(ID)
-); 
+create table Pedido (
+	id int not null auto_increment,
+    pagado boolean not null,
+    enPreparacion boolean not null,
+    cocinado boolean not null,
+    entregado boolean not null,
+    idCliente varchar(10) not null,
+    idMesero varchar(10) not null,
+    idCocinero varchar(10),
+    foreign key (idCliente) references Cliente(Cedula),
+    foreign key (idMesero) references Personal(cedula),
+    foreign key (idCocinero) references Personal(cedula)
+);
+
 CREATE TABLE Categoria_Articulo(
 	ID int NOT NULL,
     Nombre VARCHAR(255),
@@ -35,38 +76,24 @@ CREATE TABLE Categoria_Articulo(
     
     PRIMARY KEY(ID)
 );
+
 CREATE TABLE Articulo(
 
 	ID int NOT NULL,
     Nombre VARCHAR(255),
     Descripcion VARCHAR(255),
     
-    Precio DOUBLE,
-    Disponibilidad boolean,
-	TiempoPreparacion int,
-    Idcategoria int,
+    Precio DOUBLE not null,
+    Disponibilidad boolean not null,
+	TiempoPreparacion int not null,
+    Idcategoria int not null,
+    eliminado boolean not null,
     
     PRIMARY KEY (ID),
     FOREIGN KEY (Idcategoria) references Categoria_Articulo(ID)
 );
-CREATE TABLE Estado_Pedido(
-	ID int NOT NULL,
-    Estado nvarchar(30) NOT NULL,
-    
-    PRIMARY KEY (ID)
-    
-);
-CREATE TABLE Pedido (
-    ID int NOT NULL,
-    
-    Preferencial boolean,
-    ID_estado int,
-    
-    PRIMARY KEY (ID),
-    FOREIGN KEY (ID_estado) references Estado_Pedido(ID)
-); 
-CREATE TABLE Detalle_Pedido(
 
+CREATE TABLE Detalle_Pedido(
 
 	ID_detalle int NOT NULL,
     ID_Pedido int NOT NULL,
@@ -76,14 +103,17 @@ CREATE TABLE Detalle_Pedido(
     
     
     PRIMARY KEY (ID_detalle),
-    FOREIGN KEY (ID_Pedido) references Pedido(ID)
+    FOREIGN KEY (ID_Pedido) references Pedido(ID),
+    foreign key (ID_Articulo) references Articulo(ID)
 );
+
 CREATE TABLE TipoDePago(
 	ID int,
     Tipo varchar(30),
     
     PRIMARY KEY (ID)
 );
+
 CREATE TABLE Factura (
     ID int NOT NULL,
     TOTAL double,
@@ -95,7 +125,8 @@ CREATE TABLE Factura (
     PRIMARY KEY (ID),
     FOREIGN KEY (Id_cliente) REFERENCES Cliente(ID),
     FOREIGN KEY (TipoDePago) REFERENCES TipoDePago(ID)
-); 
+);
+
 CREATE TABLE Detalle_Factura(
 	id_detalle int,
     id_factura int,

@@ -14,7 +14,10 @@ import static Constantes.TipoCola.*;
  */
 public class Mesero extends Personal{
     ColasPedidos cola= ColasPedidos.getInstancia();
-    
+
+    public Mesero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
+        super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
+    }
     
     public void IngresarPedido(String idPedido,int tipoCola){
         //cola.add(idPedido);
@@ -26,4 +29,5 @@ public class Mesero extends Personal{
             cola.agregarPedidoNormal(idPedido);
         }
     }
+    
 }
