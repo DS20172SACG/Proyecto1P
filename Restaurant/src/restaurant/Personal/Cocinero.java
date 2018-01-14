@@ -5,32 +5,36 @@
  */
 package restaurant.Personal;
 
-import java.util.*;
+import restaurant.ColasPedidos;
 
 /**
  *
  * @author Usuario
  */
-public class Cocinero extends Personal{
-    private List<Observador> Observadores;
+public class Cocinero {
+    ColasPedidos cola= ColasPedidos.getInstancia();
     private int state;
 
     public Cocinero() {
-        Observadores= new ArrayList<Observador>();
     }
     
-    public void add(Observador o) {
-        Observadores.add(o);
-    }
-    public void remove(Observador o) {
-        Observadores.remove(o);
-    }
-    public void NotificarPedidoListo(String idPedido){
-        NotificarObservadores(idPedido);
-    }
-    public void NotificarObservadores(String idPedido){
-        for(Observador obs: Observadores){
-            obs.ActualizarPedido(idPedido);
+    public void cocinarPedido(){
+        String pedidoEnproceso;
+        if((pedidoEnproceso=cola.atenderPedidoPrioritario())!=null){
+            CambioEstadoPedido(pedidoEnproceso);
+        }else{
+            pedidoEnproceso=cola.atenderPedidoPrioritario();
+            CambioEstadoPedido(pedidoEnproceso);
         }
     }
+    public void CambioEstadoPedido(String pedidoEnproceso){
+        System.out.println("Cocinando Pedido .......");
+        PedidoTerminado(pedidoEnproceso);
+    }
+    
+    
+    public void PedidoTerminado(String idPedido){
+        cola.AgregarPedidoPorEntregar(idPedido);
+    }
+
 }
