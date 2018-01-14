@@ -9,7 +9,7 @@ package restaurant.Personal;
  *
  * @author User
  */
-public enum TipoCola {
-    COLANORMAL,COLAPREFERENCIAL
-    
+public class TipoCola {
+    public static final int COLANORMAL=1;
+    public static final int COLAPREFERENCIAL=2;
 }
