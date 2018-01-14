@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurant.Articulo;
+package restaurant;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,10 +14,11 @@ import java.util.Queue;
  */
 public class ColasPedidos {
     
+    private static ColasPedidos instancia = new ColasPedidos();
     private Queue<String> colaNormal;
     private Queue<String> colaPrioritaria;
     
-    public ColasPedidos(){
+    private ColasPedidos(){
         colaNormal = new LinkedList<>();
         colaPrioritaria = new LinkedList<>();
     }
@@ -36,6 +37,10 @@ public class ColasPedidos {
     
     public String atenderPedidoPrioritario(){
         return colaNormal.poll();
+    }
+    
+    public static ColasPedidos getInstancia(){
+        return instancia;
     }
     
 }

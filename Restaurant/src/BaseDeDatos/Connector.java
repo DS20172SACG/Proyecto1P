@@ -14,15 +14,15 @@ import javax.swing.JOptionPane;
  */
 public class Connector {
     
-    private Connector instancia = new Connector();
+    private static Connector instancia = new Connector();
     private Connection connection;
     private DatosBase datos = new DatosBase();
     
     private Connector(){
     }
     
-    public Connector getInstancia(){
-        return this.instancia;
+    public static Connector getInstancia(){
+        return instancia;
     }
     
     public Connection getConnection() {
