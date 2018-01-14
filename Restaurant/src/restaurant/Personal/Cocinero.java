@@ -11,11 +11,11 @@ import restaurant.ColasPedidos;
  *
  * @author Usuario
  */
-public class Cocinero {
+public class Cocinero implements Observador{
     ColasPedidos cola= ColasPedidos.getInstancia();
     private int state;
 
-    public Cocinero() {
+    public Cocinero() {        
     }
     
     public void cocinarPedido(){
@@ -35,6 +35,11 @@ public class Cocinero {
     
     public void PedidoTerminado(String idPedido){
         cola.AgregarPedidoPorEntregar(idPedido);
+    }
+
+    @Override
+    public void ActualizarPedido() {
+        System.out.println("El pedido ha sido preparado, y esta listo para ser entregado");
     }
 
 }

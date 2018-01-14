@@ -12,8 +12,14 @@ import static restaurant.Personal.TipoCola.*;
  *
  * @author Usuario
  */
-public class Mesero extends Personal{
+public class Mesero extends Personal implements Observador{
     ColasPedidos cola= ColasPedidos.getInstancia();
+
+    public Mesero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
+        super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
+    }
+
+    
     
     
     public void IngresarPedido(String idPedido,int tipoCola){
@@ -25,5 +31,10 @@ public class Mesero extends Personal{
         else{
             cola.agregarPedidoNormal(idPedido);
         }
+    }
+
+    @Override
+    public void ActualizarPedido() {
+        System.out.println("El pedido ha sido puesto en la cola para ser preparado");
     }
 }

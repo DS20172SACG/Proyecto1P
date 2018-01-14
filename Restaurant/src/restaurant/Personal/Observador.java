@@ -10,6 +10,6 @@ package restaurant.Personal;
  *
  * @author User
  */
-public abstract class Observador {
-    public abstract void ActualizarPedido(String IdPedido);
+public interface Observador {
+    public void ActualizarPedido();
 }
