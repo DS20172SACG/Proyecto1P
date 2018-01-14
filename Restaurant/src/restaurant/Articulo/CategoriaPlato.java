@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurant.Comida;
+package restaurant.Articulo;
 
 /**
  *
  * @author Usuario
  */
-public class Postre extends Categoria{
-    
+public class CategoriaPlato extends Categoria {
+
+    public CategoriaPlato(int categoria) {
+        this.id = categoria;
+    }
+
 }

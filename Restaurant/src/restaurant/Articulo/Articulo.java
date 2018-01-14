@@ -3,30 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurant.Comida;
+package restaurant.Articulo;
 
 /**
  *
  * @author Usuario
  */
-public class Plato {
-    private String id;
-    private String nombre;
-    private String descripcion;
-    private double precio;
-    private boolean disponible;
-    private String idCategoria;
+public abstract class Articulo {
+    protected String id;
+    protected String nombre;
+    protected String descripcion;
+    protected double precio;
+    protected boolean disponible;
+    protected Categoria categoria;
+    protected int minutosPreparacion;
+    
 
-    public Plato() {
+    public Articulo() {
     }
 
-    public Plato(String id, String nombre, String descripcion, double precio, boolean disponible, String categoria) {
+    public Articulo(String id, String nombre, String descripcion, double precio, boolean disponible) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.disponible = disponible;
-        this.idCategoria = categoria;
+    }
+
+    public Articulo(String id, String nombre, String descripcion, double precio, boolean disponible, int minutosPreparacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.disponible = disponible;
+        this.minutosPreparacion = minutosPreparacion;
     }
     
     public String getId() {
@@ -69,13 +79,20 @@ public class Plato {
         this.disponible = disponible;
     }
 
-    public String getCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategoria(String idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
-    
-    
+
+    public int getMinutosPreparacion() {
+        return minutosPreparacion;
+    }
+
+    public void setMinutosPreparacion(int minutosPreparacion) {
+        this.minutosPreparacion = minutosPreparacion;
+    }
+
 }

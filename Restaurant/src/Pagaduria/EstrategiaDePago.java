@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurant.Comida;
+package Pagaduria;
 
 /**
  *
  * @author Usuario
  */
-public class Entrada extends Categoria{
+public interface EstrategiaDePago {
+    
+    public void pagar();
     
 }
