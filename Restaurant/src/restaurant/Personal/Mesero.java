@@ -6,7 +6,7 @@
 package restaurant.Personal;
 
 import restaurant.ColasPedidos;
-import static restaurant.Personal.TipoCola.*;
+import static Constantes.TipoCola.*;
 
 /**
  *
