@@ -4,20 +4,20 @@ create database if not exists SARES;
 
 use SARES;
 
-create table Usuario(
+CREATE TABLE Usuario(
 	usuario varchar(50) not null,
     clave varchar(50) not null,
     primary key (usuario)
 );
 
-create table Cargo(
+CREATE TABLE Cargo(
 	idCargo int not null auto_increment,
     nombreCargo varchar(50) not null,
     eliminado boolean not null,
     primary key (idCargo)
 );
 
-create table Personal(
+CREATE TABLE Personal(
 	cedula varchar(10) not null,
     nombres varchar(255) not null,
     apellidos varchar(255) not null,
@@ -31,14 +31,14 @@ create table Personal(
     foreign key (idCargo) references Cargo(idCargo)
 );
 
-create table Ambientes(
+CREATE TABLE Ambientes(
 	idAmbiente int not null auto_increment,
     nombre varchar(255) not null,
     eliminado boolean not null,
     primary key (idAmbiente)
 );
 
-create table Mesa(
+CREATE TABLE Mesa(
 	idMesa int not null auto_increment,
     asientos int not null,
     disponibilidad boolean not null,
@@ -49,12 +49,12 @@ create table Mesa(
 );
 
 CREATE TABLE Cliente (
-	Cedula varchar(10) not null,
+	cedula varchar(10) not null,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255),
     Direccion varchar(255),
     eliminado boolean not null,
-    PRIMARY KEY (Cedula)
+    PRIMARY KEY (cedula)
 );
 
 CREATE TABLE Categoria_Articulo(
@@ -67,7 +67,7 @@ CREATE TABLE Categoria_Articulo(
 
 CREATE TABLE Articulo(
 
-	ID int NOT NULL auto_increment,
+	ID int NOT NULL,
     Nombre VARCHAR(255),
     Descripcion VARCHAR(255),
     
@@ -81,7 +81,7 @@ CREATE TABLE Articulo(
     FOREIGN KEY (Idcategoria) references Categoria_Articulo(ID)
 );
 
-create table Pedido (
+CREATE TABLE Pedido (
 	id int not null auto_increment,
     pagado boolean not null,
     enPreparacion boolean not null,
@@ -89,11 +89,12 @@ create table Pedido (
     entregado boolean not null,
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
-    idCocinero varchar(10),
-    primary key (id),
-    foreign key (idCliente) references Cliente(Cedula),
-    foreign key (idMesero) references Personal(cedula),
-    foreign key (idCocinero) references Personal(cedula)
+    idCocinero varchar(10) not null,
+    
+    PRIMARY KEY (id),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(cedula),
+    FOREIGN KEY (idMesero) REFERENCES Personal(cedula),
+    FOREIGN KEY (idCocinero) REFERENCES Personal(cedula)
 );
 
 CREATE TABLE Detalle_Pedido(
@@ -110,7 +111,7 @@ CREATE TABLE Detalle_Pedido(
     foreign key (ID_Articulo) references Articulo(ID)
 );
 
-create table MesaPedido(
+CREATE TABLE MesaPedido(
 	id int not null auto_increment,
     idMesa int not null,
     idPedido int not null,

@@ -5,13 +5,11 @@
  */
 package restaurant.Personal;
 
-import Pedidos.Pedido;
 
 /**
  *
  * @author User
  */
-public abstract class Observador {
-    protected Cocinero cosinero;
-    public abstract void ActualizarPedido(String IdPedido);
+public interface Observador {
+    public void ActualizarPedido();
 }

@@ -12,7 +12,7 @@ import static Constantes.TipoCola.*;
  *
  * @author Usuario
  */
-public class Mesero extends Personal{
+public class Mesero extends Personal implements Observador{
     ColasPedidos cola= ColasPedidos.getInstancia();
 
     public Mesero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
@@ -29,5 +29,9 @@ public class Mesero extends Personal{
             cola.agregarPedidoNormal(idPedido);
         }
     }
-    
+
+    @Override
+    public void ActualizarPedido() {
+        System.out.println("El pedido ha sido puesto en la cola para ser preparado");
+    }
 }
