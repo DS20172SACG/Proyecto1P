@@ -5,17 +5,13 @@
  */
 package restaurant.Personal;
 
-import java.util.Queue;
+import Pedidos.Pedido;
 
 /**
  *
- * @author Usuario
+ * @author User
  */
-public class Mesero extends Personal{
-
-    
-    
-    public void IngresarPedido(String idPedido){
-        //cola.add(idPedido);
-    }
+public abstract class Observador {
+    protected Cocinero cosinero;
+    public abstract void ActualizarPedido(String IdPedido);
 }

@@ -5,17 +5,11 @@
  */
 package restaurant.Personal;
 
-import java.util.Queue;
-
 /**
  *
- * @author Usuario
+ * @author User
  */
-public class Mesero extends Personal{
-
+public enum TipoCola {
+    COLANORMAL,COLAPREFERENCIAL
     
-    
-    public void IngresarPedido(String idPedido){
-        //cola.add(idPedido);
-    }
 }
