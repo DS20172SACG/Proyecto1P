@@ -69,6 +69,32 @@ create table Pedido (
     foreign key (idCocinero) references Personal(cedula)
 );
 
+CREATE TABLE Detalle_Pedido(
+
+	ID_detalle int NOT NULL,
+    ID_Pedido int NOT NULL,
+    ID_Articulo int NOT NULL,
+    cantidad int,
+    Observaciones varchar(255),
+    
+    
+    PRIMARY KEY (ID_detalle),
+    FOREIGN KEY (ID_Pedido) references Pedido(ID),
+    foreign key (ID_Articulo) references Articulo(ID)
+);
+
+create table MesaPedido(
+	id int not null auto_increment,
+    idMesa int not null,
+    idPedido int not null,
+    fecha Date,
+    hora time,
+    
+    primary key (id),
+    foreign key (idMesa) references Mesa(idMesa),
+    foreign key (idPedido) references Pedido(id)
+);
+
 CREATE TABLE Categoria_Articulo(
 	ID int NOT NULL,
     Nombre VARCHAR(255),
@@ -91,20 +117,6 @@ CREATE TABLE Articulo(
     
     PRIMARY KEY (ID),
     FOREIGN KEY (Idcategoria) references Categoria_Articulo(ID)
-);
-
-CREATE TABLE Detalle_Pedido(
-
-	ID_detalle int NOT NULL,
-    ID_Pedido int NOT NULL,
-    ID_Articulo int NOT NULL,
-    cantidad int,
-    Observaciones varchar(255),
-    
-    
-    PRIMARY KEY (ID_detalle),
-    FOREIGN KEY (ID_Pedido) references Pedido(ID),
-    foreign key (ID_Articulo) references Articulo(ID)
 );
 
 CREATE TABLE TipoDePago(
