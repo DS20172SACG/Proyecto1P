@@ -5,17 +5,25 @@
  */
 package restaurant.Personal;
 
-import java.util.Queue;
+import restaurant.ColasPedidos;
+import static restaurant.Personal.TipoCola.*;
 
 /**
  *
  * @author Usuario
  */
 public class Mesero extends Personal{
-
+    ColasPedidos cola= ColasPedidos.getInstancia();
     
     
-    public void IngresarPedido(String idPedido){
+    public void IngresarPedido(String idPedido,int tipoCola){
         //cola.add(idPedido);
+        
+        if(tipoCola==COLAPREFERENCIAL){
+            cola.agregarPedidoPrioritario(idPedido);
+        }
+        else{
+            cola.agregarPedidoNormal(idPedido);
+        }
     }
 }
