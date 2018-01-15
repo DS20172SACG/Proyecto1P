@@ -225,94 +225,22 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    public JTextPane getTextContraseña() {
-        return TextContraseña;
+    public String getTextContraseña() {
+        return TextContraseña.getText();
     }
 
-    public void setTextContraseña(JTextPane TextContraseña) {
-        this.TextContraseña = TextContraseña;
-    }
-
-    public JTextPane getTextUsuario() {
-        return TextUsuario;
-    }
-
-    public void setTextUsuario(JTextPane TextUsuario) {
-        this.TextUsuario = TextUsuario;
+    public String getTextUsuario() {
+        return TextUsuario.getText();
     }
 
     public JButton getjButton1() {
         return jButton1;
     }
 
-    public void setjButton1(JButton jButton1) {
-        this.jButton1 = jButton1;
-    }
-
     public JButton getjButton2() {
         return jButton2;
     }
 
-    public void setjButton2(JButton jButton2) {
-        this.jButton2 = jButton2;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
-    public JLabel getjLabel3() {
-        return jLabel3;
-    }
-
-    public void setjLabel3(JLabel jLabel3) {
-        this.jLabel3 = jLabel3;
-    }
-
-    public JLabel getjLabel4() {
-        return jLabel4;
-    }
-
-    public void setjLabel4(JLabel jLabel4) {
-        this.jLabel4 = jLabel4;
-    }
-
-    public JPanel getjPanel1() {
-        return jPanel1;
-    }
-
-    public void setjPanel1(JPanel jPanel1) {
-        this.jPanel1 = jPanel1;
-    }
-
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
-    }
-
-    public JScrollPane getjScrollPane2() {
-        return jScrollPane2;
-    }
-
-    public void setjScrollPane2(JScrollPane jScrollPane2) {
-        this.jScrollPane2 = jScrollPane2;
-    }
-    
     public void limpiar(){
         this.TextUsuario.setText("");
         this.TextContraseña.setText("");

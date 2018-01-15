@@ -34,7 +34,7 @@ VALUES 	(1, 2, 1, 1, 0),
         (6, 6, 1, 1, 0), 
         (7, 8, 1, 1, 0);
 
-INSERT INTO Usuario (usuario, clave) 
+INSERT INTO Usuario (usuario, clave)
 VALUES 	('admin', 'superclave'), 
 		('elcajero', '11111'), 
         ('elrepartidor', '22222'), 

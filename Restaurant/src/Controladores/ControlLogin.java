@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import BaseDeDatos.Consultador;
 import Usuarios.Usuario;
 import Vistas.Login;
 import java.awt.event.ActionEvent;
@@ -47,8 +48,8 @@ public class ControlLogin implements ActionListener {
         if(e.getSource().equals(ventana.getjButton2())){
             ventana.limpiar();
         }else if(e.getSource().equals(ventana.getjButton1())){
-            usuario.setUsuario(ventana.getTextUsuario().getText());
-            usuario.setContrasena(ventana.getTextContraseña().getText());
+            usuario.setUsuario(ventana.getTextUsuario());
+            usuario.setContrasena(ventana.getTextContraseña());
             usuario.iniciarSesion();
         }
     }

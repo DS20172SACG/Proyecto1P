@@ -16,6 +16,7 @@ public abstract class Personal {
     protected int Edad;
     protected double sueldo;
     protected String usuario;
+    protected int tipoPersonal;
     
     public Personal() {
     } 
@@ -69,5 +70,5 @@ public abstract class Personal {
         this.sueldo = sueldo;
     }
     
-    
+    public abstract void presentarPantalla();
 }

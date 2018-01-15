@@ -5,6 +5,13 @@
  */
 package Usuarios;
 
+import BaseDeDatos.Consultador;
+import Constantes.ConstantesTipoPersonal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import restaurant.Personal.*;
+
 /**
  *
  * @author Usuario
@@ -12,6 +19,7 @@ package Usuarios;
 public class Usuario {
     private String usuario;
     private String contrasena;
+    private Personal personal;
 
     public Usuario() {
     }
@@ -37,7 +45,42 @@ public class Usuario {
         this.contrasena = contrasena;
     }
     
-    public void iniciarSesion(){
-        
+    public void crearPersonal(ResultSet rs){
+        try{
+            switch (rs.getInt(6)){
+                case ConstantesTipoPersonal.ADMINISTRADOR:
+                    personal = new Administrador(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(7));
+                    break;
+                case ConstantesTipoPersonal.CAJERO:
+                    personal = new Cajero(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(7));
+                    break;
+                case ConstantesTipoPersonal.COCINERO:
+                    personal = new Cocinero(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(7));
+                    break;
+                case ConstantesTipoPersonal.MESERO:
+                    personal = new Mesero(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(7));
+                    break;
+                case ConstantesTipoPersonal.REPARTIDOR:
+                    personal = new Repartidor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5), rs.getString(7));
+                    break;
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
+    
+    public void iniciarSesion(){
+        if(Consultador.getInstancia().usuarioExiste(usuario)){
+            if(!Consultador.getInstancia().datosUsuarioCorrectos(usuario, contrasena)){
+                JOptionPane.showMessageDialog(null, "La contrasena no corresponde a ese usuario.", "Mensaje del sistema.", JOptionPane.ERROR_MESSAGE);
+            }else{
+                crearPersonal(Consultador.getInstancia().obtenerPersonalPorUsuario(usuario));
+                personal.presentarPantalla();
+                JOptionPane.showMessageDialog(null, "Ingreso Exitoso", "Mensaje del sistema.", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No existe ese usuario en la base de datos.", "Mensaje del sistema.", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }

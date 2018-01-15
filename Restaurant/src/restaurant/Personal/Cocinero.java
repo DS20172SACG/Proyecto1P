@@ -5,17 +5,24 @@
  */
 package restaurant.Personal;
 
+import Constantes.ConstantesTipoPersonal;
+import Vistas.VistaCocinero;
 import restaurant.ColasPedidos;
 
 /**
  *
  * @author Usuario
  */
-public class Cocinero implements Observador{
+public class Cocinero extends Personal implements Observador{
     ColasPedidos cola= ColasPedidos.getInstancia();
     private int state;
 
     public Cocinero() {        
+    }
+
+    public Cocinero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
+        super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
+        this.tipoPersonal = ConstantesTipoPersonal.COCINERO;
     }
     
     public void cocinarPedido(){
@@ -40,6 +47,11 @@ public class Cocinero implements Observador{
     @Override
     public void ActualizarPedido() {
         System.out.println("El pedido ha sido preparado, y esta listo para ser entregado");
+    }
+
+    @Override
+    public void presentarPantalla() {
+        new VistaCocinero().setVisible(true);
     }
 
 }
