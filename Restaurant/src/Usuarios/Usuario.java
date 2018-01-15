@@ -37,4 +37,7 @@ public class Usuario {
         this.contrasena = contrasena;
     }
     
+    public void iniciarSesion(){
+        
+    }
 }

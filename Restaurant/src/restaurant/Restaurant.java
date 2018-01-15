@@ -5,6 +5,9 @@
  */
 package restaurant;
 
+import Controladores.ControlLogin;
+import Vistas.Login;
+
 /**
  *
  * @author Usuario
@@ -15,7 +18,8 @@ public class Restaurant {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ControlLogin controlLogin = new ControlLogin(new Login());
+        controlLogin.presentarVista();
     }
     
 }
