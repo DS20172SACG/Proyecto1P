@@ -7,6 +7,7 @@ use SARES;
 CREATE TABLE Usuario(
 	usuario varchar(50) not null,
     clave varchar(50) not null,
+    eliminado boolean not null,
     primary key (usuario)
 );
 

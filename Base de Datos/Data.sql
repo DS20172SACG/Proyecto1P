@@ -34,13 +34,13 @@ VALUES 	(1, 2, 1, 1, 0),
         (6, 6, 1, 1, 0), 
         (7, 8, 1, 1, 0);
 
-INSERT INTO Usuario (usuario, clave)
-VALUES 	('admin', 'superclave'), 
-		('elcajero', '11111'), 
-        ('elrepartidor', '22222'), 
-        ('elmesero1', '33333'),
-        ('elmesero2', '44444'),
-        ('elcocinero', '12345');
+INSERT INTO Usuario (usuario, clave, eliminado)
+VALUES 	('admin', 'superclave', 0), 
+		('elcajero', '11111', 0), 
+        ('elrepartidor', '22222', 0), 
+        ('elmesero1', '33333', 0),
+        ('elmesero2', '44444', 0),
+        ('elcocinero', '12345', 0);
 
 INSERT INTO Personal (cedula, nombres, apellidos, edad, sueldo, idCargo, usuario, eliminado) 
 VALUES 	('0900000000', 'Luis', 'Arizaga', 23, 500, 1, 'admin', 0),
