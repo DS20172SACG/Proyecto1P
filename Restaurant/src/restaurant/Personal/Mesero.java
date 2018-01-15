@@ -8,7 +8,7 @@ package restaurant.Personal;
 import Constantes.ConstantesTipoPersonal;
 import restaurant.ColasPedidos;
 import static Constantes.TipoCola.*;
-import Vistas.VistaMesero;
+import Controladores.ControlMesero;
 
 /**
  *
@@ -20,6 +20,7 @@ public class Mesero extends Personal implements Observador{
     public Mesero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
         super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
         this.tipoPersonal = ConstantesTipoPersonal.MESERO;
+        control = new ControlMesero(this);
     }
     
     public void IngresarPedido(String idPedido,int tipoCola){
@@ -37,9 +38,5 @@ public class Mesero extends Personal implements Observador{
     public void ActualizarPedido() {
         System.out.println("El pedido ha sido puesto en la cola para ser preparado");
     }
-
-    @Override
-    public void presentarPantalla() {
-        new VistaMesero().setVisible(true);
-    }
+    
 }

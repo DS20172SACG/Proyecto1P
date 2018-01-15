@@ -6,7 +6,7 @@
 package restaurant.Personal;
 
 import Constantes.ConstantesTipoPersonal;
-import Vistas.VistaCocinero;
+import Controladores.ControlCocinero;
 import restaurant.ColasPedidos;
 
 /**
@@ -23,6 +23,7 @@ public class Cocinero extends Personal implements Observador{
     public Cocinero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
         super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
         this.tipoPersonal = ConstantesTipoPersonal.COCINERO;
+        control = new ControlCocinero(this);
     }
     
     public void cocinarPedido(){
@@ -47,11 +48,6 @@ public class Cocinero extends Personal implements Observador{
     @Override
     public void ActualizarPedido() {
         System.out.println("El pedido ha sido preparado, y esta listo para ser entregado");
-    }
-
-    @Override
-    public void presentarPantalla() {
-        new VistaCocinero().setVisible(true);
     }
 
 }

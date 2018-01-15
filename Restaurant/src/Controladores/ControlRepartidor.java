@@ -5,18 +5,33 @@
  */
 package Controladores;
 
+import Vistas.VistaRepartidor;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import restaurant.Personal.Repartidor;
 
 /**
  *
  * @author Usuario
  */
-public class ControlRepartidor implements ActionListener {
+public class ControlRepartidor implements Controlador {
 
+    private VistaRepartidor ventana;
+    private Repartidor repartidor;
+
+    public ControlRepartidor(Repartidor repartidor) {
+        ventana = new VistaRepartidor();
+        this.repartidor = repartidor;
+        this.repartidor.setControl(this);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void presentarVista() {
+        ventana.setVisible(true);
     }
     
 }

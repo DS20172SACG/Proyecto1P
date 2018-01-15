@@ -6,7 +6,7 @@
 package restaurant.Personal;
 
 import Constantes.ConstantesTipoPersonal;
-import Vistas.VistaCajero;
+import Controladores.ControlCajero;
 
 /**
  *
@@ -17,11 +17,7 @@ public class Cajero extends Personal{
     public Cajero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
         super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
         this.tipoPersonal = ConstantesTipoPersonal.CAJERO;
-    }
-
-    @Override
-    public void presentarPantalla() {
-        new VistaCajero().setVisible(true);
+        control = new ControlCajero(this);
     }
     
 }

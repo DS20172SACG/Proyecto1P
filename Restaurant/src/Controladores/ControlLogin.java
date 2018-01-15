@@ -5,7 +5,6 @@
  */
 package Controladores;
 
-import BaseDeDatos.Consultador;
 import Usuarios.Usuario;
 import Vistas.Login;
 import java.awt.event.ActionEvent;
@@ -15,13 +14,13 @@ import java.awt.event.ActionListener;
  *
  * @author Usuario
  */
-public class ControlLogin implements ActionListener {
+public class ControlLogin implements ActionListener, Controlador{
     
     private Login ventana;
     private Usuario usuario;
 
-    public ControlLogin(Login ventana) {
-        this.ventana = ventana;
+    public ControlLogin() {
+        this.ventana = new Login();
         this.usuario = new Usuario();
         ventana.getjButton1().addActionListener(this);
         ventana.getjButton2().addActionListener(this);
@@ -54,7 +53,9 @@ public class ControlLogin implements ActionListener {
         }
     }
     
+    @Override
     public void presentarVista(){
         ventana.setVisible(true);
     }
+
 }

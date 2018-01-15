@@ -18,7 +18,7 @@ public class Restaurant {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ControlLogin controlLogin = new ControlLogin(new Login());
+        ControlLogin controlLogin = new ControlLogin();
         controlLogin.presentarVista();
     }
     

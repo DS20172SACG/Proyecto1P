@@ -5,6 +5,8 @@
  */
 package restaurant.Personal;
 
+import Controladores.Controlador;
+
 /**
  *
  * @author Usuario
@@ -17,6 +19,7 @@ public abstract class Personal {
     protected double sueldo;
     protected String usuario;
     protected int tipoPersonal;
+    protected Controlador control;
     
     public Personal() {
     } 
@@ -69,6 +72,13 @@ public abstract class Personal {
     public void setSueldo(double sueldo) {
         this.sueldo = sueldo;
     }
+
+    public Controlador getControl() {
+        return control;
+    }
+
+    public void setControl(Controlador control) {
+        this.control = control;
+    }
     
-    public abstract void presentarPantalla();
 }

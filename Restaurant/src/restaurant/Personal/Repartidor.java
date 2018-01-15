@@ -6,22 +6,18 @@
 package restaurant.Personal;
 
 import Constantes.ConstantesTipoPersonal;
-import Vistas.VistaRepartidor;
+import Controladores.ControlRepartidor;
 
 /**
  *
  * @author Usuario
  */
 public class Repartidor extends Personal{
-
+    
     public Repartidor(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
         super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
         this.tipoPersonal = ConstantesTipoPersonal.REPARTIDOR;
-    }
-
-    @Override
-    public void presentarPantalla() {
-        new VistaRepartidor().setVisible(true);
+        control = new ControlRepartidor(this);
     }
     
 }

@@ -75,7 +75,7 @@ public class Usuario {
                 JOptionPane.showMessageDialog(null, "La contrasena no corresponde a ese usuario.", "Mensaje del sistema.", JOptionPane.ERROR_MESSAGE);
             }else{
                 crearPersonal(Consultador.getInstancia().obtenerPersonalPorUsuario(usuario));
-                personal.presentarPantalla();
+                personal.getControl().presentarVista();
                 JOptionPane.showMessageDialog(null, "Ingreso Exitoso", "Mensaje del sistema.", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{

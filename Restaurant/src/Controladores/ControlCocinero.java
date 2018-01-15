@@ -5,18 +5,33 @@
  */
 package Controladores;
 
+import Vistas.VistaCocinero;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import restaurant.Personal.Cocinero;
 
 /**
  *
  * @author Usuario
  */
-public class ControlCocinero implements ActionListener {
+public class ControlCocinero implements Controlador {
 
+    private VistaCocinero ventana;
+    private Cocinero cocinero;
+
+    public ControlCocinero(Cocinero cocinero) {
+        ventana = new VistaCocinero();
+        this.cocinero = cocinero;
+        this.cocinero.setControl(this);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void presentarVista() {
+        ventana.setVisible(true);
     }
     
 }
