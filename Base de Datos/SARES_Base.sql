@@ -88,9 +88,12 @@ CREATE TABLE Pedido (
     enPreparacion boolean not null,
     cocinado boolean not null,
     entregado boolean not null,
+    fecha Date,
+    hora time,
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
     idCocinero varchar(10) not null,
+    
     
     PRIMARY KEY (id),
     FOREIGN KEY (idCliente) REFERENCES Cliente(cedula),
@@ -116,8 +119,7 @@ CREATE TABLE MesaPedido(
 	id int not null auto_increment,
     idMesa int not null,
     idPedido int not null,
-    fecha Date,
-    hora time,
+    
     
     primary key (id),
     foreign key (idMesa) references Mesa(idMesa),
