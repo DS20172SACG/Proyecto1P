@@ -88,6 +88,7 @@ CREATE TABLE Pedido (
     enPreparacion boolean not null,
     cocinado boolean not null,
     entregado boolean not null,
+    EnCola boolean not null,
     fecha Date,
     hora time,
     idCliente varchar(10) not null,

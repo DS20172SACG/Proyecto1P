@@ -4,8 +4,9 @@ delimiter $$
 
 create procedure NuevoPedido(in cliente varchar(10), in mesero varchar(10), in mesa int, out NuevoPedido int)
 begin
-	INSERT INTO Pedido(idCliente)
-    VALUES (cliente, mesero);
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, idCliente, idMesero) 
+    VALUES (0, 0, 0, 0, 0, cliente, mesero);
+    
     SELECT LAST_INSERT_ID() into NuevoPedido;
     
     Insert INTO MesaPedido(idMesa, idPedido)
@@ -25,6 +26,12 @@ begin
     where Detalle_Pedido.ID_Pedido = pedido AND Detalle_Pedido.ID_Articulo = Articulo;
 end$$
 
+Create PROCEDURE EncolarPedido(in pedido int)
+begin
+	update Pedido
+    set Pedido.EnCola = 1
+    where Pedido.id = pedido;
+end$$
 create procedure AgregarArticuloAPedido(in Articulo int, in Pedido int, in Cantidad int,in obs varchar(255))
 begin
 	INSERT INTO Detalle_Pedido(ID_Articulo, ID_Pedido, cantidad, Observaciones)
@@ -49,6 +56,13 @@ begin
 	UPDATE Pedido
     set Pedido.cocinado = 1
     where Pedido.id = pedido;
+end$$
+
+create procedure FaltaIngrediente(in inArticulo int)
+begin
+	update Articulo
+    set Articulo.Disponibilidad = 0
+    where Articulo.ID = inArticulo;
 end$$
 
 
