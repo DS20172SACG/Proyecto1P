@@ -22,8 +22,7 @@ public class ControlMesero implements Controlador {
         ventana = new VistaMesero();
         this.mesero = mesero;
         this.mesero.setControl(this);
-    }
-    
+    } 
     
     @Override
     public void actionPerformed(ActionEvent e) {

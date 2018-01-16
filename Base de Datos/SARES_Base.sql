@@ -88,6 +88,7 @@ CREATE TABLE Pedido (
     enPreparacion boolean not null,
     cocinado boolean not null,
     entregado boolean not null,
+    horaIngreso time not null,
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
     idCocinero varchar(10) not null,
