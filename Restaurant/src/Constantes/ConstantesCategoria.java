@@ -17,5 +17,6 @@ public class ConstantesCategoria {
     public static final int BEBIDAREFRESCO = 4;
     public static final int BEBIDANATURAL = 5;
     public static final int BEBIDAARTIFICIAL = 6;
+    public static final int COMBO = 7;
     
 }

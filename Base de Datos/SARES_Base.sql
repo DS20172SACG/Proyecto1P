@@ -68,7 +68,7 @@ CREATE TABLE Categoria_Articulo(
 
 CREATE TABLE Articulo(
 
-	ID int NOT NULL,
+	ID int NOT NULL auto_increment,
     Nombre VARCHAR(255),
     Descripcion VARCHAR(255),
     
@@ -80,6 +80,16 @@ CREATE TABLE Articulo(
     
     PRIMARY KEY (ID),
     FOREIGN KEY (Idcategoria) references Categoria_Articulo(ID)
+);
+
+create table ArticulosCombos(
+	id int not null auto_increment,
+    idCombo int not null,
+    idArticulo int not null,
+    
+    primary key (id),
+    foreign key (idCombo) references Articulo(ID),
+    foreign key (idArticulo) references Articulo(ID)
 );
 
 CREATE TABLE Pedido (

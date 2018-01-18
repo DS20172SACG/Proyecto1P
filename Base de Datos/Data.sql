@@ -14,7 +14,8 @@ VALUES	(1, 'Entrada'),
         (3, 'Postre'), 
         (4, 'Refresco'), 
         (5, 'Natural'),
-        (6, 'Artificial');
+        (6, 'Artificial'),
+        (7, 'Combo');
 
 INSERT INTO TipoDePago (ID, Tipo) 
 VALUES 	(1, 'Efectivo'),  
@@ -50,11 +51,17 @@ VALUES 	('0900000000', 'Luis', 'Arizaga', 23, 500, 1, 'admin', 0),
         ('0981237645', 'Jose Jose', 'Primero Segundo', 19, 300, 3, 'elmesero2', 0),
         ('0987612345', 'Leonardo', 'Velez', 23, 325, 5, 'elcajero', 0);
 
-INSERT INTO Articulo (ID, Nombre, Descripcion, Precio, Disponibilidad, TiempoPreparacion, Idcategoria, eliminado) 
-VALUES 	(1, 'limonada', 'jarra de limonada ', 4, 1, 3, 5, 0),
-		(2, 'Jugo de Durazno', 'Jugo Artificial', 1, 1, 0, 6, 0),
-		(3, 'Patacones', 'patacones con queso', 2, 1, 4, 1, 0),
-        (4, 'seco de pollo', 'seco de pollo', 4, 1, 10, 2, 0),
-        (5, 'Arroz marinero', 'arroz marinero', 7, 1, 13, 2, 0),
-        (6, 'tres leches', 'tres leches', 3, 1, 4, 3, 0);
+INSERT INTO Articulo (Nombre, Descripcion, Precio, Disponibilidad, TiempoPreparacion, Idcategoria, eliminado) 
+VALUES 	('limonada', 'jarra de limonada ', 4, 1, 3, 5, 0),
+		('Jugo de Durazno', 'Jugo Artificial', 1, 1, 0, 6, 0),
+		('Patacones', 'patacones con queso', 2, 1, 4, 1, 0),
+        ('seco de pollo', 'seco de pollo', 4, 1, 10, 2, 0),
+        ('Arroz marinero', 'arroz marinero', 7, 1, 13, 2, 0),
+        ('tres leches', 'tres leches', 3, 1, 4, 3, 0),
+        ('Flan','Flan de vainilla preparado con las mejores esencias', 1, 1, 2, 3, 0),
+        ('Almuerzo Playero','Contiene Arroz Marinero, limonada, y un suculento flan', 10, 1, 19, 7, 0);
 
+INSERT INTO ArticulosCombos (idCombo,idArticulo)
+values (8,5),
+       (8,1),
+       (8,7);
