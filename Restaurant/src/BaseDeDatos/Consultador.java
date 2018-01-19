@@ -85,5 +85,39 @@ public class Consultador {
         return resultado;
     }
     
+    public String descripcionDeArticuloPorNombre(String nombre){
+        if(nombre.isEmpty()) return "";
+        cadenaDeLlamada = "{CALL cargarDescripcionArticuloPorNombre(?)}";
+        String retorno = "";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
+            resultado = llamada.executeQuery();
+            if(resultado.isBeforeFirst()){
+                resultado.next();
+                retorno = resultado.getString(1);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return retorno;
+    }
     
+    public double precioDeArticuloPorNombre(String nombre){
+        if(nombre.isEmpty()) return 0;
+        cadenaDeLlamada = "{CALL cargarPrecioArticuloPorNombre(?)}";
+        double retorno = 0;
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
+            resultado = llamada.executeQuery();
+            if(resultado.isBeforeFirst()){
+                resultado.next();
+                retorno = resultado.getDouble(1);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return retorno;
+    }
 }

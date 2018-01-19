@@ -36,11 +36,7 @@ public class ControlMesero implements Controlador {
         }else if(e.getSource().equals(ventana.getjRadioButton3())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOPOSTRE), ventana.getjComboBox1());
         }else if(e.getSource().equals(ventana.getjRadioButton4())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.COMBO), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjRadioButton5())){
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton6())){
-            
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.COMBO), ventana.getjComboBox1()); 
         }else if(e.getSource().equals(ventana.getjRadioButton7())){
             
         }else if(e.getSource().equals(ventana.getjRadioButton8())){
@@ -49,16 +45,16 @@ public class ControlMesero implements Controlador {
             
         }else if(e.getSource().equals(ventana.getjRadioButton10())){
             
-        }else if(e.getSource().equals(ventana.getjRadioButton11())){
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton12())){
-            
         }else if(e.getSource().equals(ventana.getjRadioButton13())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAREFRESCO), ventana.getjComboBox3());
         }else if(e.getSource().equals(ventana.getjRadioButton14())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDANATURAL), ventana.getjComboBox1());
         }else if(e.getSource().equals(ventana.getjRadioButton15())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAARTIFICIAL), ventana.getjComboBox1());
+        }else if(e.getSource().equals(ventana.getjComboBox1())){
+            String texto = String.valueOf(ventana.getjComboBox1().getSelectedItem());
+            ventana.getjTextArea1().setText(Consultador.getInstancia().descripcionDeArticuloPorNombre(texto));
+            ventana.getjTextField2().setText(Double.toString(Consultador.getInstancia().precioDeArticuloPorNombre(texto)));
         }
     }
     

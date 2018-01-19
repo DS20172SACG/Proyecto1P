@@ -109,6 +109,18 @@ begin
     where IdCategoria = categoria and eliminado = 0;
 end$$
 
+create procedure cargarDescripcionArticuloPorNombre(in nombreArticulo varchar(255))
+begin
+	select Descripcion
+    from Articulo
+    where Nombre = nombreArticulo;
+end$$
 
+create procedure cargarPrecioArticuloPorNombre(in nombreArticulo varchar(255))
+begin
+	select Precio
+    from Articulo
+    where Nombre = nombreArticulo;
+end$$
 delimiter ;
 

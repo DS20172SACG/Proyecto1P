@@ -50,6 +50,7 @@ public class ControlLogin implements ActionListener, Controlador{
             usuario.setUsuario(ventana.getTextUsuario());
             usuario.setContrasena(ventana.getTextContraseña());
             usuario.iniciarSesion();
+            ventana.dispose();
         }
     }
     

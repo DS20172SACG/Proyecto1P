@@ -67,5 +67,4 @@ begin
     where Articulo.ID = inArticulo;
 end$$
 
-
 delimiter ;
