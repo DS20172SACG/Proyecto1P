@@ -300,7 +300,7 @@ public class VistaMesero extends javax.swing.JFrame {
                         .addComponent(jTextField2)))
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(200, 200, 200)
+                .addGap(245, 245, 245)
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -328,9 +328,9 @@ public class VistaMesero extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jToggleButton1)
-                .addGap(12, 12, 12))
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Comidas", jPanel5);
