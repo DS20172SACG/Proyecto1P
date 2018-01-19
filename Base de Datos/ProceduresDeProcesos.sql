@@ -32,6 +32,7 @@ begin
     set Pedido.EnCola = 1
     where Pedido.id = pedido;
 end$$
+
 create procedure AgregarArticuloAPedido(in Articulo int, in Pedido int, in Cantidad int,in obs varchar(255))
 begin
 	INSERT INTO Detalle_Pedido(ID_Articulo, ID_Pedido, cantidad, Observaciones)
@@ -44,6 +45,7 @@ begin
     set Detalle_Pedido.cantidad = cantidad, Detalle_Pedido.Observaciones = Obs
     where Detalle_Pedido.ID_Articulo=Articulo AND Detalle_Pedido.ID_Pedido = Pedido;
 end$$
+
 CREATE procedure AceptarPedido(in pedido int, in id int)
 begin
 	update Pedido

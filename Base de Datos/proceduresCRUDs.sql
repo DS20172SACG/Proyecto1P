@@ -101,5 +101,14 @@ create procedure VerMesas()
 begin
 	select * from Mesa;
 end$$
+
+create procedure cargarArticuloPorCategoria(in categoria int)
+begin
+	select *
+    from Articulo
+    where IdCategoria = categoria and eliminado = 0;
+end$$
+
+
 delimiter ;
 

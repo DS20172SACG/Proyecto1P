@@ -131,7 +131,6 @@ CREATE TABLE MesaPedido(
     idMesa int not null,
     idPedido int not null,
     
-    
     primary key (id),
     foreign key (idMesa) references Mesa(idMesa),
     foreign key (idPedido) references Pedido(id)

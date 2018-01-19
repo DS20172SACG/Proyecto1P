@@ -73,4 +73,17 @@ public class Consultador {
         return resultado;
     }
     
+    public ResultSet cargarArticulosPorCategoria(int categoria){
+        cadenaDeLlamada = "{CALL cargarArticuloPorCategoria(?)}";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, categoria);
+            resultado = llamada.executeQuery();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return resultado;
+    }
+    
+    
 }
