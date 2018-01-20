@@ -23,7 +23,7 @@ public class Mesero extends Personal implements Observador{
         control = new ControlMesero(this);
     }
     
-    public void IngresarPedido(String idPedido,int tipoCola){
+    public void ingresarPedido(String idPedido,int tipoCola){
         //cola.add(idPedido);
         
         if(tipoCola==COLAPREFERENCIAL){
@@ -37,6 +37,9 @@ public class Mesero extends Personal implements Observador{
     @Override
     public void ActualizarPedido() {
         System.out.println("El pedido ha sido puesto en la cola para ser preparado");
+    }
+    
+    public void ingresarPedidoPresencial(){
     }
     
 }

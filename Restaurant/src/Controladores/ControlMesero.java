@@ -106,11 +106,8 @@ public class ControlMesero implements Controlador {
         detalle.setNumDetalle(detallePedidoNuevo.size()+1);
         detallePedidoNuevo.add(detalle);
         DefaultTableModel dm = (DefaultTableModel) ventana.getjTable1().getModel();
-        dm.addRow(new Object[]{detalle.getNumDetalle(),detalle.getNombreArticulo(),detalle.getCantidad(),detalle.getPrecioArticulo()});     
-        
+        dm.addRow(new Object[]{detalle.getNumDetalle(),detalle.getNombreArticulo(),detalle.getCantidad(),detalle.getPrecioArticulo()});
     }
     
-    private void ingresarPedidoPresencial(){
-        
-    }
+    
 }

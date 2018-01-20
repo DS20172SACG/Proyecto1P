@@ -8,6 +8,9 @@ package BaseDeDatos;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restaurant.Personal.*;
 
 /**
@@ -119,5 +122,21 @@ public class Consultador {
             System.out.println(ex.getMessage());
         }
         return retorno;
+    }
+
+    public LinkedList<String> nombresMesas(){
+        LinkedList<String> mesas = new LinkedList<>();
+        cadenaDeLlamada = "{CALL cargarNombresMesas()}";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            resultado = llamada.executeQuery();
+            if(resultado.isBeforeFirst()){
+                resultado.next();
+                mesas.add(resultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mesas;
     }
 }
