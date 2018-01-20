@@ -178,6 +178,52 @@ public class Consultador {
         }
         return idMesa;
     }
+    public ArrayList<String> cargarListaPedidosNoPagados(){
+        cadenaDeLlamada = "{CALL cargarListaIdPedidosNoPagados}";
+        resultado = null;
+        ArrayList<String> Id_pedidos= new ArrayList<>();
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            resultado = llamada.executeQuery();
+            
+            while(resultado.next())
+            {
+                Id_pedidos.add(resultado.getString(1));
+                
+
+            }
+            
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            
+        }
+        return Id_pedidos;
+    }
+    public String generarDetalleFactura(String Id_Pedido){
+        cadenaDeLlamada = "{CALL cargarInfoPedido(?)}";
+        float total = 0;
+        resultado = null;
+        String result = "Cod.   Articulo\tCant.   Precio";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, Id_Pedido);
+            resultado = llamada.executeQuery();
+            while(resultado.next()){
+                result += String.format("\n%-7s %-8s\t %-8d %-6.2f", 
+                                        resultado.getString(1), resultado.getString(2), 
+                                        resultado.getInt(3), resultado.getFloat(4));
+                total += resultado.getFloat(4);
+                
+            }
+            
+            
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        result += String.format("\nTOTAL %#25.2f", total);
+        return result;
+        
+    }
     
 }
 
