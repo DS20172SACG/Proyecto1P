@@ -105,14 +105,14 @@ CREATE TABLE Pedido (
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
     idCocinero varchar(10) not null,
-    idMesa int not null,
     
     PRIMARY KEY (id),
     FOREIGN KEY (idCliente) REFERENCES Cliente(cedula),
     FOREIGN KEY (idMesero) REFERENCES Personal(cedula),
-    FOREIGN KEY (idCocinero) REFERENCES Personal(cedula),
-    foreign key (idMesa) references Mesa(idMesa)
+    FOREIGN KEY (idCocinero) REFERENCES Personal(cedula)
 );
+
+
 
 CREATE TABLE Detalle_Pedido(
 

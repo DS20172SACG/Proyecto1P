@@ -123,11 +123,19 @@ begin
     where Nombre = nombreArticulo;
 end$$
 
+CREATE procedure cargarListaClientes()
+begin
+	Select Cliente.cedula, Cliente.FirstName, Cliente.LastName, Cliente.Direccion
+	from Cliente
+    where Cliente.eliminado = 0;
+end$$
+
 create procedure cargarNombresMesas()
 begin
 	select nombreMesa
     from Mesa;
 end$$
+
 
 delimiter ;
 
