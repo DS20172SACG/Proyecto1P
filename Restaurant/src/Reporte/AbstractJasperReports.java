@@ -29,7 +29,7 @@ public class AbstractJasperReports {
             ex.printStackTrace();
         }
     }
-    /*
+    
     public static void createReports(Connection cn,String path, Map parameters) {
         
         try{
@@ -40,7 +40,7 @@ public class AbstractJasperReports {
             ex.printStackTrace();
         }
     }
-*/
+
     public static void showViewer(){
         viewer = new JasperViewer(reportfilled);
         //viewer.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
