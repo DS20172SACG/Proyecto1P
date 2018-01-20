@@ -5,6 +5,8 @@
  */
 package Vistas;
 
+import javax.swing.JTable;
+
 /**
  *
  * @author Usuario
@@ -31,7 +33,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TablaUsuario = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -93,7 +95,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TablaUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,7 +103,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(TablaUsuario);
 
         jLabel2.setText("Nombre");
 
@@ -617,6 +619,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaUsuario;
     private com.toedter.calendar.DateUtil dateUtil1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -669,7 +672,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
@@ -681,4 +683,14 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
+
+    public JTable getTablaUsuario() {
+        return TablaUsuario;
+    }
+
+    public void setTablaUsuario(JTable TablaUsuario) {
+        this.TablaUsuario = TablaUsuario;
+    }
+
+
 }

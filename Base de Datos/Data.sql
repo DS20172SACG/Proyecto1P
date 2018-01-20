@@ -26,14 +26,14 @@ INSERT INTO Ambientes (idAmbiente, nombre, eliminado)
 VALUES 	(1, 'Normal', 0), 
 		(2, 'VIP', 0);
 
-INSERT INTO Mesa (idMesa, asientos, disponibilidad, idAmbiente, eliminado) 
-VALUES 	(1, 2, 1, 1, 0), 
-		(2, 2, 1, 1, 0), 
-		(3, 2, 1, 2, 0), 
-        (4, 4, 1, 1, 0), 
-        (5, 4, 1, 2, 0), 
-        (6, 6, 1, 1, 0), 
-        (7, 8, 1, 1, 0);
+INSERT INTO Mesa (idMesa, nombreMesa, asientos, disponibilidad, idAmbiente, eliminado) 
+VALUES 	(1,'Mesa 1', 2, 1, 1, 0), 
+		(2,'Mesa 2', 2, 1, 1, 0), 
+		(3,'Mesa 3', 2, 1, 2, 0), 
+        (4,'Mesa 4', 4, 1, 1, 0), 
+        (5,'Mesa 5', 4, 1, 2, 0), 
+        (6,'Mesa 6', 6, 1, 1, 0), 
+        (7,'Mesa 7', 8, 1, 1, 0);
 
 INSERT INTO Usuario (usuario, clave, eliminado)
 VALUES 	('admin', 'superclave', 0), 

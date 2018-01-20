@@ -122,5 +122,12 @@ begin
     from Articulo
     where Nombre = nombreArticulo;
 end$$
+
+create procedure cargarNombresMesas()
+begin
+	select nombreMesa
+    from Mesa;
+end$$
+
 delimiter ;
 

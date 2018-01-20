@@ -17,6 +17,8 @@ public class PedidoDomicilio extends Pedido{
         this.direccionEntrega = direccionEntrega;
     }
 
+    
+
     public PedidoDomicilio(String direccionEntrega, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
         this.direccionEntrega = direccionEntrega;

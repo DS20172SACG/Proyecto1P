@@ -49,7 +49,7 @@ public class ControlAdministrador implements Controlador {
         modo.addColumn("Sueldo");
         modo.addColumn("Id Cargo");
         modo.addColumn("Usuario");
-        VistaAdministrador.TablaUsuario.setModel(modo);
+        ventana.getTablaUsuario().setModel(modo);
         
         String sql="SELECT * FROM Personal";
         String datos[] = new String[7];
@@ -67,7 +67,7 @@ public class ControlAdministrador implements Controlador {
                 datos[6]=rs.getString(7);
                 modo.addRow(datos);
             }
-            VistaAdministrador.TablaUsuario.setModel(modo);
+            ventana.getTablaUsuario().setModel(modo);
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de personal por usuario");
         

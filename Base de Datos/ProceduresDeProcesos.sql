@@ -2,7 +2,7 @@ use SARES;
 
 delimiter $$
 
-create procedure NuevoPedido(in cliente varchar(10), in mesero varchar(10), in mesa int, out NuevoPedido int)
+create procedure NuevoPedidoPresencial(in cliente varchar(10), in mesero varchar(10), in mesa int, out NuevoPedido int)
 begin
 	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, idCliente, idMesero) 
     VALUES (0, 0, 0, 0, 0, cliente, mesero);
@@ -10,8 +10,22 @@ begin
     SELECT LAST_INSERT_ID() into NuevoPedido;
     
     Insert INTO MesaPedido(idMesa, idPedido)
-    values(mesa, NuevoPedido);
+	values(mesa, NuevoPedido);
+end$$
+
+create procedure NuevoPedidoDomicilio(in cliente varchar(10), in mesero varchar(10))
+begin
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, idCliente, idMesero) 
+    VALUES (0, 0, 0, 0, 0, cliente, mesero);
     
+    SELECT LAST_INSERT_ID();
+    
+end$$
+
+create procedure IngresarDetallePedido(in num int, in idPed int, in idArt int, in cant int, in obser int)
+begin
+	INSERT INTO Detalle_Pedido(numDetalle, ID_Pedido, ID_Articulo, cantidad, Observaciones) 
+    VALUES (num, idPed, idArt, cant, obser);
 end$$
 
 create procedure EliminarPedido(in pedido int)

@@ -42,8 +42,6 @@ public abstract class Pedido {
         this.idMesero = idMesero;
         this.idCocinero = idCocinero;
     }
-    
-    
 
     public String getIdPedido() {
         return idPedido;
@@ -108,6 +106,5 @@ public abstract class Pedido {
     public void setIdCocinero(String idCocinero) {
         this.idCocinero = idCocinero;
     }
-    
     
 }
