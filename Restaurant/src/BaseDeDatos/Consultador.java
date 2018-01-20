@@ -5,9 +5,13 @@
  */
 package BaseDeDatos;
 
+import Pagaduria.Cliente;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import restaurant.Personal.*;
 
 /**
@@ -120,4 +124,30 @@ public class Consultador {
         }
         return retorno;
     }
+    
+    public ArrayList<Cliente> obtenerListaClientes(){
+        cadenaDeLlamada = "{CALL cargarListaClientes}";
+        resultado = null;
+        ArrayList<Cliente> clientes = new ArrayList();
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            resultado = llamada.executeQuery();
+            
+            while(resultado.next())
+            {
+                Cliente cliente = new Cliente(  resultado.getString(1),
+                                                resultado.getString(2),
+                                                resultado.getString(3),
+                                                resultado.getString(4));
+                clientes.add(cliente); 
+
+            }
+            
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            
+        }
+        return clientes;
+    }
 }
+

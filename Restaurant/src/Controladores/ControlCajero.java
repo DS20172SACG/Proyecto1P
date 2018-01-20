@@ -7,6 +7,10 @@ package Controladores;
 
 import Vistas.VistaCajero;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import restaurant.Personal.Cajero;
 
 /**
@@ -22,16 +26,42 @@ public class ControlCajero implements Controlador {
         ventana = new VistaCajero();
         this.cajero = cajero;
         this.cajero.setControl(this);
+        addListeners();
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void presentarVista() {
         ventana.setVisible(true);
     }
+    
+    public void addListeners(){
+        ventana.getjButton3().addActionListener(this);
+        ventana.getjList1().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                ventana.getjTextField1().setText(ventana.getjList1().getSelectedValue().getCedula());
+                ventana.getjTextField3().setText(ventana.getjList1().getSelectedValue().getNombre());
+                ventana.getjTextField4().setText(ventana.getjList1().getSelectedValue().getApellido());
+                ventana.getjTextField5().setText(ventana.getjList1().getSelectedValue().getDireccion());
+                
+            }
+        });
+        
+        ventana.getjButton3().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actualizar cliente.
+            }
+        });
+        
+        
+    }
+    
+    
     
 }

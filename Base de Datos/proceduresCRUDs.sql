@@ -122,5 +122,13 @@ begin
     from Articulo
     where Nombre = nombreArticulo;
 end$$
+
+delimiter $$
+CREATE procedure cargarListaClientes()
+begin
+	Select Cliente.cedula, Cliente.FirstName, Cliente.LastName, Cliente.Direccion
+	from Cliente
+    where Cliente.eliminado = 0;
+end$$
 delimiter ;
 
