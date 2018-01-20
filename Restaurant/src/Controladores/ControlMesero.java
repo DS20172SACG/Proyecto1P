@@ -8,6 +8,7 @@ package Controladores;
 import BaseDeDatos.Consultador;
 import Constantes.ConstantesCategoria;
 import Pedidos.DetallePedido;
+import Pedidos.PedidoPresencial;
 import Vistas.VistaMesero;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
@@ -22,13 +23,12 @@ public class ControlMesero implements Controlador {
 
     private VistaMesero ventana;
     private Mesero mesero;
-    private LinkedList<DetallePedido> detallePedidoNuevo;
 
     public ControlMesero(Mesero mesero) {
         ventana = new VistaMesero();
+        ventana.colocarNombresMesas(Consultador.getInstancia().nombresMesas());
         this.mesero = mesero;
         this.mesero.setControl(this);
-        detallePedidoNuevo = new LinkedList<>();
         addListeners();
     } 
     
@@ -65,6 +65,18 @@ public class ControlMesero implements Controlador {
                 agregarDetallePedidoNuevo();
                 ventana.limpiarParteIngresoDetalle();
             };
+        }else if(e.getSource().equals(ventana.getjButton1())){
+            if(ventana.getjRadioButton16().isSelected()){
+                
+            }else if(ventana.getjRadioButton17().isSelected()){
+                
+            }
+        }else if(e.getSource().equals(ventana.getjRadioButton16())){
+            ventana.getjComboBox4().setEnabled(true);
+            ventana.getjTextField14().setEnabled(false);
+        }else if(e.getSource().equals(ventana.getjRadioButton17())){
+            ventana.getjComboBox4().setEnabled(false);
+            ventana.getjTextField14().setEnabled(false);
         }
     }
     
@@ -73,7 +85,7 @@ public class ControlMesero implements Controlador {
         ventana.setVisible(true);
     }
     
-    public void addListeners(){
+    private void addListeners(){
         ventana.getjRadioButton1().addActionListener(this);
         ventana.getjRadioButton2().addActionListener(this);
         ventana.getjRadioButton3().addActionListener(this);
@@ -89,8 +101,11 @@ public class ControlMesero implements Controlador {
         ventana.getjRadioButton13().addActionListener(this);
         ventana.getjRadioButton14().addActionListener(this);
         ventana.getjRadioButton15().addActionListener(this);
+        ventana.getjRadioButton16().addActionListener(this);
+        ventana.getjRadioButton17().addActionListener(this);
         ventana.getjComboBox1().addActionListener(this);
         ventana.getjButton9().addActionListener(this);
+        
     }
     
     private boolean validarIngresoDetalle(){
@@ -103,11 +118,18 @@ public class ControlMesero implements Controlador {
         detalle.setPrecioArticulo(Double.parseDouble(ventana.getjTextField2().getText()));
         detalle.setCantidad(Integer.parseInt(ventana.getjTextField3().getText()));
         detalle.setObservaciones(ventana.getjTextArea2().getText());
-        detalle.setNumDetalle(detallePedidoNuevo.size()+1);
-        detallePedidoNuevo.add(detalle);
+        detalle.setNumDetalle(mesero.getDetallePedidoNuevo().size()+1);
+        mesero.getDetallePedidoNuevo().add(detalle);
         DefaultTableModel dm = (DefaultTableModel) ventana.getjTable1().getModel();
         dm.addRow(new Object[]{detalle.getNumDetalle(),detalle.getNombreArticulo(),detalle.getCantidad(),detalle.getPrecioArticulo()});
     }
     
+    public PedidoPresencial generarPedidoPresencial(){
+        return new PedidoPresencial(
+            Consultador.getInstancia().idMesaPorNombre(String.valueOf(ventana.getjComboBox4().getSelectedItem())),
+            mesero.totalDetalle(),
+            ventana.getjTextField1().getText(),
+            mesero.getIdentificacion());
+    }
     
 }

@@ -5,10 +5,14 @@
  */
 package restaurant.Personal;
 
+import BaseDeDatos.Escritor;
 import Constantes.ConstantesTipoPersonal;
 import restaurant.ColasPedidos;
 import static Constantes.TipoCola.*;
 import Controladores.ControlMesero;
+import Pedidos.DetallePedido;
+import Pedidos.PedidoPresencial;
+import java.util.LinkedList;
 
 /**
  *
@@ -16,11 +20,21 @@ import Controladores.ControlMesero;
  */
 public class Mesero extends Personal implements Observador{
     ColasPedidos cola= ColasPedidos.getInstancia();
+    private LinkedList<DetallePedido> detallePedidoNuevo;
 
     public Mesero(String identificacion, String nombres, String apellidos, int Edad, double sueldo, String usuario) {
         super(identificacion, nombres, apellidos, Edad, sueldo, usuario);
         this.tipoPersonal = ConstantesTipoPersonal.MESERO;
         control = new ControlMesero(this);
+        detallePedidoNuevo = new LinkedList<>();
+    }
+
+    public LinkedList<DetallePedido> getDetallePedidoNuevo() {
+        return detallePedidoNuevo;
+    }
+
+    public void setDetallePedidoNuevo(LinkedList<DetallePedido> detallePedidoNuevo) {
+        this.detallePedidoNuevo = detallePedidoNuevo;
     }
     
     public void ingresarPedido(String idPedido,int tipoCola){
@@ -39,7 +53,20 @@ public class Mesero extends Personal implements Observador{
         System.out.println("El pedido ha sido puesto en la cola para ser preparado");
     }
     
-    public void ingresarPedidoPresencial(){
+    public double totalDetalle(){
+        double total = 0;
+        for(DetallePedido detalle : detallePedidoNuevo){
+            total += detalle.getPrecioArticulo()*detalle.getCantidad();
+        }
+        return total;
     }
+    
+    public void ingresarPedidoPresencial(PedidoPresencial pedido){
+        pedido.setIdPedido(Escritor.ingresarPedidoPresencial(pedido));
+        for(DetallePedido d : detallePedidoNuevo) d.setIdPedido(pedido.getIdPedido());
+        Escritor.ingresarDetallePedido(detallePedidoNuevo);
+        detallePedidoNuevo.clear();
+    }
+    
     
 }

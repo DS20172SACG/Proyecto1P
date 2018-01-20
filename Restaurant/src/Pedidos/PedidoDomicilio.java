@@ -12,14 +12,14 @@ package Pedidos;
 public class PedidoDomicilio extends Pedido{
     private String direccionEntrega;
 
-    public PedidoDomicilio(String direccionEntrega, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
+    public PedidoDomicilio(String direccionEntrega, int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero);
         this.direccionEntrega = direccionEntrega;
     }
 
     
 
-    public PedidoDomicilio(String direccionEntrega, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+    public PedidoDomicilio(String direccionEntrega, int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
         this.direccionEntrega = direccionEntrega;
     }

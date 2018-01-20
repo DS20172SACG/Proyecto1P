@@ -100,6 +100,7 @@ CREATE TABLE Pedido (
     cocinado boolean not null,
     entregado boolean not null,
     EnCola boolean not null,
+    preferencial boolean not null,
     fecha Date,
     hora time,
     idCliente varchar(10) not null,
@@ -112,7 +113,24 @@ CREATE TABLE Pedido (
     FOREIGN KEY (idCocinero) REFERENCES Personal(cedula)
 );
 
+create table MesaPedido(
+	id int not null auto_increment,
+    idMesa int not null,
+    idPedido int not null,
+    
+    primary key (id),
+    foreign key (idMesa) references Mesa(idMesa),
+    foreign key (idPedido) references Pedido(idPedido)
+);
 
+create table DireccionPedido(
+	id int not null auto_increment,
+    direccion varchar(255) not null,
+    idPedido int not null,
+    
+    primary key (id),
+    foreign key (idPedido) references Pedido(idPedido)
+);
 
 CREATE TABLE Detalle_Pedido(
 

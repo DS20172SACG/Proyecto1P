@@ -82,8 +82,6 @@ public class VistaMesero extends javax.swing.JFrame {
         fdM.setBackground("/Icon_Image/fondo_restaurant.png");
         this.add(fdM, BorderLayout.CENTER);
         this.pack();
-        this.jRadioButton1.setSelected(true);
-        this.jRadioButton16.setSelected(true);
     }
     
 
@@ -920,6 +918,7 @@ public class VistaMesero extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton12ActionPerformed
@@ -1473,6 +1472,18 @@ public class VistaMesero extends javax.swing.JFrame {
     public JButton getjButton9() {
         return jButton9;
     }
+
+    public JRadioButton getjRadioButton16() {
+        return jRadioButton16;
+    }
+
+    public JRadioButton getjRadioButton17() {
+        return jRadioButton17;
+    }
+
+    public JTextField getjTextField14() {
+        return jTextField14;
+    }
     
     public void colocarArticulosEnCombo(ResultSet rs, JComboBox<String> comboBox){
         comboBox.removeAllItems();
@@ -1490,7 +1501,10 @@ public class VistaMesero extends javax.swing.JFrame {
         getjTextArea2().setText("");
     }
     
-    public void cargarNombresMesas(LinkedList<String> nombres){
-        
+    public void colocarNombresMesas(LinkedList<String> nombres){
+        for(String nombre : nombres){
+            jComboBox4.addItem(nombre);
+        }
     }
+    
 }

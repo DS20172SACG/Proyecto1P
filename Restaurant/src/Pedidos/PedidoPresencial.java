@@ -15,16 +15,21 @@ public class PedidoPresencial extends Pedido{
     public PedidoPresencial() {
     }
 
-    public PedidoPresencial(int idMesa, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
+    public PedidoPresencial(int idMesa, int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero);
         this.idMesa = idMesa;
     }
 
-    public PedidoPresencial(int idMesa, String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+    public PedidoPresencial(int idMesa, int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
         this.idMesa = idMesa;
     }
 
+    public PedidoPresencial(int idMesa, double total, String idCliente, String idMesero) {
+        super(total, idCliente, idMesero);
+        this.idMesa = idMesa;
+    }
+    
     public int getIdMesa() {
         return idMesa;
     }

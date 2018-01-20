@@ -40,14 +40,17 @@ public class ColasPedidos extends Observado{
     
     public String atenderPedidoPrioritario(){
         return colaNormal.poll();
-    }  
+    }
+    
     public void AgregarPedidoPorEntregar(String idPedido){
          colaEntrega.offer(idPedido);
          notificarObservadores();
     }
+    
     public String PedidoPorEntregado(){
          return colaEntrega.poll();
     }
+    
     public static ColasPedidos getInstancia(){
         return instancia;
     }

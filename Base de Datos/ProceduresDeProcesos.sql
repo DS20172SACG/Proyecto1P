@@ -2,10 +2,10 @@ use SARES;
 
 delimiter $$
 
-create procedure NuevoPedidoPresencial(in cliente varchar(10), in mesero varchar(10), in mesa int, out NuevoPedido int)
+create procedure NuevoPedidoPresencial(in cliente varchar(10), in mesero varchar(10), in mesa int, in prefe boolean, out NuevoPedido int)
 begin
-	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, idCliente, idMesero) 
-    VALUES (0, 0, 0, 0, 0, cliente, mesero);
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero) 
+    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero);
     
     SELECT LAST_INSERT_ID() into NuevoPedido;
     
@@ -13,13 +13,15 @@ begin
 	values(mesa, NuevoPedido);
 end$$
 
-create procedure NuevoPedidoDomicilio(in cliente varchar(10), in mesero varchar(10))
+create procedure NuevoPedidoDomicilio(in cliente varchar(10), in mesero varchar(10), in dir varchar(255), in prefe boolean, out NuevoPedido int)
 begin
-	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, idCliente, idMesero) 
-    VALUES (0, 0, 0, 0, 0, cliente, mesero);
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero) 
+    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero);
     
-    SELECT LAST_INSERT_ID();
+    SELECT LAST_INSERT_ID() into NuevoPedido;
     
+    insert into DireccionPedido(direccion,idPedido)
+    values(dir,NuevoPedido);
 end$$
 
 create procedure IngresarDetallePedido(in num int, in idPed int, in idArt int, in cant int, in obser int)

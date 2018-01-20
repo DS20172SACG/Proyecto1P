@@ -131,8 +131,7 @@ public class Consultador {
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
             resultado = llamada.executeQuery();
-            if(resultado.isBeforeFirst()){
-                resultado.next();
+            while(resultado.next()){
                 mesas.add(resultado.getString(1));
             }
         } catch (SQLException ex) {
@@ -165,5 +164,20 @@ public class Consultador {
         }
         return clientes;
     }
+    
+    public int idMesaPorNombre(String nombre){
+        int idMesa = 0;
+        cadenaDeLlamada = "{CALL idMesaPorNombre(?)}";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            idMesa = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idMesa;
+    }
+    
 }
 

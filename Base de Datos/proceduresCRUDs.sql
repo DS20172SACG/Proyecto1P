@@ -136,6 +136,12 @@ begin
     from Mesa;
 end$$
 
+create procedure idMesaPorNombre(in nombre varchar(255))
+begin
+	select idMesa
+    from Mesa
+    where nombreMesa = nombre;
+end$$
 
 delimiter ;
 

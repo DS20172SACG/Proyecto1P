@@ -10,11 +10,12 @@ package Pedidos;
  * @author Usuario
  */
 public abstract class Pedido {
-    protected String idPedido;
+    protected int idPedido;
     protected double total;
     protected boolean pagado;
     protected boolean cocinado;
     protected boolean entregado;
+    protected boolean preferencial;
     protected String idCliente;
     protected String idMesero;
     protected String idCocinero; /*Es null hasta que un cocinero cocina el pedido, o el Mesero asigna un cocinero.*/
@@ -22,7 +23,7 @@ public abstract class Pedido {
     public Pedido() {
     }
 
-    public Pedido(String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
+    public Pedido(int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
         this.idPedido = idPedido;
         this.total = total;
         this.pagado = pagado;
@@ -32,7 +33,7 @@ public abstract class Pedido {
         this.idMesero = idMesero; /*No se asigna ningún cocinero cuando recién se crea el pedido*/
     }
 
-    public Pedido(String idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+    public Pedido(int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
         this.idPedido = idPedido;
         this.total = total;
         this.pagado = pagado;
@@ -43,11 +44,18 @@ public abstract class Pedido {
         this.idCocinero = idCocinero;
     }
 
-    public String getIdPedido() {
+    public Pedido(double total, String idCliente, String idMesero) {
+        this.total = total;
+        this.idCliente = idCliente;
+        this.idMesero = idMesero;
+    }
+
+    
+    public int getIdPedido() {
         return idPedido;
     }
 
-    public void setIdPedido(String idPedido) {
+    public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
     }
 
@@ -105,6 +113,14 @@ public abstract class Pedido {
 
     public void setIdCocinero(String idCocinero) {
         this.idCocinero = idCocinero;
+    }
+
+    public boolean isPreferencial() {
+        return preferencial;
+    }
+
+    public void setPreferencial(boolean preferencial) {
+        this.preferencial = preferencial;
     }
     
 }
