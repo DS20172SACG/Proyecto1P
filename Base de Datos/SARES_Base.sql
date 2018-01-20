@@ -41,6 +41,7 @@ CREATE TABLE Ambientes(
 
 CREATE TABLE Mesa(
 	idMesa int not null auto_increment,
+    nombreMesa varchar(255) not null unique,
     asientos int not null,
     disponibilidad boolean not null,
     idAmbiente int not null,
@@ -69,7 +70,7 @@ CREATE TABLE Categoria_Articulo(
 CREATE TABLE Articulo(
 
 	ID int NOT NULL auto_increment,
-    Nombre VARCHAR(255),
+    Nombre VARCHAR(255) not null unique,
     Descripcion VARCHAR(255),
     
     Precio DOUBLE not null,
@@ -104,17 +105,19 @@ CREATE TABLE Pedido (
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
     idCocinero varchar(10) not null,
-    
+    idMesa int not null,
     
     PRIMARY KEY (id),
     FOREIGN KEY (idCliente) REFERENCES Cliente(cedula),
     FOREIGN KEY (idMesero) REFERENCES Personal(cedula),
-    FOREIGN KEY (idCocinero) REFERENCES Personal(cedula)
+    FOREIGN KEY (idCocinero) REFERENCES Personal(cedula),
+    foreign key (idMesa) references Mesa(idMesa)
 );
 
 CREATE TABLE Detalle_Pedido(
 
 	ID_detalle int NOT NULL auto_increment,
+    numDetalle int not null,
     ID_Pedido int NOT NULL,
     ID_Articulo int NOT NULL,
     cantidad int,
@@ -124,16 +127,6 @@ CREATE TABLE Detalle_Pedido(
     PRIMARY KEY (ID_detalle),
     FOREIGN KEY (ID_Pedido) references Pedido(id),
     foreign key (ID_Articulo) references Articulo(ID)
-);
-
-CREATE TABLE MesaPedido(
-	id int not null auto_increment,
-    idMesa int not null,
-    idPedido int not null,
-    
-    primary key (id),
-    foreign key (idMesa) references Mesa(idMesa),
-    foreign key (idPedido) references Pedido(id)
 );
 
 CREATE TABLE TipoDePago(

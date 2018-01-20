@@ -7,8 +7,11 @@ package Controladores;
 
 import BaseDeDatos.Consultador;
 import Constantes.ConstantesCategoria;
+import Pedidos.DetallePedido;
 import Vistas.VistaMesero;
 import java.awt.event.ActionEvent;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
 import restaurant.Personal.Mesero;
 
 /**
@@ -19,11 +22,13 @@ public class ControlMesero implements Controlador {
 
     private VistaMesero ventana;
     private Mesero mesero;
+    private LinkedList<DetallePedido> detallePedidoNuevo;
 
     public ControlMesero(Mesero mesero) {
         ventana = new VistaMesero();
         this.mesero = mesero;
         this.mesero.setControl(this);
+        detallePedidoNuevo = new LinkedList<>();
         addListeners();
     } 
     
@@ -55,6 +60,11 @@ public class ControlMesero implements Controlador {
             String texto = String.valueOf(ventana.getjComboBox1().getSelectedItem());
             ventana.getjTextArea1().setText(Consultador.getInstancia().descripcionDeArticuloPorNombre(texto));
             ventana.getjTextField2().setText(Double.toString(Consultador.getInstancia().precioDeArticuloPorNombre(texto)));
+        }else if(e.getSource().equals(ventana.getjButton9())){
+            if(validarIngresoDetalle()){ 
+                agregarDetallePedidoNuevo();
+                ventana.limpiarParteIngresoDetalle();
+            };
         }
     }
     
@@ -80,6 +90,27 @@ public class ControlMesero implements Controlador {
         ventana.getjRadioButton14().addActionListener(this);
         ventana.getjRadioButton15().addActionListener(this);
         ventana.getjComboBox1().addActionListener(this);
+        ventana.getjButton9().addActionListener(this);
     }
     
+    private boolean validarIngresoDetalle(){
+        return true;
+    }
+    
+    private void agregarDetallePedidoNuevo(){
+        DetallePedido detalle = new DetallePedido();
+        detalle.setNombreArticulo(String.valueOf(ventana.getjComboBox1().getSelectedItem()));
+        detalle.setPrecioArticulo(Double.parseDouble(ventana.getjTextField2().getText()));
+        detalle.setCantidad(Integer.parseInt(ventana.getjTextField3().getText()));
+        detalle.setObservaciones(ventana.getjTextArea2().getText());
+        detalle.setNumDetalle(detallePedidoNuevo.size()+1);
+        detallePedidoNuevo.add(detalle);
+        DefaultTableModel dm = (DefaultTableModel) ventana.getjTable1().getModel();
+        dm.addRow(new Object[]{detalle.getNumDetalle(),detalle.getNombreArticulo(),detalle.getCantidad(),detalle.getPrecioArticulo()});     
+        
+    }
+    
+    private void ingresarPedidoPresencial(){
+        
+    }
 }
