@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import BaseDeDatos.Consultador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -51,17 +52,21 @@ public class VistaCajero extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        AgregarPed = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList<>();
+        QuitarPed = new javax.swing.JButton();
+        FacturarBut = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -80,10 +85,11 @@ public class VistaCajero extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel3.setText("Pedidos A Pagar:");
+        jLabel3.setText("Clientes:");
 
-        jButton4.setText("Agregar pedido a Factura");
+        AgregarPed.setText("Agregar pedidos");
 
+        jTextPane1.setText("Cod.   Articulo\tCant.   Precio");
         jScrollPane1.setViewportView(jTextPane1);
 
         jLabel1.setText("Detalle Factura:");
@@ -97,45 +103,54 @@ public class VistaCajero extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo de Pago:");
 
-        jButton1.setText("Facturar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel4.setText("Descuento(%):");
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, null, 10, 1));
+        jSpinner1.setVerifyInputWhenFocusTarget(false);
+
+        DefaultListModel<String> model = new DefaultListModel<>();
+        jList2.setModel(model);
+        ArrayList<Cliente> clientes = Consultador.getInstancia().obtenerListaClientesPendientes();
+        for (Cliente cliente: clientes){
+            model.addElement(cliente.getCedula());
+        }
+        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(jList2);
+
+        jLabel10.setText("Pedidos Pendientes:");
+
+        DefaultListModel<String> model2 = new DefaultListModel<>();
+        jList3.setModel(model2);
+        jList3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(jList3);
+
+        QuitarPed.setText("Quitar Pedidos");
+        QuitarPed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                QuitarPedActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Descuento(%):");
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            ArrayList<String> strings = Consultador.getInstancia().cargarListaPedidosNoPagados();
-            public int getSize() { return strings.size(); }
-            public String getElementAt(int i) { return strings.get(i); }
-        });
-        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane4.setViewportView(jList2);
+        FacturarBut.setText("Facturar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(AgregarPed, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(220, 220, 220)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(122, 122, 122)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(QuitarPed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(91, 91, 91)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(30, 30, 30)
@@ -144,36 +159,46 @@ public class VistaCajero extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
-                .addContainerGap(125, Short.MAX_VALUE))
+                    .addComponent(FacturarBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(130, 130, 130)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
+                .addContainerGap(105, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
-                        .addComponent(jButton1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addGap(29, 29, 29)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel10))
                         .addGap(29, 29, 29)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton4)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52)
+                                .addComponent(FacturarBut))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane4)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(AgregarPed)
+                                    .addComponent(QuitarPed))))))
                 .addGap(141, 141, 141))
         );
 
@@ -243,7 +268,7 @@ public class VistaCajero extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -321,10 +346,6 @@ public class VistaCajero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
@@ -344,6 +365,10 @@ public class VistaCajero extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void QuitarPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitarPedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_QuitarPedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,12 +406,14 @@ public class VistaCajero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton AgregarPed;
+    private javax.swing.JButton FacturarBut;
+    private javax.swing.JButton QuitarPed;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -397,10 +424,12 @@ public class VistaCajero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<Cliente> jList1;
     private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -411,21 +440,31 @@ public class VistaCajero extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
-
-    public JButton getjButton1() {
-        return jButton1;
+    private DefaultListModel model = new DefaultListModel();
+    public JButton getAgregarPed() {
+        return AgregarPed;
     }
 
-    public JList<String> getjList2() {
-        return jList2;
+    public void setAgregarPed(JButton AgregarPed) {
+        this.AgregarPed = AgregarPed;
     }
 
-    public void setjList2(JList<String> jList2) {
-        this.jList2 = jList2;
+    
+
+    public JButton getFacturarBut() {
+        return FacturarBut;
     }
 
-    public void setjButton1(JButton jButton1) {
-        this.jButton1 = jButton1;
+    public void setFacturarBut(JButton FacturarBut) {
+        this.FacturarBut = FacturarBut;
+    }
+
+    public JButton getQuitarPed() {
+        return QuitarPed;
+    }
+
+    public void setQuitarPed(JButton QuitarPed) {
+        this.QuitarPed = QuitarPed;
     }
 
     public JButton getjButton2() {
@@ -444,14 +483,6 @@ public class VistaCajero extends javax.swing.JFrame {
         this.jButton3 = jButton3;
     }
 
-    public JButton getjButton4() {
-        return jButton4;
-    }
-
-    public void setjButton4(JButton jButton4) {
-        this.jButton4 = jButton4;
-    }
-
     public JComboBox<String> getjComboBox1() {
         return jComboBox1;
     }
@@ -466,6 +497,14 @@ public class VistaCajero extends javax.swing.JFrame {
 
     public void setjLabel1(JLabel jLabel1) {
         this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel10() {
+        return jLabel10;
+    }
+
+    public void setjLabel10(JLabel jLabel10) {
+        this.jLabel10 = jLabel10;
     }
 
     public JLabel getjLabel2() {
@@ -540,6 +579,22 @@ public class VistaCajero extends javax.swing.JFrame {
         this.jList1 = jList1;
     }
 
+    public JList<String> getjList2() {
+        return jList2;
+    }
+
+    public void setjList2(JList<String> jList2) {
+        this.jList2 = jList2;
+    }
+
+    public JList<String> getjList3() {
+        return jList3;
+    }
+
+    public void setjList3(JList<String> jList3) {
+        this.jList3 = jList3;
+    }
+
     public JPanel getjPanel1() {
         return jPanel1;
     }
@@ -572,15 +627,21 @@ public class VistaCajero extends javax.swing.JFrame {
         this.jScrollPane2 = jScrollPane2;
     }
 
-    public JTextPane getjTextPane1() {
-        return jTextPane1;
+    public JScrollPane getjScrollPane3() {
+        return jScrollPane3;
     }
 
-    public void setjTextPane1(JTextPane jTextPane1) {
-        this.jTextPane1 = jTextPane1;
+    public void setjScrollPane3(JScrollPane jScrollPane3) {
+        this.jScrollPane3 = jScrollPane3;
     }
 
-    
+    public JScrollPane getjScrollPane4() {
+        return jScrollPane4;
+    }
+
+    public void setjScrollPane4(JScrollPane jScrollPane4) {
+        this.jScrollPane4 = jScrollPane4;
+    }
 
     public JSpinner getjSpinner1() {
         return jSpinner1;
@@ -597,8 +658,6 @@ public class VistaCajero extends javax.swing.JFrame {
     public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
         this.jTabbedPane1 = jTabbedPane1;
     }
-
-    
 
     public JTextField getjTextField1() {
         return jTextField1;
@@ -640,6 +699,12 @@ public class VistaCajero extends javax.swing.JFrame {
         this.jTextField5 = jTextField5;
     }
 
-    
-   
+    public JTextPane getjTextPane1() {
+        return jTextPane1;
+    }
+
+    public void setjTextPane1(JTextPane jTextPane1) {
+        this.jTextPane1 = jTextPane1;
+    }
+
 }

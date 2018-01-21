@@ -11,6 +11,6 @@ package Pagaduria;
  */
 public interface EstrategiaDePago {
     
-    public void pagar();
+    public void pagar(String cliente, int desc);
     
 }

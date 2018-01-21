@@ -140,6 +140,22 @@ public class Consultador {
         return mesas;
     }
     
+    
+    
+    public int idMesaPorNombre(String nombre){
+        int idMesa = 0;
+        cadenaDeLlamada = "{CALL idMesaPorNombre(?)}";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            idMesa = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idMesa;
+    }
     public ArrayList<Cliente> obtenerListaClientes(){
         cadenaDeLlamada = "{CALL cargarListaClientes}";
         resultado = null;
@@ -165,26 +181,39 @@ public class Consultador {
         return clientes;
     }
     
-    public int idMesaPorNombre(String nombre){
-        int idMesa = 0;
-        cadenaDeLlamada = "{CALL idMesaPorNombre(?)}";
+    public ArrayList<Cliente> obtenerListaClientesPendientes(){
+        cadenaDeLlamada = "{CALL cargarListaClientesPendientes}";
+        resultado = null;
+        ArrayList<Cliente> clientes = new ArrayList();
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
-            llamada.setString(1, nombre);
             resultado = llamada.executeQuery();
-            resultado.next();
-            idMesa = resultado.getInt(1);
-        } catch (SQLException ex) {
-            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+            
+            while(resultado.next())
+            {
+                Cliente cliente = new Cliente(  resultado.getString(1),
+                                                resultado.getString(2),
+                                                resultado.getString(3),
+                                                resultado.getString(4));
+                clientes.add(cliente); 
+
+            }
+            
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            
         }
-        return idMesa;
+        return clientes;
     }
-    public ArrayList<String> cargarListaPedidosNoPagados(){
-        cadenaDeLlamada = "{CALL cargarListaIdPedidosNoPagados}";
+    
+    
+    public ArrayList<String> cargarListaPedidosNoPagadosPorCliente(String id){
+        cadenaDeLlamada = "{CALL cargarListaIdPedidosNoPagados(?)}";
         resultado = null;
         ArrayList<String> Id_pedidos= new ArrayList<>();
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, id);
             resultado = llamada.executeQuery();
             
             while(resultado.next())
@@ -204,7 +233,7 @@ public class Consultador {
         cadenaDeLlamada = "{CALL cargarInfoPedido(?)}";
         float total = 0;
         resultado = null;
-        String result = "Cod.   Articulo\tCant.   Precio";
+        String result = "";
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
             llamada.setString(1, Id_Pedido);
@@ -221,7 +250,7 @@ public class Consultador {
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-        result += String.format("\nTOTAL %#25.2f", total);
+        
         return result;
         
     }
@@ -240,5 +269,7 @@ public class Consultador {
         }
         return idArticulo;
     }
+    
+    
 }
 
