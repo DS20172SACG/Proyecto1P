@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,24 +33,62 @@ public class ControlAdministrador implements Controlador {
         this.administrador = administrador;
         this.administrador.setControl(this);
         this.ventana.MostrarReporte.addActionListener(this);
+        this.ventana.BusquedaPorFiltro.addActionListener(this);
+        this.ventana.BuscarSeleccionFiltro.addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         if(ventana.MostrarReporte==e.getSource()){
-            
-            AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper");
+            Map parameters = new HashMap();
+            if(ventana.RadioBotonPlato.isSelected()){
+                
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
+            if(ventana.RadioBotonMesero.isSelected()){
+                parameters.put("Lastname", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                System.out.println(parameters.get("Lastname"));
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteMesero.jasper",parameters);
+            }
+            if(ventana.RadioBotonAmbiente.isSelected()){
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteCategoria.jasper",parameters);
+            }
+            if(ventana.RadioBotonCategoria.isSelected()){
+                //parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                //AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
             AbstractJasperReports.showViewer();
-           
+            
+        }
+        if(ventana.BusquedaPorFiltro==e.getSource()){
+            if(ventana.RadioBotonPlato.isSelected()){
+                MostrarReportePlatos("Plato");
+            }
+            if(ventana.RadioBotonMesero.isSelected()){
+                MostrarReportePlatos("Mesero");
+            }
+            if(ventana.RadioBotonAmbiente.isSelected()){
+                MostrarReportePlatos("Ambiente");
+            }
+            if(ventana.RadioBotonCategoria.isSelected()){
+                MostrarReportePlatos("Categoria");
+            }
+            VistaAdministrador.ListaPlatosReporte.isSelectedIndex(0);
+        }
+        if(ventana.BuscarSeleccionFiltro==e.getSource()){
+            VistaAdministrador.TextoFiltroSeleccionado.setText(VistaAdministrador.ListaPlatosReporte.getSelectedValue().toString());
+            VistaAdministrador.MostrarReporte.setEnabled(true);
         }
     }
 
     @Override
     public void presentarVista() {
         ventana.setVisible(true);
-        this.ventana.ListaPlatosReporte.setSelectedIndex(1);
+        agregarRadioBotones();
         MostrarUsuarios();
-        MostrarReportePlatos();
+        VistaAdministrador.MostrarReporte.setEnabled(false);
     }
     void MostrarUsuarios(){
         DefaultTableModel modo=new DefaultTableModel();
@@ -83,16 +123,30 @@ public class ControlAdministrador implements Controlador {
         
         } 
     }
-    void MostrarReportePlatos(){
+    void MostrarReportePlatos(String opcion){
         DefaultListModel<String> model = new DefaultListModel<>();
+        String sql;
+        if(opcion.equals("Mesero")){
+            sql="SELECT * FROM personal WHERE idCargo=3";
+        }else if(opcion.equals("Ambiente")){
+            sql="SELECT * FROM ambientes ";
+        }else if(opcion.equals("Categoria")){
+            sql="SELECT * FROM categoria_articulo ";
+        }else{
+            sql="SELECT * FROM articulo";
+        }
         
-        String sql="SELECT * FROM articulo";
         
         try{
             Statement st = Connector.getInstancia().getConnection().createStatement();
             ResultSet rs= st.executeQuery(sql);
             while(rs.next()){
-                model.addElement(rs.getString(2));
+                if(opcion.equals("Mesero")){
+                    model.addElement(rs.getString(3));//para apellido
+                }else{
+                    model.addElement(rs.getString(2));
+                }
+                
                 
             }
             VistaAdministrador.ListaPlatosReporte.setModel(model);
@@ -100,5 +154,11 @@ public class ControlAdministrador implements Controlador {
             JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de articulo");
         
         } 
+    }
+    void agregarRadioBotones(){
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonPlato);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonMesero);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonAmbiente);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonCategoria);
     }
 }

@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import BaseDeDatos.Consultador;
 import Vistas.VistaCajero;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,22 +42,19 @@ public class ControlCajero implements Controlador {
     
     public void addListeners(){
         ventana.getjButton3().addActionListener(this);
-        ventana.getjList1().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                ventana.getjTextField1().setText(ventana.getjList1().getSelectedValue().getCedula());
-                ventana.getjTextField3().setText(ventana.getjList1().getSelectedValue().getNombre());
-                ventana.getjTextField4().setText(ventana.getjList1().getSelectedValue().getApellido());
-                ventana.getjTextField5().setText(ventana.getjList1().getSelectedValue().getDireccion());
-                
-            }
+        ventana.getjList1().addListSelectionListener((ListSelectionEvent e) -> {
+            ventana.getjTextField1().setText(ventana.getjList1().getSelectedValue().getCedula());
+            ventana.getjTextField3().setText(ventana.getjList1().getSelectedValue().getNombre());
+            ventana.getjTextField4().setText(ventana.getjList1().getSelectedValue().getApellido());
+            ventana.getjTextField5().setText(ventana.getjList1().getSelectedValue().getDireccion());
         });
         
-        ventana.getjButton3().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //actualizar cliente.
-            }
+        ventana.getjButton3().addActionListener((ActionEvent e) -> {
+            //actualizar cliente.
+        });
+        
+        ventana.getjList2().addListSelectionListener((ListSelectionEvent e) -> {
+            ventana.getjTextPane1().setText(Consultador.getInstancia().generarDetalleFactura(ventana.getjList2().getSelectedValue()));
         });
         
         

@@ -34,6 +34,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         dateUtil1 = new com.toedter.calendar.DateUtil();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        GrupoRadioBotonesReporte = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -71,11 +72,26 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        MostrarReporte = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jLabel24 = new javax.swing.JLabel();
+        RadioBotonPlato = new javax.swing.JRadioButton();
+        RadioBotonMesero = new javax.swing.JRadioButton();
+        RadioBotonAmbiente = new javax.swing.JRadioButton();
+        RadioBotonCategoria = new javax.swing.JRadioButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         ListaPlatosReporte = new javax.swing.JList<>();
-        MostrarReporte = new javax.swing.JButton();
+        BuscarSeleccionFiltro = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        TextoFiltroSeleccionado = new javax.swing.JTextField();
+        BusquedaPorFiltro = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -322,7 +338,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,12 +364,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Administracion Usuarios", jPanel2);
 
-        jLabel20.setText("Prueba PDF o HTML");
-
-        jLabel21.setText("Seleccione Mesero");
-
-        jScrollPane4.setViewportView(ListaPlatosReporte);
-
         MostrarReporte.setText("Mostrar reporte");
         MostrarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,36 +371,168 @@ public class VistaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jLabel20.setText("Filtrar entre fechas");
+
+        jLabel22.setText("Inicio: ");
+
+        jLabel23.setText("fin");
+
+        jLabel24.setText("Filtrar por ");
+
+        RadioBotonPlato.setText("Plato");
+        RadioBotonPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioBotonPlatoActionPerformed(evt);
+            }
+        });
+
+        RadioBotonMesero.setText("Mesero");
+        RadioBotonMesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioBotonMeseroActionPerformed(evt);
+            }
+        });
+
+        RadioBotonAmbiente.setText("Ambiente");
+        RadioBotonAmbiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioBotonAmbienteActionPerformed(evt);
+            }
+        });
+
+        RadioBotonCategoria.setText("Categoria");
+
+        jScrollPane4.setViewportView(ListaPlatosReporte);
+
+        BuscarSeleccionFiltro.setText("Seleccionar opcion del filtro");
+        BuscarSeleccionFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarSeleccionFiltroActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Opcion Seleccionada");
+
+        TextoFiltroSeleccionado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextoFiltroSeleccionadoActionPerformed(evt);
+            }
+        });
+
+        BusquedaPorFiltro.setText("Buscar");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel24)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addGap(49, 49, 49)
+                                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(RadioBotonPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RadioBotonMesero)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel23)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(RadioBotonAmbiente)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(RadioBotonCategoria)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(BusquedaPorFiltro))))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addComponent(TextoFiltroSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BuscarSeleccionFiltro)
+                .addGap(152, 152, 152))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel22))
+                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RadioBotonPlato)
+                    .addComponent(RadioBotonMesero)
+                    .addComponent(RadioBotonAmbiente)
+                    .addComponent(RadioBotonCategoria)
+                    .addComponent(BusquedaPorFiltro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BuscarSeleccionFiltro)
+                    .addComponent(jLabel21)
+                    .addComponent(TextoFiltroSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jButton12.setText("Extraer a PDF");
+
+        jButton13.setText("Mostrar Grafico");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addContainerGap(184, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel20)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(MostrarReporte)))
-                .addContainerGap(559, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton13)
+                        .addGap(120, 120, 120)
+                        .addComponent(jButton12)
+                        .addGap(115, 115, 115)
+                        .addComponent(MostrarReporte)
+                        .addGap(251, 251, 251))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(185, 185, 185))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(MostrarReporte)))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MostrarReporte)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reportes", jPanel3);
@@ -631,6 +773,26 @@ public class VistaAdministrador extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_MostrarReporteActionPerformed
+
+    private void RadioBotonPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioBotonPlatoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadioBotonPlatoActionPerformed
+
+    private void RadioBotonMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioBotonMeseroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadioBotonMeseroActionPerformed
+
+    private void RadioBotonAmbienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioBotonAmbienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadioBotonAmbienteActionPerformed
+
+    private void TextoFiltroSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextoFiltroSeleccionadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextoFiltroSeleccionadoActionPerformed
+
+    private void BuscarSeleccionFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarSeleccionFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscarSeleccionFiltroActionPerformed
     
     /**
      * @param args the command line arguments
@@ -668,13 +830,23 @@ public class VistaAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton BuscarSeleccionFiltro;
+    public static javax.swing.JButton BusquedaPorFiltro;
+    public static javax.swing.ButtonGroup GrupoRadioBotonesReporte;
     public static javax.swing.JList<String> ListaPlatosReporte;
     public static javax.swing.JButton MostrarReporte;
+    public static javax.swing.JRadioButton RadioBotonAmbiente;
+    public static javax.swing.JRadioButton RadioBotonCategoria;
+    public static javax.swing.JRadioButton RadioBotonMesero;
+    public static javax.swing.JRadioButton RadioBotonPlato;
     public static javax.swing.JTable TablaUsuario;
+    public static javax.swing.JTextField TextoFiltroSeleccionado;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.toedter.calendar.DateUtil dateUtil1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -688,6 +860,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -702,6 +876,9 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -716,6 +893,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;

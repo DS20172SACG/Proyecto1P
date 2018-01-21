@@ -2,9 +2,38 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bf4b1b53-d7cd-4e6f-b0c3-cbd523d27f14">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Nombre" class="java.lang.String">
+		<parameterDescription><![CDATA[Nombre Plato]]></parameterDescription>
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+     detalle_factura.`id_detalle` AS detalle_factura_id_detalle,
+     detalle_factura.`id_factura` AS detalle_factura_id_factura,
+     detalle_factura.`id_pedido` AS detalle_factura_id_pedido,
+     factura.`ID` AS factura_ID,
+     factura.`TOTAL` AS factura_TOTAL,
+     factura.`Fecha` AS factura_Fecha,
+     factura.`Id_cliente` AS factura_Id_cliente,
+     factura.`Descuento` AS factura_Descuento,
+     factura.`TipoDePago` AS factura_TipoDePago,
+     pedido.`id` AS pedido_id,
+     pedido.`pagado` AS pedido_pagado,
+     pedido.`enPreparacion` AS pedido_enPreparacion,
+     pedido.`cocinado` AS pedido_cocinado,
+     pedido.`entregado` AS pedido_entregado,
+     pedido.`EnCola` AS pedido_EnCola,
+     pedido.`fecha` AS pedido_fecha,
+     pedido.`hora` AS pedido_hora,
+     pedido.`idCliente` AS pedido_idCliente,
+     pedido.`idMesero` AS pedido_idMesero,
+     pedido.`idCocinero` AS pedido_idCocinero,
+     detalle_pedido.`ID_detalle` AS detalle_pedido_ID_detalle,
+     detalle_pedido.`ID_Pedido` AS detalle_pedido_ID_Pedido,
+     detalle_pedido.`ID_Articulo` AS detalle_pedido_ID_Articulo,
+     detalle_pedido.`cantidad` AS detalle_pedido_cantidad,
+     detalle_pedido.`Observaciones` AS detalle_pedido_Observaciones,
      articulo.`ID` AS articulo_ID,
      articulo.`Nombre` AS articulo_Nombre,
      articulo.`Descripcion` AS articulo_Descripcion,
@@ -14,8 +43,38 @@
      articulo.`Idcategoria` AS articulo_Idcategoria,
      articulo.`eliminado` AS articulo_eliminado
 FROM
-     `articulo` articulo]]>
+     `factura` factura INNER JOIN `detalle_factura` detalle_factura ON factura.`ID` = detalle_factura.`id_factura`
+     INNER JOIN `pedido` pedido ON detalle_factura.`id_pedido` = pedido.`id`
+     INNER JOIN `detalle_pedido` detalle_pedido ON pedido.`id` = detalle_pedido.`ID_Pedido`
+     INNER JOIN `articulo` articulo ON detalle_pedido.`ID_Articulo` = articulo.`ID`
+WHERE
+     articulo.`Nombre` = $P{Nombre}]]>
 	</queryString>
+	<field name="detalle_factura_id_detalle" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_factura" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_pedido" class="java.lang.Integer"/>
+	<field name="factura_ID" class="java.lang.Integer"/>
+	<field name="factura_TOTAL" class="java.lang.Double"/>
+	<field name="factura_Fecha" class="java.sql.Date"/>
+	<field name="factura_Id_cliente" class="java.lang.String"/>
+	<field name="factura_Descuento" class="java.lang.Integer"/>
+	<field name="factura_TipoDePago" class="java.lang.Integer"/>
+	<field name="pedido_id" class="java.lang.Integer"/>
+	<field name="pedido_pagado" class="java.lang.Boolean"/>
+	<field name="pedido_enPreparacion" class="java.lang.Boolean"/>
+	<field name="pedido_cocinado" class="java.lang.Boolean"/>
+	<field name="pedido_entregado" class="java.lang.Boolean"/>
+	<field name="pedido_EnCola" class="java.lang.Boolean"/>
+	<field name="pedido_fecha" class="java.sql.Date"/>
+	<field name="pedido_hora" class="java.sql.Time"/>
+	<field name="pedido_idCliente" class="java.lang.String"/>
+	<field name="pedido_idMesero" class="java.lang.String"/>
+	<field name="pedido_idCocinero" class="java.lang.String"/>
+	<field name="detalle_pedido_ID_detalle" class="java.lang.Integer"/>
+	<field name="detalle_pedido_ID_Pedido" class="java.lang.Integer"/>
+	<field name="detalle_pedido_ID_Articulo" class="java.lang.Integer"/>
+	<field name="detalle_pedido_cantidad" class="java.lang.Integer"/>
+	<field name="detalle_pedido_Observaciones" class="java.lang.String"/>
 	<field name="articulo_ID" class="java.lang.Integer"/>
 	<field name="articulo_Nombre" class="java.lang.String"/>
 	<field name="articulo_Descripcion" class="java.lang.String"/>
@@ -48,40 +107,72 @@ FROM
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="20" y="2" width="100" height="20" uuid="ffd419b0-7b6b-4af1-adc3-2af9d0d1afd5"/>
-				<text><![CDATA[articulo_ID]]></text>
+				<reportElement x="0" y="0" width="66" height="20" uuid="56bcd386-aedf-4466-8b3e-0ad45e19c779"/>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="147" y="2" width="100" height="20" uuid="fc901e93-ec09-4fea-a53e-b622543a91af"/>
-				<text><![CDATA[articulo_Nombre]]></text>
+				<reportElement x="66" y="0" width="100" height="20" uuid="d7ef0724-bebf-4ba6-8ac6-81c39ce61766"/>
+				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="283" y="2" width="100" height="20" uuid="079e6736-6373-4127-a9c7-af367e80a51a"/>
-				<text><![CDATA[articulo_Descripcion]]></text>
+				<reportElement x="166" y="0" width="66" height="20" uuid="744ff240-5b2a-43d9-b510-b02ab1010c32"/>
+				<text><![CDATA[Disponibilidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="2" width="100" height="20" uuid="953975f3-eeef-4cd9-8a36-e07149a27208"/>
-				<text><![CDATA[articulo_Precio]]></text>
+				<reportElement x="232" y="0" width="90" height="20" uuid="4f542da2-1ee1-4b87-9789-371616a4a1e7"/>
+				<text><![CDATA[Fecha de Pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="0" width="53" height="20" uuid="83f9b0a3-ed24-41d2-a0be-ec666ecb4765"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="0" width="65" height="20" uuid="25b833b8-5276-427a-a9f9-6e104ef9a2d3"/>
+				<text><![CDATA[ID Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="0" width="37" height="20" uuid="f945b5c8-8f4b-4a9a-a7c2-27a1ad9ced8a"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="54" height="20" uuid="4813a01a-0455-4e76-b83f-8b36fa0ad0e4"/>
+				<text><![CDATA[Tipo Pago]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="20" y="28" width="100" height="20" uuid="9cb678b3-197c-4125-98e3-646bd8f94b46"/>
+				<reportElement x="0" y="55" width="66" height="20" uuid="6baa1563-2683-4435-a4ca-d600c86d9576"/>
 				<textFieldExpression><![CDATA[$F{articulo_ID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="147" y="28" width="100" height="20" uuid="d0e8c2bd-d261-4f21-ac27-b253f0e4c46f"/>
+				<reportElement x="66" y="55" width="100" height="20" uuid="853fb707-5c92-4f2c-a7a0-22cb08f781fd"/>
 				<textFieldExpression><![CDATA[$F{articulo_Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="283" y="28" width="100" height="20" uuid="8a69d906-cafa-4246-8c4a-f278581a501c"/>
-				<textFieldExpression><![CDATA[$F{articulo_Descripcion}]]></textFieldExpression>
+				<reportElement x="166" y="55" width="66" height="20" uuid="a020875d-da4b-4a0f-9f86-f713a9a38121"/>
+				<textFieldExpression><![CDATA[$F{articulo_Disponibilidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="423" y="28" width="100" height="20" uuid="656f83fc-0684-4b31-8e86-30dc74a02914"/>
-				<textFieldExpression><![CDATA[$F{articulo_Precio}]]></textFieldExpression>
+				<reportElement x="232" y="55" width="90" height="20" uuid="57f11563-cfad-4b71-a810-1ae122c2c181"/>
+				<textFieldExpression><![CDATA[$F{pedido_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="55" width="53" height="20" uuid="47782104-44df-499a-8074-e58b3e2a0e2e"/>
+				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="55" width="65" height="20" uuid="f3f5e184-add7-48a6-b6fa-8c203febb3a2"/>
+				<textFieldExpression><![CDATA[$F{factura_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="55" width="37" height="20" uuid="a6e6df44-d079-4acc-96da-ad80db66fced"/>
+				<textFieldExpression><![CDATA[$F{factura_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="55" width="54" height="20" uuid="d12a63bd-874e-4916-a244-915b1f35250e"/>
+				<textFieldExpression><![CDATA[$F{factura_TipoDePago}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
