@@ -7,6 +7,8 @@ VALUES 	(1, 'Administrador', 0),
         (4, 'Repartidor', 0), 
         (5, 'Cajero', 0);
 
+insert into Cliente (cedula, lastName, firstName, Direccion, eliminado)
+values ('1234567890', 'probador', 'prueba', 'Lol', false);
 
 INSERT INTO Categoria_Articulo (ID, Nombre) 
 VALUES	(1, 'Entrada'), 

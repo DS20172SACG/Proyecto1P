@@ -4,13 +4,14 @@ delimiter $$
 
 create procedure NuevoPedidoPresencial(in cliente varchar(10), in mesero varchar(10), in mesa int, in prefe boolean, out NuevoPedido int)
 begin
-	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero) 
-    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero);
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero, fecha, hora) 
+    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero, curdate(), curtime());
     
     SELECT LAST_INSERT_ID() into NuevoPedido;
     
     Insert INTO MesaPedido(idMesa, idPedido)
 	values(mesa, NuevoPedido);
+    
 end$$
 
 create procedure NuevoPedidoDomicilio(in cliente varchar(10), in mesero varchar(10), in dir varchar(255), in prefe boolean, out NuevoPedido int)
@@ -20,11 +21,11 @@ begin
     
     SELECT LAST_INSERT_ID() into NuevoPedido;
     
-    insert into DireccionPedido(direccion,idPedido)
+    insert into DireccionPedido(direccion,id)
     values(dir,NuevoPedido);
 end$$
 
-create procedure IngresarDetallePedido(in num int, in idPed int, in idArt int, in cant int, in obser int)
+create procedure IngresarDetallePedido(in num int, in idPed int, in idArt int, in cant int, in obser varchar(255))
 begin
 	INSERT INTO Detalle_Pedido(numDetalle, ID_Pedido, ID_Articulo, cantidad, Observaciones) 
     VALUES (num, idPed, idArt, cant, obser);

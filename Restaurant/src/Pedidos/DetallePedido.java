@@ -5,6 +5,8 @@
  */
 package Pedidos;
 
+import BaseDeDatos.Consultador;
+
 /**
  *
  * @author Usuario

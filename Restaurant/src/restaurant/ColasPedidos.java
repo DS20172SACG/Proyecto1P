@@ -15,39 +15,39 @@ import restaurant.Personal.Observado;
 public class ColasPedidos extends Observado{
     
     private static ColasPedidos instancia = new ColasPedidos();
-    private Queue<String> colaNormal;
-    private Queue<String> colaPrioritaria;
-    private Queue<String> colaEntrega;
+    private Queue<Integer> colaNormal;
+    private Queue<Integer> colaPrioritaria;
+    private Queue<Integer> colaEntrega;
     
     private ColasPedidos(){
         colaNormal = new LinkedList<>();
         colaPrioritaria = new LinkedList<>();
         colaEntrega = new LinkedList<>();
     }    
-    public void agregarPedidoNormal(String idPedido){
+    public void agregarPedidoNormal(int idPedido){
         colaNormal.offer(idPedido);
         notificarObservadores();
     }
     
-    public void agregarPedidoPrioritario(String idPedido){
+    public void agregarPedidoPrioritario(int idPedido){
         colaPrioritaria.offer(idPedido);
         notificarObservadores();
     }
     
-    public String atenderPedidoNormal(){
+    public int atenderPedidoNormal(){
         return colaNormal.poll();
     }
     
-    public String atenderPedidoPrioritario(){
+    public int atenderPedidoPrioritario(){
         return colaNormal.poll();
     }
     
-    public void AgregarPedidoPorEntregar(String idPedido){
+    public void AgregarPedidoPorEntregar(int idPedido){
          colaEntrega.offer(idPedido);
          notificarObservadores();
     }
     
-    public String PedidoPorEntregado(){
+    public int PedidoPorEntregado(){
          return colaEntrega.poll();
     }
     

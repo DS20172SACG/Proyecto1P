@@ -17,10 +17,13 @@ public class PedidoDomicilio extends Pedido{
         this.direccionEntrega = direccionEntrega;
     }
 
-    
-
     public PedidoDomicilio(String direccionEntrega, int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
         super(idPedido, total, pagado, cocinado, entregado, idCliente, idMesero, idCocinero);
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public PedidoDomicilio(String direccionEntrega, double total, String idCliente, String idMesero, boolean preferencial) {
+        super(total, idCliente, idMesero, preferencial);
         this.direccionEntrega = direccionEntrega;
     }
 

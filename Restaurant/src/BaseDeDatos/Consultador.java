@@ -170,6 +170,7 @@ public class Consultador {
         cadenaDeLlamada = "{CALL idMesaPorNombre(?)}";
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
             resultado = llamada.executeQuery();
             resultado.next();
             idMesa = resultado.getInt(1);
@@ -179,5 +180,19 @@ public class Consultador {
         return idMesa;
     }
     
+    public int idArticuloPorNombre(String nombre){
+        int idArticulo = 0;
+        cadenaDeLlamada = "{CALL idArticuloPorNombre(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            idArticulo = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idArticulo;
+    }
 }
 

@@ -44,10 +44,11 @@ public abstract class Pedido {
         this.idCocinero = idCocinero;
     }
 
-    public Pedido(double total, String idCliente, String idMesero) {
+    public Pedido(double total, String idCliente, String idMesero, boolean preferencial) {
         this.total = total;
         this.idCliente = idCliente;
         this.idMesero = idMesero;
+        this.preferencial = preferencial;
     }
 
     

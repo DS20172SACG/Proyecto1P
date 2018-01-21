@@ -35,9 +35,10 @@ public class Escritor {
             llamada.setString(2, pedido.getIdMesero());
             llamada.setInt(3, pedido.getIdMesa());
             llamada.setBoolean(4, pedido.isPreferencial());
-            resultado = llamada.executeQuery();
-            resultado.next();
-            idPedido = resultado.getInt(1);
+            llamada.registerOutParameter(5, java.sql.Types.INTEGER);
+            llamada.executeQuery();
+            idPedido = llamada.getInt(5);
+            System.out.println(idPedido);
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
@@ -50,7 +51,11 @@ public class Escritor {
             try {
                 llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
                 llamada.setInt(1, d.getNumDetalle());
-                llamada.setInt(1, d.getIdPedido());
+                llamada.setInt(2, d.getIdPedido());
+                llamada.setInt(3, d.getIdArticulo());
+                llamada.setInt(4, d.getCantidad());
+                llamada.setString(5,d.getObservaciones());
+                llamada.executeQuery();
             } catch (SQLException ex) {
                 Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
             }

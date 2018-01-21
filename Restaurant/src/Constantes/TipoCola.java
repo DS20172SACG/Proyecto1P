@@ -10,6 +10,6 @@ package Constantes;
  * @author User
  */
 public class TipoCola {
-    public static final int COLANORMAL=1;
-    public static final int COLAPREFERENCIAL=2;
+    public static final int COLANORMAL=0;
+    public static final int COLAPREFERENCIAL=1;
 }

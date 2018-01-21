@@ -105,7 +105,7 @@ CREATE TABLE Pedido (
     hora time,
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
-    idCocinero varchar(10) not null,
+    idCocinero varchar(10),
     
     PRIMARY KEY (id),
     FOREIGN KEY (idCliente) REFERENCES Cliente(cedula),
@@ -120,7 +120,7 @@ create table MesaPedido(
     
     primary key (id),
     foreign key (idMesa) references Mesa(idMesa),
-    foreign key (idPedido) references Pedido(idPedido)
+    foreign key (idPedido) references Pedido(id)
 );
 
 create table DireccionPedido(
@@ -129,7 +129,7 @@ create table DireccionPedido(
     idPedido int not null,
     
     primary key (id),
-    foreign key (idPedido) references Pedido(idPedido)
+    foreign key (idPedido) references Pedido(id)
 );
 
 CREATE TABLE Detalle_Pedido(
@@ -138,7 +138,7 @@ CREATE TABLE Detalle_Pedido(
     numDetalle int not null,
     ID_Pedido int NOT NULL,
     ID_Articulo int NOT NULL,
-    cantidad int,
+    cantidad int not null,
     Observaciones varchar(255),
     
     

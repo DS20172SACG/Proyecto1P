@@ -25,8 +25,8 @@ public class PedidoPresencial extends Pedido{
         this.idMesa = idMesa;
     }
 
-    public PedidoPresencial(int idMesa, double total, String idCliente, String idMesero) {
-        super(total, idCliente, idMesero);
+    public PedidoPresencial(int idMesa, double total, String idCliente, String idMesero, boolean preferencial) {
+        super(total, idCliente, idMesero, preferencial);
         this.idMesa = idMesa;
     }
     

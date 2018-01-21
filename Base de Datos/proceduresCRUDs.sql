@@ -143,5 +143,12 @@ begin
     where nombreMesa = nombre;
 end$$
 
+create procedure idArticuloPorNombre(in art varchar(255))
+begin
+	select id
+    from Articulo
+    where nombre = art;
+end$$
+
 delimiter ;
 

@@ -5,6 +5,7 @@
  */
 package restaurant.Personal;
 
+import BaseDeDatos.Consultador;
 import BaseDeDatos.Escritor;
 import Constantes.ConstantesTipoPersonal;
 import restaurant.ColasPedidos;
@@ -37,7 +38,7 @@ public class Mesero extends Personal implements Observador{
         this.detallePedidoNuevo = detallePedidoNuevo;
     }
     
-    public void ingresarPedido(String idPedido,int tipoCola){
+    public void ingresarPedidoACola(int idPedido,int tipoCola){
         //cola.add(idPedido);
         
         if(tipoCola==COLAPREFERENCIAL){
@@ -63,9 +64,14 @@ public class Mesero extends Personal implements Observador{
     
     public void ingresarPedidoPresencial(PedidoPresencial pedido){
         pedido.setIdPedido(Escritor.ingresarPedidoPresencial(pedido));
-        for(DetallePedido d : detallePedidoNuevo) d.setIdPedido(pedido.getIdPedido());
+        System.out.println(pedido.getIdPedido());
+        for(DetallePedido d : detallePedidoNuevo){
+            d.setIdPedido(pedido.getIdPedido());
+            d.setIdArticulo(Consultador.getInstancia().idArticuloPorNombre(d.getNombreArticulo()));
+        }
         Escritor.ingresarDetallePedido(detallePedidoNuevo);
         detallePedidoNuevo.clear();
+        ingresarPedidoACola(pedido.getIdPedido(), pedido.isPreferencial() ? 1 : 0);
     }
     
     
