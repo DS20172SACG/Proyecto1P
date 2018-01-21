@@ -40,12 +40,27 @@ public class ControlAdministrador implements Controlador {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(ventana.MostrarReporte==e.getSource()){
-            Integer number = 1;
             Map parameters = new HashMap();
-            parameters.put("ID", number);
-            AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            if(ventana.RadioBotonPlato.isSelected()){
+                
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
+            if(ventana.RadioBotonMesero.isSelected()){
+                parameters.put("Lastname", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                System.out.println(parameters.get("Lastname"));
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteMesero.jasper",parameters);
+            }
+            if(ventana.RadioBotonAmbiente.isSelected()){
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteCategoria.jasper",parameters);
+            }
+            if(ventana.RadioBotonCategoria.isSelected()){
+                //parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                //AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
             AbstractJasperReports.showViewer();
-           
+            
         }
         if(ventana.BusquedaPorFiltro==e.getSource()){
             if(ventana.RadioBotonPlato.isSelected()){

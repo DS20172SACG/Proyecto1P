@@ -71,7 +71,7 @@ VALUES ('1', '1', '5', '1', 'ninguna'),
 
 INSERT INTO factura (ID, TOTAL, Fecha, Id_cliente, Descuento, TipoDePago) 
 VALUES ('1', '7', '2018-01-19', '0936674845', '0', '1'),
-		('2', '4', '2018-01-19', '0936674845', '0', '1');
+		('2', '4', '2018-01-19', '0986494824', '0', '1');
 INSERT INTO detalle_factura (id_detalle, id_factura, id_pedido) 
 VALUES ('1', '1', '1'),
 		('2', '2', '2');
