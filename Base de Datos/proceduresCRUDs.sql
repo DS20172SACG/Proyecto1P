@@ -130,6 +130,13 @@ begin
     where Cliente.eliminado = 0;
 end$$
 
+CREATE procedure cargarListaClientesPendientes()
+begin
+	Select Cliente.cedula, Cliente.FirstName, Cliente.LastName, Cliente.Direccion
+	from Cliente, Pedido
+    where Cliente.eliminado = 0, Pedido.;
+end$$
+
 create procedure cargarNombresMesas()
 begin
 	select nombreMesa
@@ -148,6 +155,20 @@ begin
 	select id
     from Articulo
     where nombre = art;
+end$$
+
+CREATE PROCEDURE cargarListaIdPedidosNoPagados(in cedula varchar(10))
+begin
+	Select DISTINCT SARES.Pedido.id
+	from Detalle_Pedido, Pedido
+    where Pedido.pagado = 0 AND Detalle_Pedido.ID_Pedido = Pedido.id AND Pedido.idCliente = cedula;
+end$$
+
+CREATE PROCEDURE cargarInfoPedidos(in ped int)
+begin
+	Select Articulo.ID, Articulo.Nombre, Detalle_Pedido.cantidad, Detalle_Pedido.cantidad * Articulo.Precio, Pedido.idCliente
+	from Detalle_Pedido, Pedido, Articulo
+    where Pedido.pagado = 0 AND Detalle_Pedido.ID_Pedido = ped AND Pedido.id=ped AND Detalle_Pedido.ID_Articulo = Articulo.ID;
 end$$
 
 delimiter ;

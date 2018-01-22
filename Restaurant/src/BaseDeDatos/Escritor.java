@@ -9,6 +9,7 @@ import Pedidos.*;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,54 @@ public class Escritor {
             } catch (SQLException ex) {
                 Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+    
+    public static void AgregarDetalleFactura(int id_ped, int id_fact){
+        cadenaDeLlamada = "{CALL IngresarDetalleFactura(?,?)}";
+        
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, id_fact);
+            llamada.setInt(2, id_ped);
+            llamada.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public static void pagarPedido(int Pedido){
+        cadenaDeLlamada = "{CALL PedidoPagado(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1,Pedido);
+            llamada.executeQuery();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+    }
+    
+    public static void Facturar(String cliente, int descuento, int TipoDePago){
+        cadenaDeLlamada ="{CALL crearFactura(?,?,?)}";
+        
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1,cliente);
+            llamada.setInt(2, descuento);
+            llamada.setInt(3, TipoDePago);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            
+            ArrayList<String> pedidos = Consultador.getInstancia().cargarListaPedidosNoPagadosPorCliente(cliente);
+            for(String s: pedidos){
+                
+                AgregarDetalleFactura(Integer.parseInt(s), resultado.getInt(1));
+                pagarPedido(Integer.parseInt(s));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -119,4 +119,33 @@ begin
     where idPedido = idPed;
 end$$
 
+CREATE PROCEDURE calcularTotalPedido(in ped int)
+begin
+	Select sum(cantidad * Articulo.Precio)
+	from Detalle_Pedido, Pedido, Articulo
+    where Pedido.pagado = 0 AND Detalle_Pedido.ID_Pedido = ped AND Pedido.id=ped AND Detalle_Pedido.ID_Articulo = Articulo.ID;
+end$$
+
+
+create procedure crearFactura( in cliente varchar(10), in descuento int, in pago int)
+begin
+	Insert into Factura(Fecha, Id_cliente, Descuento, TipoDePago)
+    values(CURDATE(), cliente, descuento, pago);
+    SELECT LAST_INSERT_ID();
+    
+end$$
+
+create procedure IngresarDetalleFactura(in fact int, in idPed int)
+begin
+	INSERT INTO Detalle_Factura(id_factura, id_pedido)
+    values(fact, idPed);
+end$$
+
+create procedure PedidoPagado(in pedido int)
+begin
+	UPDATE Pedido
+    set Pedido.pagado = 1
+    where Pedido.id = pedido;
+end$$
+
 delimiter ;

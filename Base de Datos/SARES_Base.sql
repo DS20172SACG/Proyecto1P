@@ -168,7 +168,7 @@ CREATE TABLE Factura (
 );
 
 CREATE TABLE Detalle_Factura(
-	id_detalle int,
+	id_detalle int AUTO_INCREMENT,
     id_factura int,
     id_pedido int,
     PRIMARY KEY (id_detalle),

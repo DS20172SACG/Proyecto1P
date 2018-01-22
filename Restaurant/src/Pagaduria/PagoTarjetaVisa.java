@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package Pagaduria;
-
+import BaseDeDatos.Consultador;
+import BaseDeDatos.Escritor;
 /**
  *
  * @author Usuario
@@ -12,8 +13,8 @@ package Pagaduria;
 public class PagoTarjetaVisa implements EstrategiaDePago{
 
     @Override
-    public void pagar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void pagar(String cliente, int desc) {
+        Escritor.Facturar(cliente, desc, 2);
     }
     
 }
