@@ -84,4 +84,39 @@ begin
     where Articulo.ID = inArticulo;
 end$$
 
+create procedure pedidoPagado(in idPed int)
+begin
+	update Pedido
+    set pagado = true
+    where idPedido = idPed;
+end$$
+
+create procedure pedidoEnPreparacion(in idPed int)
+begin
+	update Pedido
+    set enPreparacion = True
+    where idPedido = idPed;
+end$$
+
+create procedure pedidoCocinado(in idPed int)
+begin
+	update Pedido
+    set Cocinado = True
+    where idPedido = idPed;
+end$$
+
+create procedure pedidoEntregado(in idPed int)
+begin
+	update Pedido
+    set Entregado = True
+    where idPedido = idPed;
+end$$
+
+create procedure pedidoEnCola(in idPed int)
+begin
+	update Pedido
+    set EnCola = True
+    where idPedido = idPed;
+end$$
+
 delimiter ;

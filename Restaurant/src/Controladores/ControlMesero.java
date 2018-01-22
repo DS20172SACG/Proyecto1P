@@ -8,6 +8,7 @@ package Controladores;
 import BaseDeDatos.Consultador;
 import Constantes.ConstantesCategoria;
 import Pedidos.DetallePedido;
+import Pedidos.PedidoDomicilio;
 import Pedidos.PedidoPresencial;
 import Vistas.VistaMesero;
 import java.awt.event.ActionEvent;
@@ -64,6 +65,7 @@ public class ControlMesero implements Controlador {
             if(validarIngresoDetalle()){ 
                 agregarDetallePedidoNuevo();
                 ventana.limpiarParteIngresoDetalle();
+                ventana.actualizarSubtotal(mesero.totalDetalle());
             };
         }else if(e.getSource().equals(ventana.getjButton1())){
             if(ventana.getjRadioButton16().isSelected()){
@@ -134,4 +136,13 @@ public class ControlMesero implements Controlador {
             ventana.getjCheckBox1().isSelected());
     }
     
+    public PedidoDomicilio generarPedidoDomicilio(){
+        return new PedidoDomicilio(
+                ventana.getjTextField14().getText(),
+                mesero.totalDetalle(),
+                ventana.getjTextField1().getText(),
+                mesero.getIdentificacion(),
+                ventana.getjCheckBox1().isSelected());
+                
+    }
 }

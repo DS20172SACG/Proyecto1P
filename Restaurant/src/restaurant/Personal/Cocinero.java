@@ -26,22 +26,16 @@ public class Cocinero extends Personal implements Observador{
         control = new ControlCocinero(this);
     }
     
-    public void cocinarPedido(){
-        String pedidoEnproceso;
-        if((pedidoEnproceso=cola.atenderPedidoPrioritario())!=null){
-            CambioEstadoPedido(pedidoEnproceso);
-        }else{
-            pedidoEnproceso=cola.atenderPedidoPrioritario();
-            CambioEstadoPedido(pedidoEnproceso);
-        }
+    public void cocinarPedido(int idPedido){
+        
     }
     public void CambioEstadoPedido(String pedidoEnproceso){
         System.out.println("Cocinando Pedido .......");
-        PedidoTerminado(pedidoEnproceso);
+        //PedidoTerminado(pedidoEnproceso);
     }
     
     
-    public void PedidoTerminado(String idPedido){
+    public void PedidoTerminado(int idPedido){
         cola.AgregarPedidoPorEntregar(idPedido);
     }
 
