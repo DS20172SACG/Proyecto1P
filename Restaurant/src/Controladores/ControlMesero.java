@@ -43,16 +43,11 @@ public class ControlMesero implements Controlador {
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOPOSTRE), ventana.getjComboBox1());
         }else if(e.getSource().equals(ventana.getjRadioButton4())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.COMBO), ventana.getjComboBox1()); 
-        }else if(e.getSource().equals(ventana.getjRadioButton7())){
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton8())){
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton9())){
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton10())){
+        
+
             
         }else if(e.getSource().equals(ventana.getjRadioButton13())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAREFRESCO), ventana.getjComboBox3());
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAREFRESCO), ventana.getjComboBox1());
         }else if(e.getSource().equals(ventana.getjRadioButton14())){
             ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDANATURAL), ventana.getjComboBox1());
         }else if(e.getSource().equals(ventana.getjRadioButton15())){
@@ -71,7 +66,7 @@ public class ControlMesero implements Controlador {
             if(ventana.getjRadioButton16().isSelected()){
                 mesero.ingresarPedidoPresencial(generarPedidoPresencial());
             }else if(ventana.getjRadioButton17().isSelected()){
-                
+                mesero.ingresarPedidoDomicilio(generarPedidoDomicilio());
             }
         }else if(e.getSource().equals(ventana.getjRadioButton16())){
             ventana.getjComboBox4().setEnabled(true);
@@ -92,12 +87,6 @@ public class ControlMesero implements Controlador {
         ventana.getjRadioButton2().addActionListener(this);
         ventana.getjRadioButton3().addActionListener(this);
         ventana.getjRadioButton4().addActionListener(this);
-        ventana.getjRadioButton5().addActionListener(this);
-        ventana.getjRadioButton6().addActionListener(this);
-        ventana.getjRadioButton7().addActionListener(this);
-        ventana.getjRadioButton8().addActionListener(this);
-        ventana.getjRadioButton9().addActionListener(this);
-        ventana.getjRadioButton10().addActionListener(this);
         ventana.getjRadioButton11().addActionListener(this);
         ventana.getjRadioButton12().addActionListener(this);
         ventana.getjRadioButton13().addActionListener(this);

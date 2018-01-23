@@ -46,6 +46,25 @@ public class Escritor {
         return idPedido;
     }
     
+    public static int ingresarPedidoDomicilio(PedidoDomicilio pedido){
+        cadenaDeLlamada = "{CALL NuevoPedidoDomicilio(?,?,?,?,?)}";
+        int idPedido = 0;
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, pedido.getIdCliente());
+            llamada.setString(2, pedido.getIdMesero());
+            llamada.setString(3, pedido.getDireccionEntrega());
+            llamada.setBoolean(4, pedido.isPreferencial());
+            llamada.registerOutParameter(5, java.sql.Types.INTEGER);
+            llamada.executeQuery();
+            idPedido = llamada.getInt(5);
+            System.out.println(idPedido);
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return idPedido;
+    }
+    
     public static void ingresarDetallePedido(LinkedList<DetallePedido> detalle){
         cadenaDeLlamada = "{CALL IngresarDetallePedido(?,?,?,?,?)}";
         for(DetallePedido d : detalle){

@@ -12,6 +12,7 @@ import restaurant.ColasPedidos;
 import static Constantes.TipoCola.*;
 import Controladores.ControlMesero;
 import Pedidos.DetallePedido;
+import Pedidos.PedidoDomicilio;
 import Pedidos.PedidoPresencial;
 import java.util.LinkedList;
 
@@ -64,7 +65,6 @@ public class Mesero extends Personal implements Observador{
     
     public void ingresarPedidoPresencial(PedidoPresencial pedido){
         pedido.setIdPedido(Escritor.ingresarPedidoPresencial(pedido));
-        System.out.println(pedido.getIdPedido());
         for(DetallePedido d : detallePedidoNuevo){
             d.setIdPedido(pedido.getIdPedido());
             d.setIdArticulo(Consultador.getInstancia().idArticuloPorNombre(d.getNombreArticulo()));
@@ -74,5 +74,15 @@ public class Mesero extends Personal implements Observador{
         ingresarPedidoACola(pedido.getIdPedido(), pedido.isPreferencial() ? 1 : 0);
     }
     
+    public void ingresarPedidoDomicilio(PedidoDomicilio pedido){
+        pedido.setIdPedido(Escritor.ingresarPedidoDomicilio(pedido));
+        for(DetallePedido d : detallePedidoNuevo){
+            d.setIdPedido(pedido.getIdPedido());
+            d.setIdArticulo(Consultador.getInstancia().idArticuloPorNombre(d.getNombreArticulo()));
+        }
+        Escritor.ingresarDetallePedido(detallePedidoNuevo);
+        detallePedidoNuevo.clear();
+        ingresarPedidoACola(pedido.getIdPedido(), pedido.isPreferencial() ? 1 : 0);
+    }
     
 }
