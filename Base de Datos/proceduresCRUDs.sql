@@ -1,6 +1,19 @@
 use SARES;
 
 delimiter $$
+create procedure cargarContraseñaPorUsuario(in nombreArticulo varchar(255))
+begin
+	select clave
+    from usuario
+    where usuario = nombreArticulo;
+end$$
+
+create procedure buscarIdentificaciondeCargo(in cadena varchar(255))
+begin
+	select *
+    from cargo
+    where nombreCargo = cadena;
+end$$
 
 create procedure buscarUsuario(in cadena varchar(255))
 begin

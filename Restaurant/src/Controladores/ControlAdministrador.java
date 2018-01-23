@@ -6,14 +6,19 @@
 package Controladores;
 
 import BaseDeDatos.Connector;
+import BaseDeDatos.Consultador;
 import Reporte.AbstractJasperReports;
 import Vistas.VistaAdministrador;
+import static Vistas.VistaAdministrador.TablaUsuario;
 import java.awt.event.ActionEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +40,11 @@ public class ControlAdministrador implements Controlador {
         this.ventana.MostrarReporte.addActionListener(this);
         this.ventana.BusquedaPorFiltro.addActionListener(this);
         this.ventana.BuscarSeleccionFiltro.addActionListener(this);
+        this.ventana.BotonNuevo.addActionListener(this);
+        this.ventana.BotonModificar.addActionListener(this);
+        this.ventana.BotonActualizar.addActionListener(this);
+        this.ventana.BotonGuardar.addActionListener(this);
+        this.ventana.BotonEliminar.addActionListener(this);
     }
     
     @Override
@@ -81,16 +91,150 @@ public class ControlAdministrador implements Controlador {
             VistaAdministrador.TextoFiltroSeleccionado.setText(VistaAdministrador.ListaPlatosReporte.getSelectedValue().toString());
             VistaAdministrador.MostrarReporte.setEnabled(true);
         }
+        if(ventana.BotonNuevo==e.getSource()){
+            habilitarOpcionesdeIngresar(true);
+            VistaAdministrador.BotonModificar.setEnabled(false);
+            VistaAdministrador.BotonEliminar.setEnabled(false);            
+        }
+        if(ventana.BotonGuardar==e.getSource()){
+            if(TodosCampoLlenos()){
+                
+                PreparedStatement guardarUsuario;
+                PreparedStatement guardarPersonal;
+                try {
+                    guardarUsuario = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Usuario (usuario, clave, eliminado)VALUES(?,?,?)");
+                    guardarPersonal = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Personal (cedula, nombres, apellidos, edad, sueldo, idCargo, usuario, eliminado) VALUES(?,?,?,?,?,?,?,?)");
+                    guardarUsuario.setString(1, VistaAdministrador.TextoUsuario.getText());
+                    guardarUsuario.setString(2, VistaAdministrador.TextoContraseña.getText());
+                    guardarUsuario.setInt(3, 0);
+                    
+                    guardarPersonal.setString(1, VistaAdministrador.TextoCedula.getText());
+                    guardarPersonal.setString(2, VistaAdministrador.TextoNombre.getText());
+                    guardarPersonal.setString(3, VistaAdministrador.TextoApellido.getText());
+                    guardarPersonal.setInt(4, Integer.parseInt(VistaAdministrador.TextoEdad.getText()));
+                    guardarPersonal.setFloat(5,Float.parseFloat( VistaAdministrador.TextoSueldo.getText()));
+                    guardarPersonal.setInt(6, Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString()));//modificar
+                    guardarPersonal.setString(7, VistaAdministrador.TextoUsuario.getText());
+                    guardarPersonal.setInt(8, 0);
+                    
+                    guardarUsuario.executeUpdate();
+                    guardarPersonal.executeUpdate();
+                    MostrarUsuarios("","");
+                    JOptionPane.showMessageDialog(null,"DATOS INGRESADOS CORRECTAMENTE");
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+               
+                VistaAdministrador.BotonModificar.setEnabled(true);
+                VistaAdministrador.BotonGuardar.setEnabled(false);
+                VistaAdministrador.BotonEliminar.setEnabled(true);
+                LimpiarCampoLlenos();
+                habilitarOpcionesdeIngresar(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "LLene los campos vacios primero");
+            }
+            
+        }
+        if(ventana.BotonModificar==e.getSource()){
+            
+            habilitarOpcionesdeIngresar(true);
+            VistaAdministrador.BotonActualizar.setEnabled(true);
+            VistaAdministrador.BotonNuevo.setEnabled(false);
+            VistaAdministrador.BotonEliminar.setEnabled(false);
+            VistaAdministrador.BotonGuardar.setEnabled(false);
+            
+            int fila = TablaUsuario.getSelectedRow();
+            if(fila>=0){
+                VistaAdministrador.TextoCedula.setText(TablaUsuario.getValueAt(fila, 0).toString());
+                VistaAdministrador.TextoNombre.setText(TablaUsuario.getValueAt(fila, 1).toString());
+                VistaAdministrador.TextoApellido.setText(TablaUsuario.getValueAt(fila, 2).toString());
+                VistaAdministrador.TextoEdad.setText(TablaUsuario.getValueAt(fila, 3).toString());
+                VistaAdministrador.TextoSueldo.setText(TablaUsuario.getValueAt(fila, 4).toString());
+                VistaAdministrador.TextoUsuario.setText(TablaUsuario.getValueAt(fila, 6).toString());
+                VistaAdministrador.TextoContraseña.setText(Consultador.getInstancia().ContraseñaPorUsuario(TablaUsuario.getValueAt(fila, 6).toString()));
+            }else{
+                JOptionPane.showMessageDialog(null,"fila no selecionada");
+            }
+            
+        }
+        if(ventana.BotonActualizar==e.getSource()){
+            if(TodosCampoLlenos()){
+                PreparedStatement actualizarUsuario;
+                PreparedStatement actualizarPersonal;
+                try {
+                    actualizarUsuario = Connector.getInstancia().getConnection().prepareStatement("UPDATE usuario SET usuario='"+VistaAdministrador.TextoUsuario.getText()+"',clave='"+VistaAdministrador.TextoContraseña.getText()+"',eliminado='"+0+"'");
+                    actualizarPersonal = Connector.getInstancia().getConnection().prepareStatement("UPDATE personal SET cedula='"+VistaAdministrador.TextoCedula.getText()+"',nombres='"+VistaAdministrador.TextoNombre.getText()+"',apellidos='"+VistaAdministrador.TextoApellido.getText()+"',edad='"+Integer.parseInt(VistaAdministrador.TextoEdad.getText())+"',sueldo='"+Float.parseFloat(VistaAdministrador.TextoSueldo.getText())+"',idCargo='"+Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString())+"',usuario='"+VistaAdministrador.TextoUsuario.getText()+"',eliminado='"+0+"'");
+                    
+                    actualizarUsuario.executeUpdate();
+                    actualizarPersonal.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Datos Actualizados");
+                    MostrarUsuarios("", "");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                VistaAdministrador.BotonActualizar.setEnabled(false);
+                VistaAdministrador.BotonNuevo.setEnabled(true);
+                VistaAdministrador.BotonEliminar.setEnabled(true);
+                LimpiarCampoLlenos();
+                habilitarOpcionesdeIngresar(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Complete los campos vacios primero");
+            }
+            
+            //falta
+        }
+        if(ventana.BotonEliminar==e.getSource()){
+            //falta
+            //habilitarOpcionesdeIngresar(false);
+        }
     }
-
+    boolean TodosCampoLlenos(){
+        if(!VistaAdministrador.TextoCedula.getText().isEmpty()&&
+        !VistaAdministrador.TextoNombre.getText().isEmpty() &&
+        !VistaAdministrador.TextoApellido.getText().isEmpty() &&
+        !VistaAdministrador.TextoEdad.getText().isEmpty() &&
+        !VistaAdministrador.TextoUsuario.getText().isEmpty()&&
+        !VistaAdministrador.TextoContraseña.getText().isEmpty() &&
+        !VistaAdministrador.TextoSueldo.getText().isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    void LimpiarCampoLlenos(){
+        VistaAdministrador.TextoCedula.setText("");
+        VistaAdministrador.TextoNombre.setText("");
+        VistaAdministrador.TextoApellido.setText("");
+        VistaAdministrador.TextoEdad.setText("");
+        VistaAdministrador.TextoUsuario.setText("");
+        VistaAdministrador.TextoContraseña.setText("");
+        VistaAdministrador.TextoSueldo.setText("");        
+    }
     @Override
     public void presentarVista() {
         ventana.setVisible(true);
         agregarRadioBotones();
-        MostrarUsuarios();
+        MostrarUsuarios("","");
         VistaAdministrador.MostrarReporte.setEnabled(false);
+        habilitarOpcionesdeIngresar(false);
+        //VistaAdministrador.BotonEliminar.setEnabled(false);
+        VistaAdministrador.BotonActualizar.setEnabled(false);
     }
-    void MostrarUsuarios(){
+    void habilitarOpcionesdeIngresar(boolean b){
+        VistaAdministrador.BotonGuardar.setEnabled(b);
+        
+        VistaAdministrador.TextoCedula.setEnabled(b);
+        VistaAdministrador.TextoNombre.setEnabled(b);
+        VistaAdministrador.TextoApellido.setEnabled(b);
+        VistaAdministrador.TextoEdad.setEnabled(b);
+        VistaAdministrador.TextoUsuario.setEnabled(b);
+        VistaAdministrador.TextoContraseña.setEnabled(b);
+        VistaAdministrador.TextoSueldo.setEnabled(b);
+    }
+    void MostrarUsuarios(String valor,String variable){
         DefaultTableModel modo=new DefaultTableModel();
         modo.addColumn("cedula");
         modo.addColumn("Nombres");
@@ -100,8 +244,13 @@ public class ControlAdministrador implements Controlador {
         modo.addColumn("Id Cargo");
         modo.addColumn("Usuario");
         VistaAdministrador.TablaUsuario.setModel(modo);
-        
-        String sql="SELECT * FROM Personal";
+        String sql ="";
+        if(valor.equals("")&&variable.equals("")){
+            sql="select * from personal";
+        }
+        else{
+            sql="select * from personal where "+variable+" like '"+valor+"%'";
+        }
         String datos[] = new String[7];
         
         try{
@@ -160,5 +309,9 @@ public class ControlAdministrador implements Controlador {
         VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonMesero);
         VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonAmbiente);
         VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonCategoria);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonNombre);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonApellido);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonEdad);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonFuncion);
     }
 }

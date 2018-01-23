@@ -286,5 +286,36 @@ public class Consultador {
         }
         return lista;
     }
+    public int idCargoPorNombre(String nombre){
+        int idCargo = 0;
+        cadenaDeLlamada = "{CALL buscarIdentificaciondeCargo(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, nombre);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            idCargo = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idCargo;
+    }
+    public String ContraseñaPorUsuario(String usuario){
+        if(usuario.isEmpty()) return "";
+        cadenaDeLlamada = "{CALL cargarContraseñaPorUsuario(?)}";
+        String retorno = "";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, usuario);
+            resultado = llamada.executeQuery();
+            if(resultado.isBeforeFirst()){
+                resultado.next();
+                retorno = resultado.getString(1);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return retorno;
+    }
 }
 
