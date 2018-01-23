@@ -68,6 +68,8 @@ public class ControlMesero implements Controlador {
             }else if(ventana.getjRadioButton17().isSelected()){
                 mesero.ingresarPedidoDomicilio(generarPedidoDomicilio());
             }
+        }else if(e.getSource().equals(ventana.getjButton4())){
+            
         }else if(e.getSource().equals(ventana.getjRadioButton16())){
             ventana.getjComboBox4().setEnabled(true);
             ventana.getjTextField14().setEnabled(false);
@@ -87,8 +89,6 @@ public class ControlMesero implements Controlador {
         ventana.getjRadioButton2().addActionListener(this);
         ventana.getjRadioButton3().addActionListener(this);
         ventana.getjRadioButton4().addActionListener(this);
-        ventana.getjRadioButton11().addActionListener(this);
-        ventana.getjRadioButton12().addActionListener(this);
         ventana.getjRadioButton13().addActionListener(this);
         ventana.getjRadioButton14().addActionListener(this);
         ventana.getjRadioButton15().addActionListener(this);
@@ -97,6 +97,7 @@ public class ControlMesero implements Controlador {
         ventana.getjComboBox1().addActionListener(this);
         ventana.getjButton9().addActionListener(this);
         ventana.getjButton1().addActionListener(this);
+        ventana.getjButton4().addActionListener(this);
         
     }
     

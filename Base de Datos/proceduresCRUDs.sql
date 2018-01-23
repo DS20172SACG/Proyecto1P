@@ -171,5 +171,12 @@ begin
     where Pedido.pagado = 0 AND Detalle_Pedido.ID_Pedido = ped AND Pedido.id=ped AND Detalle_Pedido.ID_Articulo = Articulo.ID;
 end$$
 
+create procedure pedidosNoAtendidosDeCliente(in cedula varchar(255))
+begin
+	select *
+    from Pedido
+    where IdCocinero = null and idCliente = cedula;
+end$$
+
 delimiter ;
 

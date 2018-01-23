@@ -6,6 +6,7 @@
 package BaseDeDatos;
 
 import Pagaduria.Cliente;
+import Pedidos.Pedido;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -270,6 +271,20 @@ public class Consultador {
         return idArticulo;
     }
     
-    
+    public LinkedList<Pedido> pedidosNoAtendidoDeCliente(String cedula){
+        LinkedList<Pedido> lista = new LinkedList();
+        cadenaDeLlamada = "{CALL pedidosNoAtendidosDeCliente(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setString(1, cedula);
+            resultado = llamada.executeQuery();
+            while(resultado.next()){
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
 }
 

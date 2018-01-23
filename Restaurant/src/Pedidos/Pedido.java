@@ -50,7 +50,6 @@ public abstract class Pedido {
         this.idMesero = idMesero;
         this.preferencial = preferencial;
     }
-
     
     public int getIdPedido() {
         return idPedido;
