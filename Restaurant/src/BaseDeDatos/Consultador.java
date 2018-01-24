@@ -300,9 +300,9 @@ public class Consultador {
         }
         return idCargo;
     }
-    public String ContraseñaPorUsuario(String usuario){
+    public String ContrasenaPorUsuario(String usuario){
         if(usuario.isEmpty()) return "";
-        cadenaDeLlamada = "{CALL cargarContraseñaPorUsuario(?)}";
+        cadenaDeLlamada = "{CALL cargarContraseï¿½aPorUsuario(?)}";
         String retorno = "";
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);

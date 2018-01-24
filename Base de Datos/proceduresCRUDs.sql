@@ -147,7 +147,7 @@ CREATE procedure cargarListaClientesPendientes()
 begin
 	Select Cliente.cedula, Cliente.FirstName, Cliente.LastName, Cliente.Direccion
 	from Cliente, Pedido
-    where Cliente.eliminado = 0, Pedido.;
+    where Cliente.eliminado = 0 and Pedido.pagado = 0;
 end$$
 
 create procedure cargarNombresMesas()

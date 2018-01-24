@@ -27,14 +27,14 @@ INSERT INTO Ambientes (idAmbiente, nombre, eliminado)
 VALUES 	(1, 'Normal', 0), 
 		(2, 'VIP', 0);
 
-INSERT INTO Mesa (idMesa, asientos, disponibilidad, idAmbiente, eliminado) 
-VALUES 	(1, 2, 1, 1, 0), 
-		(2, 2, 1, 1, 0), 
-		(3, 2, 1, 2, 0), 
-        (4, 4, 1, 1, 0), 
-        (5, 4, 1, 2, 0), 
-        (6, 6, 1, 1, 0), 
-        (7, 8, 1, 1, 0);
+INSERT INTO Mesa (idMesa, asientos, nombreMesa, disponibilidad, idAmbiente, eliminado) 
+VALUES 	(1, 2,"Mesa 1", 1, 1, 0), 
+		(2, 2,"Mesa 2", 1, 1, 0), 
+		(3, 2,"Mesa 3", 1, 2, 0), 
+        (4, 4,"Mesa 4", 1, 1, 0), 
+        (5, 4,"Mesa 5", 1, 2, 0), 
+        (6, 6,"Mesa 6", 1, 1, 0), 
+        (7, 8,"Mesa 7", 1, 1, 0);
 
 INSERT INTO Usuario (usuario, clave, eliminado)
 VALUES 	('admin', 'superclave', 0), 
@@ -64,12 +64,12 @@ INSERT INTO cliente (cedula,LastName, FirstName, Direccion,eliminado)
 VALUES ('0936674845','Cruz','Edward','25 y G','0'),
 		('0986494824', 'Velez', 'Andres', '15  Colon', '0');
 
-INSERT INTO pedido (id, pagado, enPreparacion, cocinado, entregado, EnCola, fecha, hora, idCliente, idMesero, idCocinero) 
-VALUES ('1', '1', '1', '1', '1', '0', '2018-01-19', '19:00', '0936674845', '0912873456', '0921234567'),
-		('2', '1', '1', '1', '1', '0', '2018-01-19', '20:00', '0986494824', '0981237645', '0921234567');
-INSERT INTO detalle_pedido (ID_detalle, ID_Pedido, ID_Articulo,cantidad, Observaciones) 
-VALUES ('1', '1', '5', '1', 'ninguna'),
-		('2','2','4','1','ninguna');
+INSERT INTO pedido (id, pagado, enPreparacion, cocinado, entregado, EnCola, fecha, hora, idCliente, idMesero, idCocinero, preferencial) 
+VALUES ('1', '1', '1', '1', '1', '0', '2018-01-19', '19:00', '0936674845', '0912873456', '0921234567',0),
+		('2', '1', '1', '1', '1', '0', '2018-01-19', '20:00', '0986494824', '0981237645', '0921234567',1);
+INSERT INTO detalle_pedido (ID_detalle, numDetalle, ID_Pedido, ID_Articulo,cantidad, Observaciones) 
+VALUES ('1', 1, '1', '5', '1', 'ninguna'),
+		('2', 1, '2','4','1','ninguna');
 
 INSERT INTO factura (ID, TOTAL, Fecha, Id_cliente, Descuento, TipoDePago) 
 VALUES ('1', '7', '2018-01-19', '0936674845', '0', '1'),

@@ -141,11 +141,4 @@ begin
     values(fact, idPed);
 end$$
 
-create procedure PedidoPagado(in pedido int)
-begin
-	UPDATE Pedido
-    set Pedido.pagado = 1
-    where Pedido.id = pedido;
-end$$
-
 delimiter ;

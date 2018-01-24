@@ -154,7 +154,7 @@ public class ControlAdministrador implements Controlador {
                 VistaAdministrador.TextoEdad.setText(TablaUsuario.getValueAt(fila, 3).toString());
                 VistaAdministrador.TextoSueldo.setText(TablaUsuario.getValueAt(fila, 4).toString());
                 VistaAdministrador.TextoUsuario.setText(TablaUsuario.getValueAt(fila, 6).toString());
-                VistaAdministrador.TextoContraseña.setText(Consultador.getInstancia().ContraseñaPorUsuario(TablaUsuario.getValueAt(fila, 6).toString()));
+                VistaAdministrador.TextoContraseña.setText(Consultador.getInstancia().ContrasenaPorUsuario(TablaUsuario.getValueAt(fila, 6).toString()));
             }else{
                 JOptionPane.showMessageDialog(null,"fila no selecionada");
             }
