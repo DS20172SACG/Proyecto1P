@@ -120,19 +120,17 @@ public class ControlMesero implements Controlador {
     public PedidoPresencial generarPedidoPresencial(){
         return new PedidoPresencial(
             Consultador.getInstancia().idMesaPorNombre(String.valueOf(ventana.getjComboBox4().getSelectedItem())),
-            mesero.totalDetalle(),
-            ventana.getjTextField1().getText(),
-            mesero.getIdentificacion(),
-            ventana.getjCheckBox1().isSelected());
+                ventana.getjCheckBox1().isSelected(),
+                ventana.getjTextField1().getText(),
+                mesero.getIdentificacion());
     }
     
     public PedidoDomicilio generarPedidoDomicilio(){
         return new PedidoDomicilio(
                 ventana.getjTextField14().getText(),
-                mesero.totalDetalle(),
+                ventana.getjCheckBox1().isSelected(),
                 ventana.getjTextField1().getText(),
-                mesero.getIdentificacion(),
-                ventana.getjCheckBox1().isSelected());
+                mesero.getIdentificacion());
                 
     }
 }

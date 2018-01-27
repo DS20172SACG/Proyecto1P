@@ -127,9 +127,11 @@ create table DireccionPedido(
 	id int not null auto_increment,
     direccion varchar(255) not null,
     idPedido int not null,
+    idRepartidor int not null,
     
     primary key (id),
-    foreign key (idPedido) references Pedido(id)
+    foreign key (idPedido) references Pedido(id),
+    foreign key (idRepartidor) references Personal(cedula)
 );
 
 CREATE TABLE Detalle_Pedido(

@@ -5,16 +5,19 @@
  */
 package Pedidos;
 
+import java.util.Date;
+
 /**
  *
  * @author Usuario
  */
 public abstract class Pedido {
     protected int idPedido;
-    protected double total;
     protected boolean pagado;
+    protected boolean enPreparacion;
     protected boolean cocinado;
     protected boolean entregado;
+    protected boolean enCola;
     protected boolean preferencial;
     protected String idCliente;
     protected String idMesero;
@@ -23,34 +26,25 @@ public abstract class Pedido {
     public Pedido() {
     }
 
-    public Pedido(int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero) {
-        this.idPedido = idPedido;
-        this.total = total;
-        this.pagado = pagado;
-        this.cocinado = cocinado;
-        this.entregado = entregado;
+    public Pedido(boolean preferencial, String idCliente, String idMesero) {
+        this.preferencial = preferencial;
         this.idCliente = idCliente;
-        this.idMesero = idMesero; /*No se asigna ningún cocinero cuando recién se crea el pedido*/
+        this.idMesero = idMesero;
     }
 
-    public Pedido(int idPedido, double total, boolean pagado, boolean cocinado, boolean entregado, String idCliente, String idMesero, String idCocinero) {
+    public Pedido(int idPedido, boolean pagado, boolean enPreparacion, boolean cocinado, boolean entregado, boolean enCola, boolean preferencial, String idCliente, String idMesero, String idCocinero) {
         this.idPedido = idPedido;
-        this.total = total;
         this.pagado = pagado;
+        this.enPreparacion = enPreparacion;
         this.cocinado = cocinado;
         this.entregado = entregado;
+        this.enCola = enCola;
+        this.preferencial = preferencial;
         this.idCliente = idCliente;
         this.idMesero = idMesero;
         this.idCocinero = idCocinero;
     }
 
-    public Pedido(double total, String idCliente, String idMesero, boolean preferencial) {
-        this.total = total;
-        this.idCliente = idCliente;
-        this.idMesero = idMesero;
-        this.preferencial = preferencial;
-    }
-    
     public int getIdPedido() {
         return idPedido;
     }
@@ -59,20 +53,20 @@ public abstract class Pedido {
         this.idPedido = idPedido;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
     public boolean isPagado() {
         return pagado;
     }
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+
+    public boolean isEnPreparacion() {
+        return enPreparacion;
+    }
+
+    public void setEnPreparacion(boolean enPreparacion) {
+        this.enPreparacion = enPreparacion;
     }
 
     public boolean isCocinado() {
@@ -89,6 +83,22 @@ public abstract class Pedido {
 
     public void setEntregado(boolean entregado) {
         this.entregado = entregado;
+    }
+
+    public boolean isEnCola() {
+        return enCola;
+    }
+
+    public void setEnCola(boolean enCola) {
+        this.enCola = enCola;
+    }
+
+    public boolean isPreferencial() {
+        return preferencial;
+    }
+
+    public void setPreferencial(boolean preferencial) {
+        this.preferencial = preferencial;
     }
 
     public String getIdCliente() {
@@ -114,13 +124,6 @@ public abstract class Pedido {
     public void setIdCocinero(String idCocinero) {
         this.idCocinero = idCocinero;
     }
-
-    public boolean isPreferencial() {
-        return preferencial;
-    }
-
-    public void setPreferencial(boolean preferencial) {
-        this.preferencial = preferencial;
-    }
+    
     
 }

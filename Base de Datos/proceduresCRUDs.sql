@@ -1,7 +1,7 @@
 use SARES;
 
 delimiter $$
-create procedure cargarContraseñaPorUsuario(in nombreArticulo varchar(255))
+create procedure cargarContrasenaPorUsuario(in nombreArticulo varchar(255))
 begin
 	select clave
     from usuario
@@ -189,6 +189,13 @@ begin
 	select *
     from Pedido
     where IdCocinero = null and idCliente = cedula;
+end$$
+
+create procedure obtenerDireccionEntregaPedido(in idPed int)
+begin
+	select direccion
+    from DireccionPedido
+    where idPedido = idPed;
 end$$
 
 delimiter ;

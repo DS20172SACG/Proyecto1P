@@ -7,6 +7,8 @@ package BaseDeDatos;
 
 import Pagaduria.Cliente;
 import Pedidos.Pedido;
+import Pedidos.PedidoDomicilio;
+import Pedidos.PedidoPresencial;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -141,8 +143,6 @@ public class Consultador {
         return mesas;
     }
     
-    
-    
     public int idMesaPorNombre(String nombre){
         int idMesa = 0;
         cadenaDeLlamada = "{CALL idMesaPorNombre(?)}";
@@ -271,7 +271,7 @@ public class Consultador {
         return idArticulo;
     }
     
-    public LinkedList<Pedido> pedidosNoAtendidoDeCliente(String cedula){
+    public LinkedList<Pedido> pedidosNoAtendidosDeCliente(String cedula){
         LinkedList<Pedido> lista = new LinkedList();
         cadenaDeLlamada = "{CALL pedidosNoAtendidosDeCliente(?)}";
         try {
@@ -279,13 +279,20 @@ public class Consultador {
             llamada.setString(1, cedula);
             resultado = llamada.executeQuery();
             while(resultado.next()){
-                
+                Pedido ped;
+                if(pedidoEsADomicilio(resultado.getInt(1))){
+                    ped = new PedidoDomicilio();
+                }else{
+                    ped = new PedidoPresencial();
+                }
+                //Falta
             }
         } catch (SQLException ex) {
             Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }
+    
     public int idCargoPorNombre(String nombre){
         int idCargo = 0;
         cadenaDeLlamada = "{CALL buscarIdentificaciondeCargo(?)}";
@@ -300,9 +307,10 @@ public class Consultador {
         }
         return idCargo;
     }
+    
     public String ContrasenaPorUsuario(String usuario){
         if(usuario.isEmpty()) return "";
-        cadenaDeLlamada = "{CALL cargarContrase�aPorUsuario(?)}";
+        cadenaDeLlamada = "{CALL cargarContrasenaPorUsuario(?)}";
         String retorno = "";
         try{
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
@@ -316,6 +324,49 @@ public class Consultador {
             System.out.println(ex.getMessage());
         }
         return retorno;
+    }
+    
+    public String direccionEntregaPedido(int idPedido){
+        cadenaDeLlamada = "{CALL obtenerDireccionEntregaPedido(?)}";
+        String retorno = "";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            retorno = resultado.getString(1);
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return retorno;
+    }
+    
+    public boolean pedidoEsADomicilio(int idPedido){
+        cadenaDeLlamada = "{CALL obtenerDireccionEntregaPedido(?)}";
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            if(resultado.isBeforeFirst()) return true;
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    public double totalPedido(int idPedido){
+        cadenaDeLlamada = "{CALL calcularTotalPedido(?)}";
+        double total = 0;
+        try{
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            resultado.getDouble(1);
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return total;
     }
 }
 
