@@ -212,5 +212,12 @@ begin
     where d.ID_Articulo = a.ID and d.ID_Pedido = idPed;
 end$$
 
+create procedure obtenerMesaDePedido(in idPed int)
+begin
+	select idMesa
+    from MesaPedido
+    where idPedido = idPed;
+end$$
+
 delimiter ;
 

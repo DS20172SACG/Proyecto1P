@@ -71,6 +71,14 @@ public class ControlMesero implements Controlador {
             }
         }else if(e.getSource().equals(ventana.getjButton2())){
             actualizarTablaDetallePedidoNoAtendido(Consultador.getInstancia().detalleDePedidoParaTabla(Integer.parseInt(ventana.getjTextField7().getText())));
+        }else if(e.getSource().equals(ventana.getjButton3())){
+            if(Consultador.getInstancia().pedidoEsADomicilio(Integer.parseInt(ventana.getjTextField7().getText()))){
+                ventana.getjPanel4().setVisible(true);
+                ventana.getjTextField10().setText(Consultador.getInstancia().direccionEntregaPedido(Integer.parseInt(ventana.getjTextField7().getText())));
+            }else{
+                ventana.getjPanel9().setVisible(true);
+                ventana.getjComboBox3().setSelectedIndex(Consultador.getInstancia().idMesaDePedido(Integer.parseInt(ventana.getjTextField7().getText())));
+            }
         }else if(e.getSource().equals(ventana.getjButton4())){
             actualizarTablaPedidosNoAtendidos(Consultador.getInstancia().pedidosNoAtendidosDeClienteParaTabla(ventana.getjTextField6().getText()));
         }else if(e.getSource().equals(ventana.getjRadioButton16())){
@@ -101,8 +109,9 @@ public class ControlMesero implements Controlador {
         ventana.getjButton9().addActionListener(this);
         ventana.getjButton1().addActionListener(this);
         ventana.getjButton2().addActionListener(this);
+        ventana.getjButton3().addActionListener(this);
         ventana.getjButton4().addActionListener(this);
-        
+        ventana.getjButton10().addActionListener(this);
     }
     
     private boolean validarIngresoDetalle(){

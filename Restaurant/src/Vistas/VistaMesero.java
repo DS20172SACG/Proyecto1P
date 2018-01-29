@@ -157,7 +157,6 @@ public class VistaMesero extends javax.swing.JFrame {
         jTable6 = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jRadioButton5 = new javax.swing.JRadioButton();
@@ -581,8 +580,6 @@ public class VistaMesero extends javax.swing.JFrame {
 
         jLabel12.setText("Número de detalle a editar:");
 
-        jButton8.setText("Modificar detalle:");
-
         buttonGroup3.add(jRadioButton5);
         jRadioButton5.setText("Entradas");
         jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -735,7 +732,7 @@ public class VistaMesero extends javax.swing.JFrame {
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -791,9 +788,7 @@ public class VistaMesero extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton8))
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -851,12 +846,11 @@ public class VistaMesero extends javax.swing.JFrame {
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(21, 21, 21)
+                        .addGap(22, 22, 22)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))
-                        .addGap(7, 7, 7)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
                         .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -877,7 +871,7 @@ public class VistaMesero extends javax.swing.JFrame {
                     .addComponent(jButton3)
                     .addComponent(jButton11)
                     .addComponent(jButton15))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel4.setVisible(false);
@@ -895,7 +889,7 @@ public class VistaMesero extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, Short.MAX_VALUE)
         );
 
         pack();
@@ -981,7 +975,6 @@ public class VistaMesero extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -1280,10 +1273,6 @@ public class VistaMesero extends javax.swing.JFrame {
         return jButton5;
     }
 
-    public JButton getjButton8() {
-        return jButton8;
-    }
-
     public JComboBox<String> getjComboBox2() {
         return jComboBox2;
     }
@@ -1359,6 +1348,7 @@ public class VistaMesero extends javax.swing.JFrame {
     public void colocarNombresMesas(LinkedList<String> nombres){
         for(String nombre : nombres){
             jComboBox4.addItem(nombre);
+            jComboBox3.addItem(nombre);
         }
     }
     
@@ -1380,6 +1370,22 @@ public class VistaMesero extends javax.swing.JFrame {
 
     public JTextField getjTextField10() {
         return jTextField10;
+    }
+
+    public JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    public JPanel getjPanel7() {
+        return jPanel7;
+    }
+
+    public JPanel getjPanel8() {
+        return jPanel8;
+    }
+
+    public JPanel getjPanel9() {
+        return jPanel9;
     }
     
 }

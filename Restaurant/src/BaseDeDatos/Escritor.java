@@ -109,7 +109,7 @@ public class Escritor {
     }
     
     public static void Facturar(String cliente, int descuento, int TipoDePago){
-        cadenaDeLlamada ="{CALL crearFactura(?,?,?)}";
+        cadenaDeLlamada = "{CALL crearFactura(?,?,?)}";
         
         try {
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
@@ -125,6 +125,21 @@ public class Escritor {
                 AgregarDetalleFactura(Integer.parseInt(s), resultado.getInt(1));
                 pagarPedido(Integer.parseInt(s));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void actualizarDetalle(DetallePedido detalle){
+        cadenaDeLlamada = "{CALL actualizarDetalle(?,?,?,?,?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, detalle.getIdPedido());
+            llamada.setInt(2, detalle.getNumDetalle());
+            llamada.setInt(3, detalle.getIdArticulo());
+            llamada.setInt(4, detalle.getCantidad());
+            llamada.setString(5, detalle.getObservaciones());
+            resultado = llamada.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }

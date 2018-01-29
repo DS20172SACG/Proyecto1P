@@ -244,9 +244,7 @@ public class Consultador {
                                         resultado.getString(1), resultado.getString(2), 
                                         resultado.getInt(3), resultado.getFloat(4));
                 total += resultado.getFloat(4);
-                
             }
-            
             
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -391,5 +389,21 @@ public class Consultador {
         }
         return lista;
     }
+    
+    public int idMesaDePedido(int idPedido){
+        int id = 0;
+        cadenaDeLlamada = "{CALL obtenerMesaDePedido(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            id = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+    
 }
 

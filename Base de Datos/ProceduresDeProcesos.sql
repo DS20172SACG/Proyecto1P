@@ -141,4 +141,11 @@ begin
     values(fact, idPed);
 end$$
 
+create procedure actualizarDetalle(in idPed int, in numDet int, in idArt int, in cant int, in obs varchar(255))
+begin
+	update detalle_pedido
+    set Id_Articulo = idArt, cantidad = cant, observacion = obs
+    where ID_Pedido = idPed and numDetalle = numDet;
+end$$
+
 delimiter ;
