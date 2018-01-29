@@ -64,9 +64,10 @@ INSERT INTO cliente (cedula,LastName, FirstName, Direccion,eliminado)
 VALUES ('0936674845','Cruz','Edward','25 y G','0'),
 		('0986494824', 'Velez', 'Andres', '15  Colon', '0');
 
-INSERT INTO pedido (id, pagado, enPreparacion, cocinado, entregado, EnCola, fecha, hora, idCliente, idMesero, idCocinero, preferencial) 
-VALUES ('1', '1', '1', '1', '1', '0', '2018-01-19', '19:00', '0936674845', '0912873456', '0921234567',0),
-		('2', '1', '1', '1', '1', '0', '2018-01-19', '20:00', '0986494824', '0981237645', '0921234567',1);
+INSERT INTO pedido (pagado, enPreparacion, cocinado, entregado, EnCola, fechaHora, idCliente, idMesero, idCocinero, preferencial) 
+VALUES ('1', '1', '1', '1', '0', '2018-01-19 19:00:00', '0936674845', '0912873456', '0921234567',0),
+		('1', '1', '1', '1', '0', '2018-01-19 20:00:00', '0986494824', '0981237645', '0921234567',1),
+        ('0', '0', '0', '0', '0', '2018-01-19 20:00:00', '0986494824', '0981237645', null, 0);
         
 INSERT INTO detalle_pedido (ID_detalle, numDetalle, ID_Pedido, ID_Articulo,cantidad, Observaciones) 
 VALUES ('1', 1, '1', '5', '1', 'ninguna'),
@@ -75,6 +76,7 @@ VALUES ('1', 1, '1', '5', '1', 'ninguna'),
 INSERT INTO factura (ID, TOTAL, Fecha, Id_cliente, Descuento, TipoDePago) 
 VALUES ('1', '7', '2018-01-19', '0936674845', '0', '1'),
 		('2', '4', '2018-01-19', '0986494824', '0', '1');
+        
 INSERT INTO detalle_factura (id_detalle, id_factura, id_pedido) 
 VALUES ('1', '1', '1'),
 		('2', '2', '2');

@@ -13,6 +13,7 @@ import Pedidos.PedidoPresencial;
 import Vistas.VistaMesero;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import restaurant.Personal.Mesero;
 
@@ -68,8 +69,10 @@ public class ControlMesero implements Controlador {
             }else if(ventana.getjRadioButton17().isSelected()){
                 mesero.ingresarPedidoDomicilio(generarPedidoDomicilio());
             }
+        }else if(e.getSource().equals(ventana.getjButton2())){
+            actualizarTablaDetallePedidoNoAtendido(Consultador.getInstancia().detalleDePedidoParaTabla(Integer.parseInt(ventana.getjTextField7().getText())));
         }else if(e.getSource().equals(ventana.getjButton4())){
-            
+            actualizarTablaPedidosNoAtendidos(Consultador.getInstancia().pedidosNoAtendidosDeClienteParaTabla(ventana.getjTextField6().getText()));
         }else if(e.getSource().equals(ventana.getjRadioButton16())){
             ventana.getjComboBox4().setEnabled(true);
             ventana.getjTextField14().setEnabled(false);
@@ -97,6 +100,7 @@ public class ControlMesero implements Controlador {
         ventana.getjComboBox1().addActionListener(this);
         ventana.getjButton9().addActionListener(this);
         ventana.getjButton1().addActionListener(this);
+        ventana.getjButton2().addActionListener(this);
         ventana.getjButton4().addActionListener(this);
         
     }
@@ -132,5 +136,19 @@ public class ControlMesero implements Controlador {
                 ventana.getjTextField1().getText(),
                 mesero.getIdentificacion());
                 
+    }
+    
+    public void actualizarTablaPedidosNoAtendidos(LinkedList<String[]> datos){
+        DefaultTableModel dm = (DefaultTableModel) ventana.getjTable2().getModel();
+        for(String[] info : datos){
+            dm.addRow(info);
+        }
+    }
+    
+    public void actualizarTablaDetallePedidoNoAtendido(LinkedList<String[]> datos){
+        DefaultTableModel dm = (DefaultTableModel) ventana.getjTable6().getModel();
+        for(String[] info : datos){
+            dm.addRow(info);
+        }
     }
 }

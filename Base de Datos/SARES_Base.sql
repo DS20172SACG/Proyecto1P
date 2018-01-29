@@ -101,8 +101,7 @@ CREATE TABLE Pedido (
     entregado boolean not null,
     EnCola boolean not null,
     preferencial boolean not null,
-    fecha Date,
-    hora time,
+    fechaHora DateTime default now(),
     idCliente varchar(10) not null,
     idMesero varchar(10) not null,
     idCocinero varchar(10),
@@ -127,7 +126,7 @@ create table DireccionPedido(
 	id int not null auto_increment,
     direccion varchar(255) not null,
     idPedido int not null,
-    idRepartidor int not null,
+    idRepartidor varchar(10) not null,
     
     primary key (id),
     foreign key (idPedido) references Pedido(id),

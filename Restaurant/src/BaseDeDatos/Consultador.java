@@ -271,21 +271,23 @@ public class Consultador {
         return idArticulo;
     }
     
-    public LinkedList<Pedido> pedidosNoAtendidosDeCliente(String cedula){
-        LinkedList<Pedido> lista = new LinkedList();
+    public LinkedList<String[]> pedidosNoAtendidosDeClienteParaTabla(String cedula){
+        LinkedList<String[]> lista = new LinkedList();
         cadenaDeLlamada = "{CALL pedidosNoAtendidosDeCliente(?)}";
         try {
             llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
             llamada.setString(1, cedula);
             resultado = llamada.executeQuery();
             while(resultado.next()){
-                Pedido ped;
-                if(pedidoEsADomicilio(resultado.getInt(1))){
-                    ped = new PedidoDomicilio();
+                String[] pedido = new String[3];
+                pedido[0] = Integer.toString(resultado.getInt(1));
+                pedido[1] = resultado.getString(8);
+                if(resultado.getString(11) == null){
+                    pedido[2] = "No";
                 }else{
-                    ped = new PedidoPresencial();
+                    pedido[2] = "Si";
                 }
-                //Falta
+                lista.add(pedido);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
@@ -367,6 +369,27 @@ public class Consultador {
             System.out.println(ex.getMessage());
         }
         return total;
+    }
+    
+    public LinkedList<String[]> detalleDePedidoParaTabla(int idPedido){
+        LinkedList<String[]> lista = new LinkedList();
+        cadenaDeLlamada = "{CALL obtenerDetalleDePedidoParaTabla(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            while(resultado.next()){
+                String[] detalle = new String[4];
+                detalle[0] = Integer.toString(resultado.getInt(1));
+                detalle[1] = resultado.getString(2);
+                detalle[2] = Integer.toString(resultado.getInt(3));
+                detalle[3] = Double.toString(resultado.getDouble(4));
+                lista.add(detalle);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 }
 

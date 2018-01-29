@@ -4,8 +4,8 @@ delimiter $$
 
 create procedure NuevoPedidoPresencial(in cliente varchar(10), in mesero varchar(10), in mesa int, in prefe boolean, out NuevoPedido int)
 begin
-	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero, fecha, hora) 
-    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero, curdate(), curtime());
+	INSERT INTO Pedido(EnCola, pagado, enPreparacion, cocinado, entregado, preferencial, idCliente, idMesero) 
+    VALUES (0, 0, 0, 0, 0, prefe, cliente, mesero);
     
     SELECT LAST_INSERT_ID() into NuevoPedido;
     

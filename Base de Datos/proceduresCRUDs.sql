@@ -188,7 +188,7 @@ create procedure pedidosNoAtendidosDeCliente(in cedula varchar(255))
 begin
 	select *
     from Pedido
-    where IdCocinero = null and idCliente = cedula;
+    where IdCocinero is null and idCliente = cedula;
 end$$
 
 create procedure obtenerDireccionEntregaPedido(in idPed int)
@@ -196,6 +196,20 @@ begin
 	select direccion
     from DireccionPedido
     where idPedido = idPed;
+end$$
+
+create procedure obtenerDetalleDePedido(in idPed int)
+begin
+	select *
+    from Detalle_Pedido
+    where ID_Pedido = idPed;
+end$$
+
+create procedure obtenerDetalleDePedidoParaTabla(in idPed int)
+begin
+	select d.numDetalle,a.nombre,d.cantidad,a.Precio
+    from Detalle_Pedido d join Articulo a
+    where d.ID_Articulo = a.ID and d.ID_Pedido = idPed;
 end$$
 
 delimiter ;
