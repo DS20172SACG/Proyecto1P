@@ -1,29 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4739932e-db53-4e43-9b4e-5bb6af52ac29">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Categoria" class="java.lang.String">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaDesde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaHasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     articulo.`ID` AS articulo_ID,
+     articulo.`Nombre` AS articulo_Nombre,
+     articulo.`Descripcion` AS articulo_Descripcion,
+     articulo.`Precio` AS articulo_Precio,
+     articulo.`Disponibilidad` AS articulo_Disponibilidad,
+     articulo.`TiempoPreparacion` AS articulo_TiempoPreparacion,
+     articulo.`Idcategoria` AS articulo_Idcategoria,
+     articulo.`eliminado` AS articulo_eliminado,
+     categoria_articulo.`ID` AS categoria_articulo_ID,
+     categoria_articulo.`Nombre` AS categoria_articulo_Nombre,
+     categoria_articulo.`Descripcion` AS categoria_articulo_Descripcion,
+     detalle_pedido.`ID_detalle` AS detalle_pedido_ID_detalle,
+     detalle_pedido.`numDetalle` AS detalle_pedido_numDetalle,
+     detalle_pedido.`ID_Pedido` AS detalle_pedido_ID_Pedido,
+     detalle_pedido.`ID_Articulo` AS detalle_pedido_ID_Articulo,
+     detalle_pedido.`cantidad` AS detalle_pedido_cantidad,
+     detalle_pedido.`Observaciones` AS detalle_pedido_Observaciones,
+     pedido.`id` AS pedido_id,
+     pedido.`pagado` AS pedido_pagado,
+     pedido.`enPreparacion` AS pedido_enPreparacion,
+     pedido.`cocinado` AS pedido_cocinado,
+     pedido.`entregado` AS pedido_entregado,
+     pedido.`EnCola` AS pedido_EnCola,
+     pedido.`preferencial` AS pedido_preferencial,
+     pedido.`fechaHora` AS pedido_fechaHora,
+     pedido.`idCliente` AS pedido_idCliente,
+     pedido.`idMesero` AS pedido_idMesero,
+     pedido.`idCocinero` AS pedido_idCocinero,
+     detalle_factura.`id_detalle` AS detalle_factura_id_detalle,
+     detalle_factura.`id_factura` AS detalle_factura_id_factura,
+     detalle_factura.`id_pedido` AS detalle_factura_id_pedido,
+     factura.`ID` AS factura_ID,
+     factura.`TOTAL` AS factura_TOTAL,
+     factura.`Fecha` AS factura_Fecha,
+     factura.`Id_cliente` AS factura_Id_cliente,
+     factura.`Descuento` AS factura_Descuento,
+     factura.`TipoDePago` AS factura_TipoDePago
+FROM
+     `categoria_articulo` categoria_articulo INNER JOIN `articulo` articulo ON categoria_articulo.`ID` = articulo.`Idcategoria`
+     INNER JOIN `detalle_pedido` detalle_pedido ON articulo.`ID` = detalle_pedido.`ID_Articulo`
+     INNER JOIN `pedido` pedido ON detalle_pedido.`ID_Pedido` = pedido.`id`
+     INNER JOIN `detalle_factura` detalle_factura ON pedido.`id` = detalle_factura.`id_pedido`
+     INNER JOIN `factura` factura ON detalle_factura.`id_factura` = factura.`ID`
+WHERE
+     categoria_articulo.`Nombre` = $P{Categoria}
+	AND (factura.`Fecha` BETWEEN $P{FechaDesde} and $P{FechaHasta})
+]]>
+	</queryString>
+	<field name="articulo_ID" class="java.lang.Integer"/>
+	<field name="articulo_Nombre" class="java.lang.String"/>
+	<field name="articulo_Descripcion" class="java.lang.String"/>
+	<field name="articulo_Precio" class="java.lang.Double"/>
+	<field name="articulo_Disponibilidad" class="java.lang.Boolean"/>
+	<field name="articulo_TiempoPreparacion" class="java.lang.Integer"/>
+	<field name="articulo_Idcategoria" class="java.lang.Integer"/>
+	<field name="articulo_eliminado" class="java.lang.Boolean"/>
+	<field name="categoria_articulo_ID" class="java.lang.Integer"/>
+	<field name="categoria_articulo_Nombre" class="java.lang.String"/>
+	<field name="categoria_articulo_Descripcion" class="java.lang.String"/>
+	<field name="detalle_pedido_ID_detalle" class="java.lang.Integer"/>
+	<field name="detalle_pedido_numDetalle" class="java.lang.Integer"/>
+	<field name="detalle_pedido_ID_Pedido" class="java.lang.Integer"/>
+	<field name="detalle_pedido_ID_Articulo" class="java.lang.Integer"/>
+	<field name="detalle_pedido_cantidad" class="java.lang.Integer"/>
+	<field name="detalle_pedido_Observaciones" class="java.lang.String"/>
+	<field name="pedido_id" class="java.lang.Integer"/>
+	<field name="pedido_pagado" class="java.lang.Boolean"/>
+	<field name="pedido_enPreparacion" class="java.lang.Boolean"/>
+	<field name="pedido_cocinado" class="java.lang.Boolean"/>
+	<field name="pedido_entregado" class="java.lang.Boolean"/>
+	<field name="pedido_EnCola" class="java.lang.Boolean"/>
+	<field name="pedido_preferencial" class="java.lang.Boolean"/>
+	<field name="pedido_fechaHora" class="java.sql.Timestamp"/>
+	<field name="pedido_idCliente" class="java.lang.String"/>
+	<field name="pedido_idMesero" class="java.lang.String"/>
+	<field name="pedido_idCocinero" class="java.lang.String"/>
+	<field name="detalle_factura_id_detalle" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_factura" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_pedido" class="java.lang.Integer"/>
+	<field name="factura_ID" class="java.lang.Integer"/>
+	<field name="factura_TOTAL" class="java.lang.Double"/>
+	<field name="factura_Fecha" class="java.sql.Date"/>
+	<field name="factura_Id_cliente" class="java.lang.String"/>
+	<field name="factura_Descuento" class="java.lang.Integer"/>
+	<field name="factura_TipoDePago" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="20" width="204" height="35" uuid="ade665a8-c11c-4d1c-b421-c421ec70f833"/>
+				<textElement>
+					<font fontName="Arial" size="20"/>
+				</textElement>
+				<text><![CDATA[Reporte por Categoria]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="21" y="35" width="100" height="20" uuid="89d787eb-2531-411b-982a-e928822f15f4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="52" height="20" uuid="f0bcaafb-e71c-4089-80d9-31834e82f72c"/>
+				<text><![CDATA[ID Pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="2" width="79" height="20" uuid="1b08e8f5-f0f1-49a2-88e3-c02d4cbefcaf"/>
+				<text><![CDATA[Nombre Plato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="0" width="48" height="20" uuid="84590f97-64b0-4338-acdb-6185bd894d1b"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="0" width="48" height="20" uuid="39863553-b43f-41b9-86ff-a87010bbf9a2"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="2" width="59" height="20" uuid="23411bd4-3936-4004-aaaf-96023f440b3c"/>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="2" width="53" height="20" uuid="5ecaa638-3f9a-429e-8b83-14a24573c320"/>
+				<text><![CDATA[ID cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="2" width="54" height="20" uuid="71dfd8f0-d214-4ea4-8b2f-79fb05fc87dd"/>
+				<text><![CDATA[ID Mesero]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="18" width="52" height="20" uuid="73af88a2-589e-4b86-871c-9e02234510f0"/>
+				<textFieldExpression><![CDATA[$F{pedido_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="18" width="79" height="20" uuid="e6a58b62-f774-4a0d-a399-92f5f12473f1"/>
+				<textFieldExpression><![CDATA[$F{articulo_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="18" width="48" height="20" uuid="5ddae5b7-a54d-4958-b0b8-9a9333b1bee6"/>
+				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="18" width="48" height="20" uuid="5fc0d355-84c4-46a0-a217-35636c13dfff"/>
+				<textFieldExpression><![CDATA[$F{pedido_fechaHora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="18" width="59" height="20" uuid="4367f1c3-fa5b-4950-bb0c-6489ad9d04eb"/>
+				<textFieldExpression><![CDATA[$F{categoria_articulo_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="18" width="50" height="20" uuid="c42d108c-b8e0-45dc-8950-15a05f06385c"/>
+				<textFieldExpression><![CDATA[$F{pedido_idCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="18" width="54" height="20" uuid="787c70a9-c5f9-4cc8-a888-e83a1852c44b"/>
+				<textFieldExpression><![CDATA[$F{pedido_idMesero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

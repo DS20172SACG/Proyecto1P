@@ -77,8 +77,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        FechaInicio = new com.toedter.calendar.JDateChooser();
+        FechaHasta = new com.toedter.calendar.JDateChooser();
         jLabel24 = new javax.swing.JLabel();
         RadioBotonPlato = new javax.swing.JRadioButton();
         RadioBotonMesero = new javax.swing.JRadioButton();
@@ -94,7 +94,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaMesasDisponible = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -110,7 +110,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        TablaReserva = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
@@ -465,11 +465,11 @@ public class VistaAdministrador extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel23)
                                         .addGap(31, 31, 31)
-                                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(FechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel8Layout.createSequentialGroup()
                                         .addComponent(RadioBotonAmbiente)
                                         .addGap(26, 26, 26)
@@ -492,12 +492,12 @@ public class VistaAdministrador extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel22))
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23))
                 .addGap(16, 16, 16)
                 .addComponent(jLabel24)
@@ -555,7 +555,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Reportes", jPanel3);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaMesasDisponible.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -563,7 +563,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaMesasDisponible);
 
         jLabel12.setText(" Mesas Disponibles");
 
@@ -583,7 +583,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         jLabel19.setText("Ambiente");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "VIP" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -642,7 +642,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        TablaReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -650,7 +650,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(TablaReserva);
 
         jLabel13.setText("Lista de Reservas");
 
@@ -867,6 +867,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
     public static javax.swing.JButton BotonNuevo;
     public static javax.swing.JButton BuscarSeleccionFiltro;
     public static javax.swing.JButton BusquedaPorFiltro;
+    public static com.toedter.calendar.JDateChooser FechaHasta;
+    public static com.toedter.calendar.JDateChooser FechaInicio;
     public static javax.swing.JComboBox<String> Funciones_o_Cargos;
     public static javax.swing.ButtonGroup GrupoRadioBotonesBusquedaUsuario;
     public static javax.swing.ButtonGroup GrupoRadioBotonesReporte;
@@ -880,6 +882,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
     public static javax.swing.JRadioButton RadioBotonMesero;
     public static javax.swing.JRadioButton RadioBotonNombre;
     public static javax.swing.JRadioButton RadioBotonPlato;
+    public static javax.swing.JTable TablaMesasDisponible;
+    private javax.swing.JTable TablaReserva;
     public static javax.swing.JTable TablaUsuario;
     public static javax.swing.JTextField TextoApellido;
     public static javax.swing.JTextField TextoCedula;
@@ -899,10 +903,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    public static javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -941,8 +943,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField10;
     public static javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables

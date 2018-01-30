@@ -51,6 +51,8 @@ public class ControlAdministrador implements Controlador {
     public void actionPerformed(ActionEvent e) {
         if(ventana.MostrarReporte==e.getSource()){
             Map parameters = new HashMap();
+            parameters.put("FechaDesde", VistaAdministrador.FechaInicio.getDate());
+            parameters.put("FechaHasta", VistaAdministrador.FechaHasta.getDate());
             if(ventana.RadioBotonPlato.isSelected()){
                 
                 parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
@@ -218,6 +220,7 @@ public class ControlAdministrador implements Controlador {
         ventana.setVisible(true);
         agregarRadioBotones();
         MostrarUsuarios("","");
+        MostrarMesas();
         VistaAdministrador.MostrarReporte.setEnabled(false);
         habilitarOpcionesdeIngresar(false);
         //VistaAdministrador.BotonEliminar.setEnabled(false);
@@ -304,6 +307,7 @@ public class ControlAdministrador implements Controlador {
         
         } 
     }
+    
     void agregarRadioBotones(){
         VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonPlato);
         VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonMesero);
@@ -313,5 +317,34 @@ public class ControlAdministrador implements Controlador {
         VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonApellido);
         VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonEdad);
         VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonFuncion);
+    }
+    void MostrarMesas(){
+        DefaultTableModel modo=new DefaultTableModel();
+        modo.addColumn("ID Mesa");
+        modo.addColumn("Nombre");
+        modo.addColumn("Asientos");
+        modo.addColumn("Disponibilidaad");
+        modo.addColumn("Disponibilidad");
+        VistaAdministrador.TablaMesasDisponible.setModel(modo);
+        String sql ="select * from mesa where disponibilidad=1";
+        
+        String datos[] = new String[5];
+        
+        try{
+            Statement st = Connector.getInstancia().getConnection().createStatement();
+            ResultSet rs= st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                modo.addRow(datos);
+            }
+            VistaAdministrador.TablaMesasDisponible.setModel(modo);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de personal por usuario");
+        
+        } 
     }
 }
