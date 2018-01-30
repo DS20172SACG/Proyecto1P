@@ -231,7 +231,7 @@ public class Consultador {
         return Id_pedidos;
     }
     public String generarDetalleFactura(String Id_Pedido){
-        cadenaDeLlamada = "{CALL cargarInfoPedido(?)}";
+        cadenaDeLlamada = "{CALL cargarInfoPedidos(?)}";
         float total = 0;
         resultado = null;
         String result = "";

@@ -139,6 +139,10 @@ create procedure IngresarDetalleFactura(in fact int, in idPed int)
 begin
 	INSERT INTO Detalle_Factura(id_factura, id_pedido)
     values(fact, idPed);
+    
+    update Pedido
+    set Pedido.pagado = 1
+    where Pedido.id = idPed;
 end$$
 
 create procedure actualizarDetalle(in idPed int, in numDet int, in idArt int, in cant int, in obs varchar(255))

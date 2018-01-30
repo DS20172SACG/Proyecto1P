@@ -73,7 +73,7 @@ public class ControlCajero implements Controlador {
             }
             
             
-            ventana.getjTextPane1().setText(text);
+            ventana.getjTextPane1().setText(ventana.getjTextPane1().getText() + "\n"+ text);
         });
         
         ventana.getQuitarPed().addActionListener((ActionEvent e) -> {
@@ -83,7 +83,7 @@ public class ControlCajero implements Controlador {
             DefaultListModel<String> ListaPedidosEnFactura = (DefaultListModel)ventana.getjList3().getModel();
             ListaPedidosEnFactura.removeAllElements();
             
-            ventana.getjTextPane1().setText("");
+            ventana.getjTextPane1().setText("Cod.   Articulo\tCant.   Precio");
         });
         
         ventana.getFacturarBut().addActionListener((e) -> {
@@ -107,7 +107,7 @@ public class ControlCajero implements Controlador {
            DefaultListModel<String> ListaPedidosEnFactura = (DefaultListModel)ventana.getjList3().getModel();
             ListaPedidosEnFactura.removeAllElements();
             
-            ventana.getjTextPane1().setText("");
+            ventana.getjTextPane1().setText("Cod.   Articulo\tCant.   Precio");
             
         });
         
