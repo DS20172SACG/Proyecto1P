@@ -7,29 +7,36 @@
 		<parameterDescription><![CDATA[Nombre Plato]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FechaDesde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaHasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     detalle_factura.`id_detalle` AS detalle_factura_id_detalle,
-     detalle_factura.`id_factura` AS detalle_factura_id_factura,
-     detalle_factura.`id_pedido` AS detalle_factura_id_pedido,
      factura.`ID` AS factura_ID,
      factura.`TOTAL` AS factura_TOTAL,
      factura.`Fecha` AS factura_Fecha,
      factura.`Id_cliente` AS factura_Id_cliente,
      factura.`Descuento` AS factura_Descuento,
      factura.`TipoDePago` AS factura_TipoDePago,
+     detalle_factura.`id_detalle` AS detalle_factura_id_detalle,
+     detalle_factura.`id_factura` AS detalle_factura_id_factura,
+     detalle_factura.`id_pedido` AS detalle_factura_id_pedido,
      pedido.`id` AS pedido_id,
      pedido.`pagado` AS pedido_pagado,
      pedido.`enPreparacion` AS pedido_enPreparacion,
      pedido.`cocinado` AS pedido_cocinado,
      pedido.`entregado` AS pedido_entregado,
      pedido.`EnCola` AS pedido_EnCola,
-     pedido.`fecha` AS pedido_fecha,
-     pedido.`hora` AS pedido_hora,
+     pedido.`preferencial` AS pedido_preferencial,
+     pedido.`fechaHora` AS pedido_fechaHora,
      pedido.`idCliente` AS pedido_idCliente,
      pedido.`idMesero` AS pedido_idMesero,
      pedido.`idCocinero` AS pedido_idCocinero,
      detalle_pedido.`ID_detalle` AS detalle_pedido_ID_detalle,
+     detalle_pedido.`numDetalle` AS detalle_pedido_numDetalle,
      detalle_pedido.`ID_Pedido` AS detalle_pedido_ID_Pedido,
      detalle_pedido.`ID_Articulo` AS detalle_pedido_ID_Articulo,
      detalle_pedido.`cantidad` AS detalle_pedido_cantidad,
@@ -48,29 +55,32 @@ FROM
      INNER JOIN `detalle_pedido` detalle_pedido ON pedido.`id` = detalle_pedido.`ID_Pedido`
      INNER JOIN `articulo` articulo ON detalle_pedido.`ID_Articulo` = articulo.`ID`
 WHERE
-     articulo.`Nombre` = $P{Nombre}]]>
+     articulo.`Nombre` = $P{Nombre}
+
+ AND (factura.`Fecha` BETWEEN $P{FechaDesde} and $P{FechaHasta})]]>
 	</queryString>
-	<field name="detalle_factura_id_detalle" class="java.lang.Integer"/>
-	<field name="detalle_factura_id_factura" class="java.lang.Integer"/>
-	<field name="detalle_factura_id_pedido" class="java.lang.Integer"/>
 	<field name="factura_ID" class="java.lang.Integer"/>
 	<field name="factura_TOTAL" class="java.lang.Double"/>
 	<field name="factura_Fecha" class="java.sql.Date"/>
 	<field name="factura_Id_cliente" class="java.lang.String"/>
 	<field name="factura_Descuento" class="java.lang.Integer"/>
 	<field name="factura_TipoDePago" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_detalle" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_factura" class="java.lang.Integer"/>
+	<field name="detalle_factura_id_pedido" class="java.lang.Integer"/>
 	<field name="pedido_id" class="java.lang.Integer"/>
 	<field name="pedido_pagado" class="java.lang.Boolean"/>
 	<field name="pedido_enPreparacion" class="java.lang.Boolean"/>
 	<field name="pedido_cocinado" class="java.lang.Boolean"/>
 	<field name="pedido_entregado" class="java.lang.Boolean"/>
 	<field name="pedido_EnCola" class="java.lang.Boolean"/>
-	<field name="pedido_fecha" class="java.sql.Date"/>
-	<field name="pedido_hora" class="java.sql.Time"/>
+	<field name="pedido_preferencial" class="java.lang.Boolean"/>
+	<field name="pedido_fechaHora" class="java.sql.Timestamp"/>
 	<field name="pedido_idCliente" class="java.lang.String"/>
 	<field name="pedido_idMesero" class="java.lang.String"/>
 	<field name="pedido_idCocinero" class="java.lang.String"/>
 	<field name="detalle_pedido_ID_detalle" class="java.lang.Integer"/>
+	<field name="detalle_pedido_numDetalle" class="java.lang.Integer"/>
 	<field name="detalle_pedido_ID_Pedido" class="java.lang.Integer"/>
 	<field name="detalle_pedido_ID_Articulo" class="java.lang.Integer"/>
 	<field name="detalle_pedido_cantidad" class="java.lang.Integer"/>
@@ -119,10 +129,6 @@ WHERE
 				<text><![CDATA[Disponibilidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="232" y="0" width="90" height="20" uuid="4f542da2-1ee1-4b87-9789-371616a4a1e7"/>
-				<text><![CDATA[Fecha de Pedido]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="322" y="0" width="53" height="20" uuid="83f9b0a3-ed24-41d2-a0be-ec666ecb4765"/>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
@@ -137,6 +143,10 @@ WHERE
 			<staticText>
 				<reportElement x="477" y="0" width="54" height="20" uuid="4813a01a-0455-4e76-b83f-8b36fa0ad0e4"/>
 				<text><![CDATA[Tipo Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="2" width="90" height="20" uuid="6a677c79-2ae4-484f-a712-7120ed97a1de"/>
+				<text><![CDATA[Fecha]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -155,10 +165,6 @@ WHERE
 				<textFieldExpression><![CDATA[$F{articulo_Disponibilidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="232" y="55" width="90" height="20" uuid="57f11563-cfad-4b71-a810-1ae122c2c181"/>
-				<textFieldExpression><![CDATA[$F{pedido_fecha}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="322" y="55" width="53" height="20" uuid="47782104-44df-499a-8074-e58b3e2a0e2e"/>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
@@ -173,6 +179,10 @@ WHERE
 			<textField>
 				<reportElement x="477" y="55" width="54" height="20" uuid="d12a63bd-874e-4916-a244-915b1f35250e"/>
 				<textFieldExpression><![CDATA[$F{factura_TipoDePago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="55" width="90" height="20" uuid="9ddb5185-45ce-45b8-8628-9d3478a5e781"/>
+				<textFieldExpression><![CDATA[$F{factura_Fecha}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
