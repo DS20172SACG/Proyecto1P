@@ -33,61 +33,8 @@ public class ControlMesero implements Controlador {
         this.mesero.setControl(this);
         addListeners();
     } 
-    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(ventana.getjRadioButton1())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOENTRADA), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjRadioButton2())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOFUERTE), ventana.getjComboBox1());            
-        }else if(e.getSource().equals(ventana.getjRadioButton3())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOPOSTRE), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjRadioButton4())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.COMBO), ventana.getjComboBox1()); 
-        
-
-            
-        }else if(e.getSource().equals(ventana.getjRadioButton13())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAREFRESCO), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjRadioButton14())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDANATURAL), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjRadioButton15())){
-            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAARTIFICIAL), ventana.getjComboBox1());
-        }else if(e.getSource().equals(ventana.getjComboBox1())){
-            String texto = String.valueOf(ventana.getjComboBox1().getSelectedItem());
-            ventana.getjTextArea1().setText(Consultador.getInstancia().descripcionDeArticuloPorNombre(texto));
-            ventana.getjTextField2().setText(Double.toString(Consultador.getInstancia().precioDeArticuloPorNombre(texto)));
-        }else if(e.getSource().equals(ventana.getjButton9())){
-            if(validarIngresoDetalle()){ 
-                agregarDetallePedidoNuevo();
-                ventana.limpiarParteIngresoDetalle();
-                ventana.actualizarSubtotal(mesero.totalDetalle());
-            };
-        }else if(e.getSource().equals(ventana.getjButton1())){
-            if(ventana.getjRadioButton16().isSelected()){
-                mesero.ingresarPedidoPresencial(generarPedidoPresencial());
-            }else if(ventana.getjRadioButton17().isSelected()){
-                mesero.ingresarPedidoDomicilio(generarPedidoDomicilio());
-            }
-        }else if(e.getSource().equals(ventana.getjButton2())){
-            actualizarTablaDetallePedidoNoAtendido(Consultador.getInstancia().detalleDePedidoParaTabla(Integer.parseInt(ventana.getjTextField7().getText())));
-        }else if(e.getSource().equals(ventana.getjButton3())){
-            if(Consultador.getInstancia().pedidoEsADomicilio(Integer.parseInt(ventana.getjTextField7().getText()))){
-                ventana.getjPanel4().setVisible(true);
-                ventana.getjTextField10().setText(Consultador.getInstancia().direccionEntregaPedido(Integer.parseInt(ventana.getjTextField7().getText())));
-            }else{
-                ventana.getjPanel9().setVisible(true);
-                ventana.getjComboBox3().setSelectedIndex(Consultador.getInstancia().idMesaDePedido(Integer.parseInt(ventana.getjTextField7().getText())));
-            }
-        }else if(e.getSource().equals(ventana.getjButton4())){
-            actualizarTablaPedidosNoAtendidos(Consultador.getInstancia().pedidosNoAtendidosDeClienteParaTabla(ventana.getjTextField6().getText()));
-        }else if(e.getSource().equals(ventana.getjRadioButton16())){
-            ventana.getjComboBox4().setEnabled(true);
-            ventana.getjTextField14().setEnabled(false);
-        }else if(e.getSource().equals(ventana.getjRadioButton17())){
-            ventana.getjComboBox4().setEnabled(false);
-            ventana.getjTextField14().setEnabled(false);
-        }
     }
     
     @Override
@@ -96,22 +43,9 @@ public class ControlMesero implements Controlador {
     }
     
     private void addListeners(){
-        ventana.getjRadioButton1().addActionListener(this);
-        ventana.getjRadioButton2().addActionListener(this);
-        ventana.getjRadioButton3().addActionListener(this);
-        ventana.getjRadioButton4().addActionListener(this);
-        ventana.getjRadioButton13().addActionListener(this);
-        ventana.getjRadioButton14().addActionListener(this);
-        ventana.getjRadioButton15().addActionListener(this);
-        ventana.getjRadioButton16().addActionListener(this);
-        ventana.getjRadioButton17().addActionListener(this);
-        ventana.getjComboBox1().addActionListener(this);
-        ventana.getjButton9().addActionListener(this);
-        ventana.getjButton1().addActionListener(this);
-        ventana.getjButton2().addActionListener(this);
-        ventana.getjButton3().addActionListener(this);
-        ventana.getjButton4().addActionListener(this);
-        ventana.getjButton10().addActionListener(this);
+        listenersRadioButtons();
+        listenersComboBoxes();
+        listenersButtons();
     }
     
     private boolean validarIngresoDetalle(){
@@ -144,7 +78,6 @@ public class ControlMesero implements Controlador {
                 ventana.getjCheckBox1().isSelected(),
                 ventana.getjTextField1().getText(),
                 mesero.getIdentificacion());
-                
     }
     
     public void actualizarTablaPedidosNoAtendidos(LinkedList<String[]> datos){
@@ -159,5 +92,91 @@ public class ControlMesero implements Controlador {
         for(String[] info : datos){
             dm.addRow(info);
         }
+    }
+    
+    public void listenersRadioButtons(){
+        
+        ventana.getjRadioButton1().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOENTRADA), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton2().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOFUERTE), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton3().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.PLATOPOSTRE), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton4().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.COMBO), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton13().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAREFRESCO), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton14().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDANATURAL), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton15().addActionListener((ActionEvent e) -> {
+            ventana.colocarArticulosEnCombo(Consultador.getInstancia().cargarArticulosPorCategoria(ConstantesCategoria.BEBIDAARTIFICIAL), ventana.getjComboBox1());
+        });
+        
+        ventana.getjRadioButton16().addActionListener((ActionEvent e) -> {
+            ventana.getjComboBox4().setEnabled(true);
+            ventana.getjTextField14().setEnabled(false);
+        });
+        
+        ventana.getjRadioButton17().addActionListener((ActionEvent e) -> {
+            ventana.getjComboBox4().setEnabled(false);
+            ventana.getjTextField14().setEnabled(false);
+        });
+        
+    }
+    
+    public void listenersComboBoxes(){
+        ventana.getjComboBox1().addActionListener((ActionEvent e) -> {
+            String texto = String.valueOf(ventana.getjComboBox1().getSelectedItem());
+            ventana.getjTextArea1().setText(Consultador.getInstancia().descripcionDeArticuloPorNombre(texto));
+            ventana.getjTextField2().setText(Double.toString(Consultador.getInstancia().precioDeArticuloPorNombre(texto)));
+        });
+    }
+    
+    public void listenersButtons(){
+        ventana.getjButton1().addActionListener((ActionEvent e) -> {
+            if(ventana.getjRadioButton16().isSelected()){
+                mesero.ingresarPedidoPresencial(generarPedidoPresencial());
+            }else if(ventana.getjRadioButton17().isSelected()){
+                mesero.ingresarPedidoDomicilio(generarPedidoDomicilio());
+            }
+        });
+        
+        ventana.getjButton2().addActionListener((ActionEvent e) -> {
+            actualizarTablaDetallePedidoNoAtendido(Consultador.getInstancia().detalleDePedidoParaTabla(Integer.parseInt(ventana.getjTextField7().getText())));
+        });
+        
+        ventana.getjButton3().addActionListener((ActionEvent e) -> {
+            if(Consultador.getInstancia().pedidoEsADomicilio(Integer.parseInt(ventana.getjTextField7().getText()))){
+                ventana.getjPanel4().setVisible(true);
+                ventana.getjTextField10().setText(Consultador.getInstancia().direccionEntregaPedido(Integer.parseInt(ventana.getjTextField7().getText())));
+            }else{
+                ventana.getjPanel9().setVisible(true);
+                ventana.getjComboBox3().setSelectedIndex(Consultador.getInstancia().idMesaDePedido(Integer.parseInt(ventana.getjTextField7().getText())));
+            }
+        });
+        
+        ventana.getjButton4().addActionListener((ActionEvent e) -> {
+            actualizarTablaPedidosNoAtendidos(Consultador.getInstancia().pedidosNoAtendidosDeClienteParaTabla(ventana.getjTextField6().getText()));
+        });
+        
+        ventana.getjButton9().addActionListener((ActionEvent e) -> {
+            if(validarIngresoDetalle()){ 
+                agregarDetallePedidoNuevo();
+                ventana.limpiarParteIngresoDetalle();
+                ventana.actualizarSubtotal(mesero.totalDetalle());
+            };
+        });
     }
 }
