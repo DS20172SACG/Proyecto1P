@@ -6,6 +6,7 @@
 package BaseDeDatos;
 
 import Pagaduria.Cliente;
+import Pedidos.DetallePedido;
 import Pedidos.Pedido;
 import Pedidos.PedidoDomicilio;
 import Pedidos.PedidoPresencial;
@@ -405,5 +406,40 @@ public class Consultador {
         return id;
     }
     
+    public LinkedList<DetallePedido> detalleDePedido(int idPedido){
+        LinkedList<DetallePedido> lista = new LinkedList();
+        cadenaDeLlamada = "{CALL obtenerDetalleDePedido(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idPedido);
+            resultado = llamada.executeQuery();
+            while(resultado.next()){
+                lista.add(new DetallePedido(resultado.getInt(1),
+                        resultado.getInt(2),
+                        resultado.getInt(3),
+                        resultado.getInt(4),
+                        resultado.getInt(5),
+                        resultado.getString(6)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
+    public int tiempoPreparacionArticulo(int idArticulo){
+        int minutos = 0;
+        cadenaDeLlamada = "{CALL tiempoPreparacionArticulo(?)}";
+        try {
+            llamada = Connector.getInstancia().getConnection().prepareCall(cadenaDeLlamada);
+            llamada.setInt(1, idArticulo);
+            resultado = llamada.executeQuery();
+            resultado.next();
+            minutos = resultado.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return minutos;
+    }
 }
 
