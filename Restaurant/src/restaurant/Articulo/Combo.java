@@ -15,18 +15,9 @@ public class Combo extends Articulo{
     
     private LinkedList<Articulo> articulos;
 
-    public Combo(String id, String nombre, String descripcion, double precio, boolean disponible, LinkedList<Articulo> articulos) {
-        super(id, nombre, descripcion, precio, disponible);
-        calcularMinutos();
+    public Combo(String id, String nombre, String descripcion, double precio, boolean disponible, int minutosPreparacion, LinkedList<Articulo> articulos) {
+        super(id, nombre, descripcion, precio, disponible, minutosPreparacion);
         this.articulos = articulos;
     }
     
-    private void calcularMinutos(){
-        for(Articulo articulo : articulos){
-            if(articulo.getMinutosPreparacion()>this.minutosPreparacion){
-                this.minutosPreparacion += articulo.getMinutosPreparacion();
-            }
-        }
-        this.minutosPreparacion = this.minutosPreparacion + (3*articulos.size());
-    }
 }
