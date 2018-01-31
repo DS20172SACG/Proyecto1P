@@ -13,7 +13,7 @@ public class Bebida extends Articulo {
 
     public Bebida(String id, String nombre, String descripcion, double precio, boolean disponible, int minutosPreparacion, int categoria) {
         super(id, nombre, descripcion, precio, disponible, minutosPreparacion);
-        this.categoria = new CategoriaBebida(categoria);
+        this.categoria = categoria;
     }
 
 }

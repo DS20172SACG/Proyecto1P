@@ -13,7 +13,7 @@ public class Plato extends Articulo {
 
     public Plato(String id, String nombre, String descripcion, double precio, boolean disponible,int minutosPreparacion, int categoria) {
         super(id, nombre, descripcion, precio, disponible, minutosPreparacion);
-        this.categoria = new CategoriaPlato(categoria);
+        this.categoria = categoria;
     }
 
 }

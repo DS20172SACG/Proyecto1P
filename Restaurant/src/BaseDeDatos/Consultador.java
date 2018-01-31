@@ -7,9 +7,6 @@ package BaseDeDatos;
 
 import Pagaduria.Cliente;
 import Pedidos.DetallePedido;
-import Pedidos.Pedido;
-import Pedidos.PedidoDomicilio;
-import Pedidos.PedidoPresencial;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

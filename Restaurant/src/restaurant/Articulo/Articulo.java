@@ -15,7 +15,7 @@ public abstract class Articulo {
     protected String descripcion;
     protected double precio;
     protected boolean disponible;
-    protected Categoria categoria;
+    protected int categoria;
     protected int minutosPreparacion;
     
 
@@ -80,11 +80,11 @@ public abstract class Articulo {
         this.disponible = disponible;
     }
 
-    public Categoria getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 

@@ -6,7 +6,6 @@
 package restaurant;
 
 import Controladores.ControlLogin;
-import Vistas.Login;
 
 /**
  *

@@ -17,6 +17,7 @@ public class Combo extends Articulo{
 
     public Combo(String id, String nombre, String descripcion, double precio, boolean disponible, int minutosPreparacion, LinkedList<Articulo> articulos) {
         super(id, nombre, descripcion, precio, disponible, minutosPreparacion);
+        this.categoria = Constantes.ConstantesCategoria.COMBO;
         this.articulos = articulos;
     }
     
