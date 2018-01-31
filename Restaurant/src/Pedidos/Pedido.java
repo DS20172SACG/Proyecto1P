@@ -47,7 +47,6 @@ public abstract class Pedido {
         this.idCliente = idCliente;
         this.idMesero = idMesero;
         this.idCocinero = idCocinero;
-        detalle = Consultador.getInstancia().detalleDePedido(idPedido);
     }
 
     public int getIdPedido() {
@@ -130,6 +129,10 @@ public abstract class Pedido {
         this.idCocinero = idCocinero;
     }
     
+    public void setearDetalleDePedido(){
+        detalle = Consultador.getInstancia().detalleDePedido(idPedido);
+    }
+    
     public int minutosEstimados(){
         int minMax = 0;
         for(DetallePedido d : this.detalle){
@@ -140,4 +143,5 @@ public abstract class Pedido {
         }
         return minMax + (3 * detalle.size());
     }
+    
 }
