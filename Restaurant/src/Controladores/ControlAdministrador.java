@@ -37,14 +37,10 @@ public class ControlAdministrador implements Controlador {
         ventana = new VistaAdministrador();
         this.administrador = administrador;
         this.administrador.setControl(this);
-        this.ventana.MostrarReporte.addActionListener(this);
-        this.ventana.BusquedaPorFiltro.addActionListener(this);
-        this.ventana.BuscarSeleccionFiltro.addActionListener(this);
-        this.ventana.BotonNuevo.addActionListener(this);
-        this.ventana.BotonModificar.addActionListener(this);
-        this.ventana.BotonActualizar.addActionListener(this);
-        this.ventana.BotonGuardar.addActionListener(this);
-        this.ventana.BotonEliminar.addActionListener(this);
+        addListenerUser();
+        addListenerReport();
+        
+        
     }
     
     @Override
@@ -73,6 +69,11 @@ public class ControlAdministrador implements Controlador {
             }
             AbstractJasperReports.showViewer();
             
+        }
+        if(ventana.BotonCerrar==e.getSource()){
+            ventana.dispose();
+            ControlLogin login= new ControlLogin();
+            login.presentarVista();
         }
         if(ventana.BusquedaPorFiltro==e.getSource()){
             if(ventana.RadioBotonPlato.isSelected()){
@@ -346,5 +347,20 @@ public class ControlAdministrador implements Controlador {
             JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de personal por usuario");
         
         } 
+    }
+
+    private void addListenerUser() {
+        this.ventana.BotonNuevo.addActionListener(this);
+        this.ventana.BotonModificar.addActionListener(this);
+        this.ventana.BotonActualizar.addActionListener(this);
+        this.ventana.BotonGuardar.addActionListener(this);
+        this.ventana.BotonEliminar.addActionListener(this);
+        this.ventana.BotonCerrar.addActionListener(this);
+    }
+
+    private void addListenerReport() {
+        this.ventana.MostrarReporte.addActionListener(this);
+        this.ventana.BusquedaPorFiltro.addActionListener(this);
+        this.ventana.BuscarSeleccionFiltro.addActionListener(this);
     }
 }
