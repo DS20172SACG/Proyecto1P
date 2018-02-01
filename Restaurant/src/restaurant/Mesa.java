@@ -13,7 +13,7 @@ public class Mesa {
     private String id;
     private int cantidadAsientos;
     private boolean disponible;
-    private String idAmbiente;
+    private int idAmbiente;
 
     public Mesa() {
     }
@@ -48,11 +48,11 @@ public class Mesa {
         this.disponible = disponible;
     }
 
-    public String getIdAmbiente() {
+    public int getIdAmbiente() {
         return idAmbiente;
     }
 
-    public void setIdAmbiente(String idAmbiente) {
+    public void setIdAmbiente(int idAmbiente) {
         this.idAmbiente = idAmbiente;
     }
     

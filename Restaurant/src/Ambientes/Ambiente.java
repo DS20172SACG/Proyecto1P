@@ -9,6 +9,33 @@ package Ambientes;
  *
  * @author Usuario
  */
-public abstract class Ambiente {
+public class Ambiente {
+    
+    private int tipoAmbiente;
+    private String nombre;
+    
+    public Ambiente(){
+        
+    }
+    
+    public Ambiente(int tipoAmbiente){
+        this.tipoAmbiente = tipoAmbiente;
+    }
+
+    public int getTipoAmbiente() {
+        return tipoAmbiente;
+    }
+
+    public void setTipoAmbiente(int tipoAmbiente) {
+        this.tipoAmbiente = tipoAmbiente;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     
 }

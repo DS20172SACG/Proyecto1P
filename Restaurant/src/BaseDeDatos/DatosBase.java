@@ -16,7 +16,7 @@ public class DatosBase {
     private String password;
 
     public DatosBase() {
-        url = "jdbc:mysql://127.0.0.1:3306/SARES";
+        url = "jdbc:mysql://127.0.0.1:3306/sares";
         user = "root";
         password = "1234";
     }

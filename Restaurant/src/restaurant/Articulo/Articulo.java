@@ -21,7 +21,7 @@ public abstract class Articulo {
 
     public Articulo() {
     }
-
+    
     public Articulo(String id, String nombre, String descripcion, double precio, boolean disponible) {
         this.id = id;
         this.nombre = nombre;
