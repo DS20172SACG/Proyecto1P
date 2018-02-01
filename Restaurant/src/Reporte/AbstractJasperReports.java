@@ -42,7 +42,7 @@ public class AbstractJasperReports {
     }
 
     public static void showViewer(){
-        viewer = new JasperViewer(reportfilled);
+        viewer = new JasperViewer(reportfilled,false);
         //viewer.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         viewer.setVisible(true);
     }
