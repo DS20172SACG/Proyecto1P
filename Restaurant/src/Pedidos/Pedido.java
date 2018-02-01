@@ -24,7 +24,7 @@ public abstract class Pedido {
     protected String idCliente;
     protected String idMesero;
     protected String idCocinero; /*Es null hasta que un cocinero cocina el pedido, o el Mesero asigna un cocinero.*/
-    protected LinkedList<DetallePedido> detalle;
+    protected LinkedList<DetallePedido> detalle = new LinkedList<>();
 
     public Pedido() {
     }
@@ -33,7 +33,7 @@ public abstract class Pedido {
         this.preferencial = preferencial;
         this.idCliente = idCliente;
         this.idMesero = idMesero;
-        detalle = new LinkedList();
+        
     }
 
     public Pedido(int idPedido, boolean pagado, boolean enPreparacion, boolean cocinado, boolean entregado, boolean enCola, boolean preferencial, String idCliente, String idMesero, String idCocinero) {
@@ -132,16 +132,19 @@ public abstract class Pedido {
     public void setearDetalleDePedido(){
         detalle = Consultador.getInstancia().detalleDePedido(idPedido);
     }
-    
+    public void addDetalles(DetallePedido det){
+        this.detalle.add(det);
+    }
     public int minutosEstimados(){
         int minMax = 0;
         for(DetallePedido d : this.detalle){
             int minDeArt = Consultador.getInstancia().tiempoPreparacionArticulo(d.getIdArticulo());
+            
             if(minDeArt>minMax){
                 minMax = minDeArt;
             }
         }
-        return minMax + (3 * detalle.size());
+        return minMax + (3 * (detalle.size()-1) );
     }
     
 }
