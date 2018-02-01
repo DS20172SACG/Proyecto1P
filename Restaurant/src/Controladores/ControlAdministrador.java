@@ -39,160 +39,16 @@ public class ControlAdministrador implements Controlador {
         this.administrador.setControl(this);
         addListenerUser();
         addListenerReport();
+        addListenerReservas();
         
         
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(ventana.MostrarReporte==e.getSource()){
-            Map parameters = new HashMap();
-            parameters.put("FechaDesde", VistaAdministrador.FechaInicio.getDate());
-            parameters.put("FechaHasta", VistaAdministrador.FechaHasta.getDate());
-            if(ventana.RadioBotonPlato.isSelected()){
-                
-                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
-                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
-            }
-            if(ventana.RadioBotonMesero.isSelected()){
-                parameters.put("Lastname", VistaAdministrador.TextoFiltroSeleccionado.getText());
-                System.out.println(parameters.get("Lastname"));
-                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteMesero.jasper",parameters);
-            }
-            if(ventana.RadioBotonAmbiente.isSelected()){
-                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
-                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteCategoria.jasper",parameters);
-            }
-            if(ventana.RadioBotonCategoria.isSelected()){
-                //parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
-                //AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
-            }
-            AbstractJasperReports.showViewer();
-            
-        }
-        if(ventana.BotonCerrar==e.getSource()){
-            ventana.dispose();
-            ControlLogin login= new ControlLogin();
-            login.presentarVista();
-        }
-        if(ventana.BusquedaPorFiltro==e.getSource()){
-            if(ventana.RadioBotonPlato.isSelected()){
-                MostrarReportePlatos("Plato");
-            }
-            if(ventana.RadioBotonMesero.isSelected()){
-                MostrarReportePlatos("Mesero");
-            }
-            if(ventana.RadioBotonAmbiente.isSelected()){
-                MostrarReportePlatos("Ambiente");
-            }
-            if(ventana.RadioBotonCategoria.isSelected()){
-                MostrarReportePlatos("Categoria");
-            }
-            VistaAdministrador.ListaPlatosReporte.isSelectedIndex(0);
-        }
-        if(ventana.BuscarSeleccionFiltro==e.getSource()){
-            VistaAdministrador.TextoFiltroSeleccionado.setText(VistaAdministrador.ListaPlatosReporte.getSelectedValue().toString());
-            VistaAdministrador.MostrarReporte.setEnabled(true);
-        }
-        if(ventana.BotonNuevo==e.getSource()){
-            habilitarOpcionesdeIngresar(true);
-            VistaAdministrador.BotonModificar.setEnabled(false);
-            VistaAdministrador.BotonEliminar.setEnabled(false);            
-        }
-        if(ventana.BotonGuardar==e.getSource()){
-            if(TodosCampoLlenos()){
-                
-                PreparedStatement guardarUsuario;
-                PreparedStatement guardarPersonal;
-                try {
-                    guardarUsuario = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Usuario (usuario, clave, eliminado)VALUES(?,?,?)");
-                    guardarPersonal = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Personal (cedula, nombres, apellidos, edad, sueldo, idCargo, usuario, eliminado) VALUES(?,?,?,?,?,?,?,?)");
-                    guardarUsuario.setString(1, VistaAdministrador.TextoUsuario.getText());
-                    guardarUsuario.setString(2, VistaAdministrador.TextoContraseña.getText());
-                    guardarUsuario.setInt(3, 0);
-                    
-                    guardarPersonal.setString(1, VistaAdministrador.TextoCedula.getText());
-                    guardarPersonal.setString(2, VistaAdministrador.TextoNombre.getText());
-                    guardarPersonal.setString(3, VistaAdministrador.TextoApellido.getText());
-                    guardarPersonal.setInt(4, Integer.parseInt(VistaAdministrador.TextoEdad.getText()));
-                    guardarPersonal.setFloat(5,Float.parseFloat( VistaAdministrador.TextoSueldo.getText()));
-                    guardarPersonal.setInt(6, Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString()));//modificar
-                    guardarPersonal.setString(7, VistaAdministrador.TextoUsuario.getText());
-                    guardarPersonal.setInt(8, 0);
-                    
-                    guardarUsuario.executeUpdate();
-                    guardarPersonal.executeUpdate();
-                    MostrarUsuarios("","");
-                    JOptionPane.showMessageDialog(null,"DATOS INGRESADOS CORRECTAMENTE");
-                
-                } catch (SQLException ex) {
-                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
-               
-                VistaAdministrador.BotonModificar.setEnabled(true);
-                VistaAdministrador.BotonGuardar.setEnabled(false);
-                VistaAdministrador.BotonEliminar.setEnabled(true);
-                LimpiarCampoLlenos();
-                habilitarOpcionesdeIngresar(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "LLene los campos vacios primero");
-            }
-            
-        }
-        if(ventana.BotonModificar==e.getSource()){
-            
-            habilitarOpcionesdeIngresar(true);
-            VistaAdministrador.BotonActualizar.setEnabled(true);
-            VistaAdministrador.BotonNuevo.setEnabled(false);
-            VistaAdministrador.BotonEliminar.setEnabled(false);
-            VistaAdministrador.BotonGuardar.setEnabled(false);
-            
-            int fila = TablaUsuario.getSelectedRow();
-            if(fila>=0){
-                VistaAdministrador.TextoCedula.setText(TablaUsuario.getValueAt(fila, 0).toString());
-                VistaAdministrador.TextoNombre.setText(TablaUsuario.getValueAt(fila, 1).toString());
-                VistaAdministrador.TextoApellido.setText(TablaUsuario.getValueAt(fila, 2).toString());
-                VistaAdministrador.TextoEdad.setText(TablaUsuario.getValueAt(fila, 3).toString());
-                VistaAdministrador.TextoSueldo.setText(TablaUsuario.getValueAt(fila, 4).toString());
-                VistaAdministrador.TextoUsuario.setText(TablaUsuario.getValueAt(fila, 6).toString());
-                VistaAdministrador.TextoContraseña.setText(Consultador.getInstancia().ContrasenaPorUsuario(TablaUsuario.getValueAt(fila, 6).toString()));
-            }else{
-                JOptionPane.showMessageDialog(null,"fila no selecionada");
-            }
-            
-        }
-        if(ventana.BotonActualizar==e.getSource()){
-            if(TodosCampoLlenos()){
-                PreparedStatement actualizarUsuario;
-                PreparedStatement actualizarPersonal;
-                try {
-                    actualizarUsuario = Connector.getInstancia().getConnection().prepareStatement("UPDATE usuario SET usuario='"+VistaAdministrador.TextoUsuario.getText()+"',clave='"+VistaAdministrador.TextoContraseña.getText()+"',eliminado='"+0+"'");
-                    actualizarPersonal = Connector.getInstancia().getConnection().prepareStatement("UPDATE personal SET cedula='"+VistaAdministrador.TextoCedula.getText()+"',nombres='"+VistaAdministrador.TextoNombre.getText()+"',apellidos='"+VistaAdministrador.TextoApellido.getText()+"',edad='"+Integer.parseInt(VistaAdministrador.TextoEdad.getText())+"',sueldo='"+Float.parseFloat(VistaAdministrador.TextoSueldo.getText())+"',idCargo='"+Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString())+"',usuario='"+VistaAdministrador.TextoUsuario.getText()+"',eliminado='"+0+"'");
-                    
-                    actualizarUsuario.executeUpdate();
-                    actualizarPersonal.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Datos Actualizados");
-                    MostrarUsuarios("", "");
-                } catch (SQLException ex) {
-                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                VistaAdministrador.BotonActualizar.setEnabled(false);
-                VistaAdministrador.BotonNuevo.setEnabled(true);
-                VistaAdministrador.BotonEliminar.setEnabled(true);
-                LimpiarCampoLlenos();
-                habilitarOpcionesdeIngresar(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Complete los campos vacios primero");
-            }
-            
-            //falta
-        }
-        if(ventana.BotonEliminar==e.getSource()){
-            //falta
-            //habilitarOpcionesdeIngresar(false);
-        }
+        controladoresBotonesAdministracionUsuarios(e);
+        controladoresBotonesReporte(e);
+        controladoresBotonesAdministracionReservaMesas(e);
     }
     boolean TodosCampoLlenos(){
         if(!VistaAdministrador.TextoCedula.getText().isEmpty()&&
@@ -222,6 +78,8 @@ public class ControlAdministrador implements Controlador {
         agregarRadioBotones();
         MostrarUsuarios("","");
         MostrarMesas();
+        MostrarReservas();
+        MostrarMesasReservadas();
         VistaAdministrador.MostrarReporte.setEnabled(false);
         habilitarOpcionesdeIngresar(false);
         //VistaAdministrador.BotonEliminar.setEnabled(false);
@@ -310,14 +168,8 @@ public class ControlAdministrador implements Controlador {
     }
     
     void agregarRadioBotones(){
-        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonPlato);
-        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonMesero);
-        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonAmbiente);
-        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonCategoria);
-        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonNombre);
-        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonApellido);
-        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonEdad);
-        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonFuncion);
+        GrupoRadioBotonesFiltroUsuario();
+        GrupoRadioBotonesFiltroReporte();
     }
     void MostrarMesas(){
         DefaultTableModel modo=new DefaultTableModel();
@@ -335,12 +187,14 @@ public class ControlAdministrador implements Controlador {
             Statement st = Connector.getInstancia().getConnection().createStatement();
             ResultSet rs= st.executeQuery(sql);
             while(rs.next()){
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                datos[3]=rs.getString(4);
-                datos[4]=rs.getString(5);
-                modo.addRow(datos);
+                if(!rs.getString(4).equals("0")){
+                    datos[0]=rs.getString(1);
+                    datos[1]=rs.getString(2);
+                    datos[2]=rs.getString(3);
+                    datos[3]=rs.getString(4);
+                    datos[4]=rs.getString(5);
+                    modo.addRow(datos);
+                }
             }
             VistaAdministrador.TablaMesasDisponible.setModel(modo);
         }catch(SQLException ex){
@@ -348,7 +202,46 @@ public class ControlAdministrador implements Controlador {
         
         } 
     }
-
+    void MostrarMesasReservadas(){
+        DefaultTableModel modo=new DefaultTableModel();
+        modo.addColumn("ID");
+        modo.addColumn("ID Mesa");
+        modo.addColumn("ID Pedido");
+        VistaAdministrador.TablaReserva.setModel(modo);
+        String sql ="select * from mesapedido ";
+        
+        String datos[] = new String[3];
+        
+        try{
+            Statement st = Connector.getInstancia().getConnection().createStatement();
+            ResultSet rs= st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                modo.addRow(datos);
+            }
+            VistaAdministrador.TablaReserva.setModel(modo);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de personal por usuario");
+        
+        } 
+    }
+    void MostrarReservas(){
+        DefaultListModel<String> model = new DefaultListModel<>();
+        String sql="SELECT * FROM pedido ";
+        try{
+            Statement st = Connector.getInstancia().getConnection().createStatement();
+            ResultSet rs= st.executeQuery(sql);
+            while(rs.next()){
+                    model.addElement(rs.getString(1));
+            }
+            VistaAdministrador.ListaPedidoID.setModel(model);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar la tabla de articulo");
+        
+        } 
+    }
     private void addListenerUser() {
         this.ventana.BotonNuevo.addActionListener(this);
         this.ventana.BotonModificar.addActionListener(this);
@@ -356,11 +249,235 @@ public class ControlAdministrador implements Controlador {
         this.ventana.BotonGuardar.addActionListener(this);
         this.ventana.BotonEliminar.addActionListener(this);
         this.ventana.BotonCerrar.addActionListener(this);
+        this.ventana.BuscarUsuarioPorFiltro.addActionListener(this);
     }
 
     private void addListenerReport() {
         this.ventana.MostrarReporte.addActionListener(this);
         this.ventana.BusquedaPorFiltro.addActionListener(this);
-        this.ventana.BuscarSeleccionFiltro.addActionListener(this);
+        this.ventana.BotonElegirOpcionFiltro.addActionListener(this);
+    }
+
+    private void controladoresBotonesAdministracionUsuarios(ActionEvent e) {
+        if(ventana.BotonCerrar==e.getSource()){
+            ventana.dispose();
+            ControlLogin login= new ControlLogin();
+            login.presentarVista();
+        }
+        if(ventana.BotonNuevo==e.getSource()){
+            habilitarOpcionesdeIngresar(true);
+            VistaAdministrador.BotonModificar.setEnabled(false);
+            VistaAdministrador.BotonEliminar.setEnabled(false);            
+        }
+        if(ventana.BotonGuardar==e.getSource()){
+            if(TodosCampoLlenos()){
+                
+                PreparedStatement guardarUsuario;
+                PreparedStatement guardarPersonal;
+                try {
+                    guardarUsuario = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Usuario (usuario, clave, eliminado)VALUES(?,?,?)");
+                    guardarPersonal = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO Personal (cedula, nombres, apellidos, edad, sueldo, idCargo, usuario, eliminado) VALUES(?,?,?,?,?,?,?,?)");
+                    guardarUsuario.setString(1, VistaAdministrador.TextoUsuario.getText());
+                    guardarUsuario.setString(2, VistaAdministrador.TextoContraseña.getText());
+                    guardarUsuario.setInt(3, 0);
+                    
+                    guardarPersonal.setString(1, VistaAdministrador.TextoCedula.getText());
+                    guardarPersonal.setString(2, VistaAdministrador.TextoNombre.getText());
+                    guardarPersonal.setString(3, VistaAdministrador.TextoApellido.getText());
+                    guardarPersonal.setInt(4, Integer.parseInt(VistaAdministrador.TextoEdad.getText()));
+                    guardarPersonal.setFloat(5,Float.parseFloat( VistaAdministrador.TextoSueldo.getText()));
+                    guardarPersonal.setInt(6, Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString()));//modificar
+                    guardarPersonal.setString(7, VistaAdministrador.TextoUsuario.getText());
+                    guardarPersonal.setInt(8, 0);
+                    
+                    guardarUsuario.executeUpdate();
+                    guardarPersonal.executeUpdate();
+                    MostrarUsuarios("","");
+                    JOptionPane.showMessageDialog(null,"DATOS INGRESADOS CORRECTAMENTE");
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+               
+                VistaAdministrador.BotonModificar.setEnabled(true);
+                VistaAdministrador.BotonGuardar.setEnabled(false);
+                VistaAdministrador.BotonEliminar.setEnabled(true);
+                LimpiarCampoLlenos();
+                habilitarOpcionesdeIngresar(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "LLene los campos vacios primero");
+            }
+            
+        }
+        if(ventana.BotonModificar==e.getSource()){
+            
+            habilitarOpcionesdeIngresar(true);
+            VistaAdministrador.BotonActualizar.setEnabled(true);
+            VistaAdministrador.BotonNuevo.setEnabled(false);
+            VistaAdministrador.BotonEliminar.setEnabled(false);
+            VistaAdministrador.BotonGuardar.setEnabled(false);
+            
+            int fila = TablaUsuario.getSelectedRow();
+            if(fila>=0){
+                VistaAdministrador.TextoCedula.setText(TablaUsuario.getValueAt(fila, 0).toString());
+                VistaAdministrador.TextoNombre.setText(TablaUsuario.getValueAt(fila, 1).toString());
+                VistaAdministrador.TextoApellido.setText(TablaUsuario.getValueAt(fila, 2).toString());
+                VistaAdministrador.TextoEdad.setText(TablaUsuario.getValueAt(fila, 3).toString());
+                VistaAdministrador.TextoSueldo.setText(TablaUsuario.getValueAt(fila, 4).toString());
+                VistaAdministrador.TextoUsuario.setText(TablaUsuario.getValueAt(fila, 6).toString());
+                VistaAdministrador.TextoContraseña.setText(Consultador.getInstancia().ContrasenaPorUsuario(TablaUsuario.getValueAt(fila, 6).toString()));
+            }else{
+                JOptionPane.showMessageDialog(null,"fila no selecionada");
+            }
+            
+        }
+        if(ventana.BotonActualizar==e.getSource()){
+            if(TodosCampoLlenos()){
+                PreparedStatement actualizarUsuario;
+                PreparedStatement actualizarPersonal;
+                try {
+                    actualizarUsuario = Connector.getInstancia().getConnection().prepareStatement("UPDATE usuario SET usuario='"+VistaAdministrador.TextoUsuario.getText()+"',clave='"+VistaAdministrador.TextoContraseña.getText()+"',eliminado='"+0+"'");
+                    actualizarPersonal = Connector.getInstancia().getConnection().prepareStatement("UPDATE personal SET cedula='"+VistaAdministrador.TextoCedula.getText()+"',nombres='"+VistaAdministrador.TextoNombre.getText()+"',apellidos='"+VistaAdministrador.TextoApellido.getText()+"',edad='"+Integer.parseInt(VistaAdministrador.TextoEdad.getText())+"',sueldo='"+Float.parseFloat(VistaAdministrador.TextoSueldo.getText())+"',idCargo='"+Consultador.getInstancia().idCargoPorNombre(VistaAdministrador.Funciones_o_Cargos.getSelectedItem().toString())+"',usuario='"+VistaAdministrador.TextoUsuario.getText()+"',eliminado='"+0+"'");
+                    actualizarUsuario.executeUpdate();
+                    actualizarPersonal.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Datos Actualizados");
+                    MostrarUsuarios("", "");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                VistaAdministrador.BotonActualizar.setEnabled(false);
+                VistaAdministrador.BotonNuevo.setEnabled(true);
+                VistaAdministrador.BotonEliminar.setEnabled(true);
+                LimpiarCampoLlenos();
+                habilitarOpcionesdeIngresar(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Complete los campos vacios primero");
+            }
+            
+            //falta
+        }
+        if(ventana.BotonEliminar==e.getSource()){
+            //falta
+            //habilitarOpcionesdeIngresar(false);
+        }
+        if(ventana.BuscarUsuarioPorFiltro==e.getSource()){
+            if(VistaAdministrador.RadioBotonNombre.isSelected()) {  MostrarUsuarios(VistaAdministrador.TextoFiltroBusquedaUsuario.getText(),"nombres");}
+            else if(VistaAdministrador.RadioBotonApellido.isSelected()) { MostrarUsuarios(VistaAdministrador.TextoFiltroBusquedaUsuario.getText(),"apellidos");}
+            else if(VistaAdministrador.RadioBotonEdad.isSelected()) { MostrarUsuarios(VistaAdministrador.TextoFiltroBusquedaUsuario.getText(),"edad");}
+            else if(VistaAdministrador.RadioBotonFuncion.isSelected()) {  MostrarUsuarios(VistaAdministrador.TextoFiltroBusquedaUsuario.getText(),"idCargo");}
+            else{
+                JOptionPane.showMessageDialog(null,"no se ha seleccionado nada");
+            }
+        }
+    }
+
+    private void controladoresBotonesReporte(ActionEvent e) {
+        if(ventana.MostrarReporte==e.getSource()){
+            Map parameters = new HashMap();
+            parameters.put("FechaDesde", VistaAdministrador.FechaInicio.getDate());
+            parameters.put("FechaHasta", VistaAdministrador.FechaHasta.getDate());
+            if(ventana.RadioBotonPlato.isSelected()){
+                
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
+            if(ventana.RadioBotonMesero.isSelected()){
+                parameters.put("Lastname", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                System.out.println(parameters.get("Lastname"));
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteMesero.jasper",parameters);
+            }
+            if(ventana.RadioBotonAmbiente.isSelected()){
+                parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteCategoria.jasper",parameters);
+            }
+            if(ventana.RadioBotonCategoria.isSelected()){
+                //parameters.put("Nombre", VistaAdministrador.TextoFiltroSeleccionado.getText());
+                //AbstractJasperReports.createReports(Connector.getInstancia().getConnection(),"C:\\Users\\User\\Documents\\ESPOL Edward Cruz\\Java y netbeans\\SARES\\Restaurant\\src\\Reporte\\ReporteGeneral.jasper",parameters);
+            }
+            AbstractJasperReports.showViewer();
+            
+        }
+        if(ventana.BusquedaPorFiltro==e.getSource()){
+            mostrarListaFiltrada();
+            
+        }
+        if(ventana.BotonElegirOpcionFiltro==e.getSource()){
+            VistaAdministrador.TextoFiltroSeleccionado.setText(VistaAdministrador.ListaPlatosReporte.getSelectedValue().toString());
+            VistaAdministrador.MostrarReporte.setEnabled(true);
+            
+        }
+    }
+
+    private void controladoresBotonesAdministracionReservaMesas(ActionEvent e) {
+        if(ventana.BotonSeleccionarPedido==e.getSource()){
+            VistaAdministrador.TextoIDPedido.setText(VistaAdministrador.ListaPedidoID.getSelectedValue().toString());
+            //VistaAdministrador.MostrarReporte.setEnabled(true); para mostrar el boton crear
+        }
+        if(ventana.Boton_agregar_mesa_a_reservar==e.getSource()){
+            int fila = VistaAdministrador.TablaMesasDisponible.getSelectedRow();
+            if(fila>=0){
+                VistaAdministrador.TextoIDMesa.setText(VistaAdministrador.TablaMesasDisponible.getValueAt(fila, 0).toString());
+            }else{
+                JOptionPane.showMessageDialog(null,"fila no selecionada");
+            }
+        }
+        if(ventana.BotonGuardarReserva==e.getSource()){
+                PreparedStatement guardarReserva;
+                PreparedStatement CambiarEstadoMesa;
+                try {
+                    guardarReserva = Connector.getInstancia().getConnection().prepareStatement("INSERT INTO mesapedido(id, idMesa,idPedido)VALUES(?,?,?)");
+                    CambiarEstadoMesa = Connector.getInstancia().getConnection().prepareStatement("UPDATE mesa SET disponibilidad=0 WHERE idMesa='"+VistaAdministrador.TextoIDMesa.getText()+"'");//
+                    guardarReserva.setString(1, "1");                                              //UPDATE `sares`.`mesa` SET `disponibilidad`='0' WHERE `idMesa`='1';                                                 
+                    guardarReserva.setString(2, VistaAdministrador.TextoIDMesa.getText());
+                    guardarReserva.setInt(3, Integer.parseInt(VistaAdministrador.TextoIDPedido.getText()));
+                    
+                    guardarReserva.executeUpdate();
+                    CambiarEstadoMesa.executeUpdate();
+                    MostrarMesas();
+                    MostrarMesasReservadas();
+                    JOptionPane.showMessageDialog(null,"DATOS INGRESADOS CORRECTAMENTE");
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControlAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+    }
+
+    private void mostrarListaFiltrada() {
+        if(ventana.RadioBotonPlato.isSelected()){
+            MostrarReportePlatos("Plato");
+        }
+        if(ventana.RadioBotonMesero.isSelected()){
+            MostrarReportePlatos("Mesero");
+        }
+        if(ventana.RadioBotonAmbiente.isSelected()){
+            MostrarReportePlatos("Ambiente");
+        }
+        if(ventana.RadioBotonCategoria.isSelected()){
+            MostrarReportePlatos("Categoria");
+        }
+        VistaAdministrador.ListaPlatosReporte.isSelectedIndex(0);
+    }
+
+    private void addListenerReservas() {
+        this.ventana.BotonSeleccionarPedido.addActionListener(this);
+        this.ventana.Boton_agregar_mesa_a_reservar.addActionListener(this);
+        this.ventana.BotonGuardarReserva.addActionListener(this);
+    }
+
+    private void GrupoRadioBotonesFiltroUsuario() {
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonNombre);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonApellido);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonEdad);
+        VistaAdministrador.GrupoRadioBotonesBusquedaUsuario.add(VistaAdministrador.RadioBotonFuncion);
+    }
+
+    private void GrupoRadioBotonesFiltroReporte() {
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonPlato);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonMesero);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonAmbiente);
+        VistaAdministrador.GrupoRadioBotonesReporte.add(VistaAdministrador.RadioBotonCategoria);
     }
 }
