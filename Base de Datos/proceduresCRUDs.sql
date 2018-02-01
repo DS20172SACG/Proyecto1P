@@ -219,5 +219,12 @@ begin
     where idPedido = idPed;
 end$$
 
+create procedure tiempoPreparacionArticulo(in idArticulo int)
+begin
+	select Articulo.TiempoPreparacion
+    from Articulo
+    where idArticulo = Articulo.ID;
+end$$
+
 delimiter ;
 
